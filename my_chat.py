@@ -2,7 +2,6 @@
 import itchat
 import os
 import sys
-import json
 
 sys.path.append(os.getcwd() + '/constants')
 from constants.wx_key_type import *
