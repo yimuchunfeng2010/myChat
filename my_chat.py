@@ -2,17 +2,19 @@
 import itchat
 import os
 import sys
+import json
 
 sys.path.append(os.getcwd() + '/constants')
 from constants.wx_key_type import *
 from constants.type import *
-from itchat.content import TEXT
 from itchat.content import *
 import importlib
 
 importlib.reload(sys)
 
 Owner_user_name = ''
+
+
 @itchat.msg_register([TEXT, PICTURE, FRIENDS, CARD, MAP, SHARING, RECORDING, ATTACHMENT, VIDEO], isFriendChat=True,
                      isGroupChat=True, isMpChat=True)
 def handle_receive_msg(msg):
@@ -21,16 +23,18 @@ def handle_receive_msg(msg):
 
 def print_receive_msg(msg):
     global Owner_user_name
-    print("Receive New Msg")
-    print(msg)
+    # print("Receive New Msg")
     if msg[WX_KEY_TYPE] == MSG_TYPE__TEXT:
         if msg[WX_KEY_FROMUSERNAME].startswith(FROM_CHATROOM):
-            print(msg[WX_KEY_ACTUALNICKNAME], "say: ", msg[WX_KEY_TEXT])
+            print(msg[WX_KEY_ACTUALNICKNAME], ": ", msg[WX_KEY_TEXT])
         else:
             if msg[WX_KEY_FROMUSERNAME] == Owner_user_name:
-                print("我say: "  + msg[WX_KEY_TEXT])
+                print("我: " + msg[WX_KEY_CONTENT])
             else:
-                print(msg[WX_KEY_NICKNAME], "say: ", msg[WX_KEY_TEXT])
+                # for k, v in msg.items():
+                #     print(k, v)
+
+                print(msg[WX_KEY_USER][WX_KEY_REMARKNAME], ": ", msg[WX_KEY_CONTENT])
 
 
 def get_friends():
