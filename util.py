@@ -42,4 +42,6 @@ def code_lines_count(path):
 if __name__ == '__main__':
     abs_dir = os.getcwd()
     x, y, z = code_lines_count(abs_dir)
-    print(x, y, z)
+    print("code_lines: ", x)
+    print("comm_lines: ", y)
+    print("blank_lines: ", z)
