@@ -16,30 +16,32 @@ def add_to_16(value):
 
 
 # 加密方法
-def encrypt_oracle(key, msg):
+def aes_encrypt(key, msg):
     # 初始化加密器
     aes = AES.new(add_to_16(key), AES.MODE_ECB)
     # 先进行aes加密
     encrypt_aes = aes.encrypt(add_to_16(msg))
     # 用base64转成字符串形式
     encrypted_text = str(base64.encodebytes(encrypt_aes), encoding='utf-8')  # 执行加密并转码返回bytes
-    print(encrypted_text)
+    return encrypted_text
 
 
 # 解密方法
-def decrypt_oralce(key, msg):
+def aes_decrypt(key, msg):
     # 初始化加密器
     aes = AES.new(add_to_16(key), AES.MODE_ECB)
     # 优先逆向解密base64成bytes
     base64_decrypted = base64.decodebytes(msg.encode(encoding='utf-8'))
     # 执行解密密并转码返回str
     decrypted_text = str(aes.decrypt(base64_decrypted), encoding='utf-8').replace('\0', '')
-    print(decrypted_text)
+    return decrypted_text
 
 
 if __name__ == '__main__':
     # 密文
-    key = '123456'
+    aes_key = '123456'
     msg = 'qR/TQk4INsWeXdMSbCDDdA=='
-    encrypt_oracle(key, msg)
-    decrypt_oralce(key, msg)
+    en_msg = aes_encrypt(aes_key, msg)
+    print("加密后： ", en_msg)
+    de_msg = aes_decrypt(aes_key, en_msg)
+    print("解密后： ", de_msg)

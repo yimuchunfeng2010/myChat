@@ -2,13 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a79d4111-877a-43bb-b37f-fcd33e2e9a5d" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/myChat.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/myChat.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/config/config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crypto/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/crypto_module/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crypto/aes_crypto.py" beforeDir="false" afterPath="$PROJECT_DIR$/crypto_module/aes_crypto.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crypto/rsa_crypto.py" beforeDir="false" afterPath="$PROJECT_DIR$/crypto_module/rsa_crypto.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crypto_module/aes_crypto.py" beforeDir="false" afterPath="$PROJECT_DIR$/crypto_module/aes_crypto.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -78,8 +73,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/crypto_module/aes_crypto.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="41" column="18" selection-end-line="45" />
+            <state relative-caret-position="542">
+              <caret line="45" column="40" selection-start-line="45" selection-start-column="40" selection-end-line="45" selection-end-column="40" />
               <folding>
                 <element signature="e#11#24#0" expanded="true" />
               </folding>
@@ -141,6 +136,7 @@
       <find>User</find>
       <find>re</find>
       <find>print</find>
+      <find>key</find>
     </findStrings>
     <replaceStrings>
       <replace>'</replace>
@@ -174,10 +170,10 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-12" />
-    <option name="y" value="-12" />
-    <option name="width" value="1944" />
-    <option name="height" value="1056" />
+    <option name="x" value="2368" />
+    <option name="y" value="283" />
+    <option name="width" value="1280" />
+    <option name="height" value="696" />
   </component>
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -363,12 +359,12 @@
       <workItem from="1548469022320" duration="956000" />
       <workItem from="1548470004248" duration="2264000" />
       <workItem from="1548475475551" duration="493000" />
-      <workItem from="1548476196924" duration="1574000" />
+      <workItem from="1548476196924" duration="1887000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="21279000" />
+    <option name="totallyTimeSpent" value="21592000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -380,10 +376,10 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1295" height="704" extended-state="6" />
+    <frame x="1912" y="-8" width="1843" height="1096" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18593371" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.12899607" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -397,7 +393,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.32952183" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5004042" side_tool="true" weight="0.32692307" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="11" visible="true" weight="0.32692307" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="11" visible="true" weight="0.19438669" />
       <window_info anchor="bottom" id="Python Console" order="12" sideWeight="0.4995958" weight="0.32692307" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -567,8 +563,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/crypto_module/aes_crypto.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="41" column="18" selection-end-line="45" />
+        <state relative-caret-position="542">
+          <caret line="45" column="40" selection-start-line="45" selection-start-column="40" selection-end-line="45" selection-end-column="40" />
           <folding>
             <element signature="e#11#24#0" expanded="true" />
           </folding>
