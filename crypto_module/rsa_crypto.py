@@ -20,10 +20,10 @@ def decrypt_by_rsa(private_key, msg):
     return rsa.decrypt(msg, private_key).decode()
 
 # 测试代码
-# message = 'Now is better than never.'
-# publicKey, privateKey = get_rsa_key()
-# en_msg = encrypt_by_rsa(publicKey, message)
-# print('Before encrypted:', en_msg)
-#
-# de_msg = decrypt_by_rsa(privateKey, en_msg)
-# print('After encrypted:', de_msg)
+message = 'Now is better...............'
+publicKey, privateKey = get_rsa_key()
+en_msg = encrypt_by_rsa(publicKey, message)
+print('Before encrypted:', en_msg)
+
+de_msg = decrypt_by_rsa(privateKey, en_msg)
+print('After encrypted:', de_msg)
