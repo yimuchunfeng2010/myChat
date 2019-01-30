@@ -45,3 +45,10 @@ if __name__ == '__main__':
     print("code_lines: ", x)
     print("comm_lines: ", y)
     print("blank_lines: ", z)
+
+
+
+#  获取用户输入代码
+# while True:
+#     msg = input()
+#     print('我说：', msg)
