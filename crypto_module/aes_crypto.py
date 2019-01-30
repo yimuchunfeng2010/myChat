@@ -16,22 +16,22 @@ def add_to_16(value):
 
 
 # 加密方法
-def aes_encrypt(key, msg):
+def aes_encrypt(key, my_msg):
     # 初始化加密器
     aes = AES.new(add_to_16(key), AES.MODE_ECB)
     # 先进行aes加密
-    encrypt_aes = aes.encrypt(add_to_16(msg))
+    encrypt_aes = aes.encrypt(add_to_16(my_msg))
     # 用base64转成字符串形式
     encrypted_text = str(base64.encodebytes(encrypt_aes), encoding='utf-8')  # 执行加密并转码返回bytes
     return encrypted_text
 
 
 # 解密方法
-def aes_decrypt(key, msg):
+def aes_decrypt(key, my_msg):
     # 初始化加密器
     aes = AES.new(add_to_16(key), AES.MODE_ECB)
     # 优先逆向解密base64成bytes
-    base64_decrypted = base64.decodebytes(msg.encode(encoding='utf-8'))
+    base64_decrypted = base64.decodebytes(my_msg.encode(encoding='utf-8'))
     # 执行解密密并转码返回str
     decrypted_text = str(aes.decrypt(base64_decrypted), encoding='utf-8').replace('\0', '')
     return decrypted_text

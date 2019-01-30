@@ -15,6 +15,7 @@ MSG_TYPE = [MSG_TYPE__TEXT, MSG_TYPE__FRIENDS, MSG_TYPE__ATTACHMENT, MSG_TYPE__V
 # 特殊字符串
 PUBLIC_KEY_PREFIX = '$@@$'  # RSA公钥前缀
 SECRET_KEY_PREFIX = '@$$@'  # AES密钥前缀
+FINAL_AES_KEY_PREFIX = '%**%' # 协商一致AES密钥前缀
 
 # 消息来源类型
 FROM_CHATROOM = '@@' # 聊天室消息

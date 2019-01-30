@@ -47,7 +47,12 @@ print(type(chat.aes_key))
 chatObj = list()
 chatObj.append(ChatInfo())
 chatObj.append(ChatInfo())
+mapObj = dict()
 
 for i in chatObj:
     print(i.aes_key)
     print(i.rsa_private_key)
+
+# 获取聊天室好友个数
+# chatroom = itchat.search_chatrooms("HIGH起来")
+# print(chatroom[0]["MemberCount"])
