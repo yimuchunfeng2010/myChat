@@ -1,41 +1,4 @@
-# coding=utf-8
-import threading
-from time import ctime, sleep
+msg = {"zeng": "22", "li": "33"}
 
-mutex = threading.Lock()
-
-msg_arr = ["zeng: haha", "li: zzz", "oo:112"]
-
-
-def say(func):
-    while True:
-        if 0 != len(msg_arr):
-            mutex.acquire(timeout=10)
-            print(msg_arr[0])
-            del msg_arr[0]
-            mutex.release()
-
-
-def listen(func):
-    while True:
-        msg = input()
-        msg = '我说：' + msg
-        # print(msg)
-        mutex.acquire(timeout=10)
-        msg_arr.append(msg)
-        mutex.release()
-
-
-
-threads = []
-t1 = threading.Thread(target=say, args=(u'爱情买卖',))
-threads.append(t1)
-t2 = threading.Thread(target=listen, args=(u'阿凡达',))
-threads.append(t2)
-
-if __name__ == '__main__':
-    # for t in threads:
-    #     t.setDaemon(True)
-    #     t.start()
-    t1.start()
-    t2.start()
+if "zeng" in msg.keys():
+    print("ok")
