@@ -49,33 +49,38 @@ def handle_receive_msg(receive_msg):
         gloabl_chat_info[msg[WX_KEY_USERNAME]].key_info_list.append(key_info_item)
 
         # 若已获取足够确认信息，则向aes密钥协商完成，发送最终aes密钥
-        if gloabl_chat_info[receive_msg[WX_KEY_USERNAME]].actual_ack_count == gloabl_chat_info[
-            receive_msg[WX_KEY_USERNAME]].except_ack_count:
-            gloabl_chat_info[receive_msg[WX_KEY_USERNAME]].aes_key = key_info_item.aes_key  # 暂时定为最后一个密钥为公用密钥
+        if gloabl_chat_info[receive_msg[WX_KEY_USERNAME]].actual_ack_count == \
+                gloabl_chat_info[receive_msg[WX_KEY_USERNAME]].except_ack_count:
+
+            gloabl_chat_info[receive_msg[WX_KEY_USERNAME]].aes_key = key_info_item.aes_key  # todo 暂时定为最后一个密钥为公用密钥
             for item in gloabl_chat_info[receive_msg[WX_KEY_USERNAME]].key_info_list:
-                send_msg = FINAL_AES_KEY_PREFIX + gloabl_chat_info[receive_msg[WX_KEY_USERNAME]].aes_key
-                send_msg = aes_encrypt(item.aes_key, send_msg)
+                send_msg = gloabl_chat_info[receive_msg[WX_KEY_USERNAME]].aes_key
+                send_msg = FINAL_AES_KEY_PREFIX + aes_encrypt(item.aes_key, send_msg)
                 itchat.send_msg(send_msg, toUserName=cur_chatter)
             return
 
     # 判断是否为好友主动发起密钥协商
     if receive_msg[WX_KEY_TEXT].startswith(PUBLIC_KEY_PREFIX) and receive_msg[WX_KEY_USERNAME] not in gloabl_chat_info:
-        key_info_item = KeyItem()
-        key_info_item.user_name = receive_msg[WX_KEY_USERNAME]
-        key_info_item.actual_user_name = receive_msg[WX_KEY_USERNAME]  # todo 修改为取实际发言人
-        key_info_item.aes_key = decrypt_by_rsa(gloabl_chat_info[receive_msg[WX_KEY_USERNAME]].rsa_private_key,
-                                               receive_msg[WX_KEY_TEXT])
 
         new_chat = ChatInfo()
         gloabl_chat_info[WX_KEY_USERNAME] = new_chat  # 修改名称
         # rsa 公钥加密并发送给密钥协商发起方
-        send_msg = encrypt_by_rsa(msg[WX_KEY_TEXT], new_chat.rsa_public_key)  # 去除前缀
+        send_msg = encrypt_by_rsa(receive_msg[WX_KEY_TEXT].lstrip(PUBLIC_KEY_PREFIX), new_chat.rsa_public_key)
         itchat.send_msg(send_msg, toUserName=receive_msg[WX_KEY_FROMUSERNAME])  # todo 修改为实际发送者
+        key_info = KeyItem()
+        key_info.aes_key = new_chat.aes_key
+        new_chat.key_info_list.append(key_info)
+
         mutex.acquire(timeout=10)
         gloabl_chat_info[msg[WX_KEY_USERNAME]] = new_chat
         mutex.release()
 
         return
+
+    # 协商一致AES密钥
+    if receive_msg[WX_KEY_TEXT].startswith(FINAL_AES_KEY_PREFIX) and receive_msg[WX_KEY_USERNAME] in gloabl_chat_info:
+        de_aes_key = aes_decrypt(gloabl_chat_info[receive_msg[WX_KEY_USERNAME]].key_info_list[0].aes_key, receive_msg[WX_KEY_TEXT].lstrip(FINAL_AES_KEY_PREFIX))
+        gloabl_chat_info[receive_msg[WX_KEY_USERNAME]].aes_key = de_aes_key
 
     if receive_msg[WX_KEY_TYPE] == MSG_TYPE__TEXT:
         if receive_msg[WX_KEY_FROMUSERNAME].startswith(FROM_CHATROOM):
@@ -95,8 +100,14 @@ def say():
             global cur_chatter
             cur_chatter = friends_list[my_msg.lstrip("Chat ")]
             continue
-        print('我说：' + my_msg)
-        itchat.send_msg(my_msg, toUserName=cur_chatter)
+        # 未启动加密，则启动加密协商
+        if cur_chatter not in gloabl_chat_info:
+            start_key_agreement(cur_chatter)
+
+        # 协商完成
+        while gloabl_chat_info[cur_chatter].aes_key != "":
+            print('我说：' + my_msg)
+            itchat.send_msg(my_msg, toUserName=cur_chatter)
 
 
 def get_friends():
@@ -157,9 +168,9 @@ def start_key_agreement(user_name):
 itchat.auto_login(hotReload=True)
 init_mychat()
 # 启动线程
-# t1 = threading.Thread(target=say)
-# t2 = threading.Thread(target=listen, args=(u'',))
-# t1.start()
-# t2.start()
+t1 = threading.Thread(target=say)
+t2 = threading.Thread(target=listen, args=(u'',))
+t1.start()
+t2.start()
 
 itchat.run()
