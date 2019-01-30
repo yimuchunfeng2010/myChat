@@ -27,7 +27,7 @@ def code_lines_count(path):
                                     line = fp.readline()
 
                                     comm_lines += 1
-                                    if ("'''" in line) or ('"""' in line):
+                                    if (b"'''" in line) or (b'"""' in line):
                                         break
                         elif line.strip():
 

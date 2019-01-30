@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a79d4111-877a-43bb-b37f-fcd33e2e9a5d" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/config/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/config/config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crypto_module/aes_crypto.py" beforeDir="false" afterPath="$PROJECT_DIR$/crypto_module/aes_crypto.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/proto/proto.py" beforeDir="false" afterPath="$PROJECT_DIR$/proto/proto.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tmp.py" beforeDir="false" afterPath="$PROJECT_DIR$/tmp.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/util.py" beforeDir="false" afterPath="$PROJECT_DIR$/util.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -17,9 +14,9 @@
     <SUITE FILE_PATH="coverage/myChat$aes_crypto__1_.coverage" NAME="aes_crypto (1) Coverage Results" MODIFIED="1548849273792" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/crypto_module" />
     <SUITE FILE_PATH="coverage/myChat$my_chat.coverage" NAME="my_chat Coverage Results" MODIFIED="1548849087364" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/myChat$aes_crypto.coverage" NAME="aes_crypto Coverage Results" MODIFIED="1548469057916" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/crypto" />
-    <SUITE FILE_PATH="coverage/myChat$tmp.coverage" NAME="tmp Coverage Results" MODIFIED="1548850251105" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/myChat$tmp.coverage" NAME="tmp Coverage Results" MODIFIED="1548850537773" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/myChat$rsa.coverage" NAME="rsa Coverage Results" MODIFIED="1548426480863" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/crypto" />
-    <SUITE FILE_PATH="coverage/myChat$util.coverage" NAME="util Coverage Results" MODIFIED="1548430393069" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/myChat$util.coverage" NAME="util Coverage Results" MODIFIED="1548850705922" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/myChat$rsa_crypto__1_.coverage" NAME="rsa_crypto (1) Coverage Results" MODIFIED="1548638822460" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/crypto_module" />
     <SUITE FILE_PATH="coverage/myChat$rsa_crypto.coverage" NAME="rsa_crypto Coverage Results" MODIFIED="1548427383598" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/crypto" />
   </component>
@@ -63,6 +60,15 @@
           </provider>
         </entry>
       </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/util.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="209">
+              <caret line="29" selection-start-line="29" selection-end-line="29" />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/CHANGEME.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
@@ -87,7 +93,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/proto/proto.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="160">
@@ -95,15 +101,6 @@
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/AppData/Roaming/Python/Python37/site-packages/itchat/__init__.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="116">
-              <caret line="47" column="53" selection-start-line="47" selection-start-column="53" selection-end-line="47" selection-end-column="53" />
             </state>
           </provider>
         </entry>
@@ -172,7 +169,6 @@
         <option value="$PROJECT_DIR$/crypto/aes_crypto.py" />
         <option value="$PROJECT_DIR$/endecryption/aes_crypto.py" />
         <option value="$PROJECT_DIR$/crypto_module/rsa_crypto.py" />
-        <option value="$PROJECT_DIR$/util.py" />
         <option value="$PROJECT_DIR$/my_chat.py" />
         <option value="$PROJECT_DIR$/project.yml" />
         <option value="$PROJECT_DIR$/CHANGEME.md" />
@@ -180,6 +176,7 @@
         <option value="$PROJECT_DIR$/crypto_module/aes_crypto.py" />
         <option value="$PROJECT_DIR$/tmp.py" />
         <option value="$PROJECT_DIR$/proto/proto.py" />
+        <option value="$PROJECT_DIR$/util.py" />
       </list>
     </option>
   </component>
@@ -245,7 +242,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.tmp">
+  <component name="RunManager" selected="Python.util">
     <configuration name="aes_crypto (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="myChat" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -312,28 +309,6 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="rsa_crypto (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="myChat" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/crypto_module" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/crypto_module/rsa_crypto.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <configuration name="tmp" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="myChat" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -356,13 +331,35 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="util" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="myChat" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/util.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.util" />
         <item itemvalue="Python.tmp" />
         <item itemvalue="Python.aes_crypto (1)" />
         <item itemvalue="Python.aes_crypto" />
         <item itemvalue="Python.my_chat" />
-        <item itemvalue="Python.rsa_crypto (1)" />
       </list>
     </recent_temporary>
   </component>
@@ -384,12 +381,12 @@
       <workItem from="1548470004248" duration="2264000" />
       <workItem from="1548475475551" duration="493000" />
       <workItem from="1548476196924" duration="2029000" />
-      <workItem from="1548833094132" duration="10586000" />
+      <workItem from="1548833094132" duration="10991000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="32320000" />
+    <option name="totallyTimeSpent" value="32725000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -404,12 +401,12 @@
     <frame x="-7" y="-7" width="1295" height="704" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18755053" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18755053" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.3006993" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3006993" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3986014" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -526,13 +523,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/util.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1349">
-          <caret line="7" column="28" selection-start-line="7" selection-start-column="26" selection-end-line="7" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/AppData/Roaming/Python/Python37/site-packages/itchat/core.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="116">
@@ -621,6 +611,13 @@
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/util.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="29" selection-start-line="29" selection-end-line="29" />
         </state>
       </provider>
     </entry>
