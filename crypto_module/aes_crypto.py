@@ -39,7 +39,7 @@ def aes_decrypt(key, msg):
 
 if __name__ == '__main__':
     # 密文
-    aes_key = '123456000000'
+    aes_key = '''!@#$%^&*()_+=-.,'''
     msg = 'i-075069024690-945'
     en_msg = aes_encrypt(aes_key, msg)
     print("加密后： ", en_msg)

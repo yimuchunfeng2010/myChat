@@ -1,1 +1,2 @@
 RSA_KEY_LEN = 1024
+AES_KEY_LEN = 16  # 暂定为32位ASCII码
