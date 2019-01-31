@@ -91,3 +91,7 @@ if __name__ == '__main__':
 #     #     t.start()
 #     t1.start()
 #     t2.start()
+
+
+# 发送文件
+# itchat.send("@fil@%s" % './tmp.py',toUserName='filehelper')

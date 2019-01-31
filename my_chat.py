@@ -4,6 +4,7 @@ import os
 import sys
 import importlib
 import threading
+import json
 from constants.wx_key_type import *
 from constants.type import *
 from itchat.content import *
@@ -29,13 +30,21 @@ global_chat_info = dict()
                      isGroupChat=True, isMpChat=True)
 def listen(receive_msg):
     print("Receive New Msg")
+    print(receive_msg)
     global owner_name
+    # 下载文件
+    receive_msg.text('./' + receive_msg['FileName'])
+    users = itchat.search_friends('曾元军')
+    userName = users[0]['UserName']
+    # 下载文件
+
     if WX_KEY_TYPE not in receive_msg or WX_KEY_TEXT not in receive_msg or WX_KEY_USERNAME not in receive_msg:
         print("invalid msg", receive_msg)
         return
 
-    #  响应好友发起的密钥协商，返回AES密钥，密钥协商步骤二
-    if receive_msg[WX_KEY_TEXT].startswith(PUBLIC_KEY_PREFIX) and receive_msg[WX_KEY_USERNAME] not in global_chat_info:
+    #  接收到好友RSA公钥文件，返回AES密钥，密钥协商步骤二
+    if receive_msg[WX_KEY_TYPE] == MSG_TYPE__ATTACHMENT and msg['FileName'] == msg[WX_KEY_FROMUSERNAME] + "public.pem" \
+            and receive_msg[WX_KEY_USERNAME] not in global_chat_info:
         response_key_agreement(receive_msg)
         return
 
@@ -78,7 +87,7 @@ def say():
 
         # 协商完成
 
-        if  cur_chatter in  global_chat_info and global_chat_info[cur_chatter].is_ready:
+        if cur_chatter in global_chat_info and global_chat_info[cur_chatter].is_ready:
             print('我说：' + my_msg)
             itchat.send_msg(my_msg, toUserName=cur_chatter)
 
@@ -141,11 +150,11 @@ def start_key_agreement(user_name):
     global_chat_info[user_name] = new_chat
     mutex.release()
 
-    send_msg = PUBLIC_KEY_PREFIX + new_chat.get_rsa_public_key()
-    itchat.send_msg(send_msg, toUserName=user_name)
+    # 发送RSA公钥文件
+    itchat.send_msg("@fil@%s" % new_chat.rsa_public_key, toUserName=user_name)
 
 
-# 收到好友RSA公钥，响应密钥协商，本地生成AES密钥，并发送给好友， 密钥协商步骤二
+# 收到好友RSA公钥文件，响应密钥协商，本地生成AES密钥，并发送给好友， 密钥协商步骤二
 def response_key_agreement(receive_msg):
     new_chat = ChatInfo()
     # rsa 公钥加密并发送给密钥协商发起方
@@ -194,7 +203,7 @@ def save_aes(receive_msg):
 
 
 if __name__ == '__main__':
-    itchat.auto_login() # hotReload=True
+    itchat.auto_login(hotReload=True)  # hotReload=True
     init_mychat()
     # 启动线程
     t1 = threading.Thread(target=say)
@@ -203,3 +212,4 @@ if __name__ == '__main__':
     t2.start()
 
     itchat.run()
+
