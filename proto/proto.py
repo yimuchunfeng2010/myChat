@@ -22,6 +22,9 @@ class ChatInfo():
     # 密钥数组
     key_info_list = list()
 
+    # 是否协商成功
+    is_ready = False
+
     def __init__(self):
         """"初始化"""
         self.except_ack_count = 0
@@ -29,6 +32,7 @@ class ChatInfo():
 
         self.rsa_public_key, self.rsa_private_key = rsa.newkeys(RSA_KEY_LEN)
         self.aes_key = "".join(random.sample(string.digits + string.ascii_letters + "~!@#$%^&*()_+-=", AES_KEY_LEN))
+        self.is_ready = False
 
     def set_aes_key(self, key):
         self.aes_key = key

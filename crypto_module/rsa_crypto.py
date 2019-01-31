@@ -19,10 +19,11 @@ def encrypt_by_rsa(public_key, msg):
 def decrypt_by_rsa(private_key, msg):
     return rsa.decrypt(msg, private_key).decode()
 
+
 # 测试代码
-message = 'Now is better...............'
+test_message = 'Now is better...............'
 publicKey, privateKey = get_rsa_key()
-en_msg = encrypt_by_rsa(publicKey, message)
+en_msg = encrypt_by_rsa(publicKey, test_message)
 print('Before encrypted:', en_msg)
 
 de_msg = decrypt_by_rsa(privateKey, en_msg)
