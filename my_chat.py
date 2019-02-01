@@ -33,11 +33,16 @@ def listen(receive_msg):
     print(receive_msg)
     global owner_name
     # 下载文件
-    receive_msg.text('./' + receive_msg['FileName'])
-    users = itchat.search_friends('曾元军')
-    userName = users[0]['UserName']
+    # receive_msg.text('./' + receive_msg['FileName'])
+    # users = itchat.search_friends('曾元军')
+    # userName = users[0]['UserName']
     # 下载文件
 
+    # print(receive_msg.Text)
+    # print(receive_msg.Type)
+    # print(receive_msg.MsgId)
+    # 获取群成员
+    # print("AAA",receive_msg.User.MemberList[0])
     if WX_KEY_TYPE not in receive_msg or WX_KEY_TEXT not in receive_msg or WX_KEY_USERNAME not in receive_msg:
         print("invalid msg", receive_msg)
         return
@@ -202,6 +207,10 @@ def save_aes(receive_msg):
     global_chat_info[receive_msg[WX_KEY_USERNAME]].is_ready = True
 
 
+def prn_obj(obj):
+    print('\n'.join(['%s:%s' % item for item in obj.__dict__.items()]))
+
+
 if __name__ == '__main__':
     itchat.auto_login(hotReload=True)  # hotReload=True
     init_mychat()
@@ -212,4 +221,3 @@ if __name__ == '__main__':
     t2.start()
 
     itchat.run()
-
