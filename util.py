@@ -333,3 +333,32 @@ if __name__ == '__main__':
 # >,
 # }
 
+
+
+# 下载文件
+    # receive_msg.text('./' + receive_msg['FileName'])
+    # users = itchat.search_friends('曾元军')
+    # userName = users[0]['UserName']
+    # 下载文件
+
+    # print(receive_msg.Text)
+    # print(receive_msg.Type)
+    # print(receive_msg.MsgId)
+    # 获取群成员
+    # print("AAA",receive_msg.User.MemberList[0])
+
+    # 获取文件名
+    # ret = receive_msg.text('./' + receive_msg['FileName'])
+    # print("AAAA", receive_msg['FileName'])
+
+
+
+
+  # if de_receive_msg[WX_KEY_TYPE] == MSG_TYPE__TEXT:
+    #     if de_receive_msg[WX_KEY_FROMUSERNAME].startswith(FROM_CHATROOM):
+    #         print(de_receive_msg[WX_KEY_ACTUALNICKNAME], ": ", de_receive_msg[WX_KEY_TEXT])
+    #     else:
+    #         if de_receive_msg[WX_KEY_FROMUSERNAME] == owner_name:
+    #             print("我说: " + de_receive_msg[WX_KEY_CONTENT])
+    #         else:
+    #             print(de_receive_msg[WX_KEY_USER][WX_KEY_REMARKNAME], ": ", de_receive_msg[WX_KEY_CONTENT])
