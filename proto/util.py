@@ -3,6 +3,7 @@ import time
 import string
 import random
 import base64
+import uuid
 from Crypto.Cipher import AES
 from config.config import *
 
@@ -19,12 +20,12 @@ class UtilTool:
         time_stamp = UtilTool.get_cur_time_stamp()
 
         (public_key, private_key) = rsa.newkeys(RSA_KEY_LEN)
-        public_key_name = user_name + time_stamp + "_id_rsa.pub"
-        private_key_name = user_name + time_stamp + "_id_rsa.pri"
-        with open(public_key_name, 'w+') as f:
+        public_key_name = user_name + "_" + time_stamp + "_id_rsa.pub"
+        private_key_name = user_name + "_" + time_stamp + "_id_rsa.pri"
+        with open("./crypto_module/key_files/mine/" + public_key_name, 'w+') as f:
             f.write(public_key.save_pkcs1().decode())
 
-        with open(private_key_name, 'w+') as f:
+        with open("./crypto_module/key_files/mine/" + private_key_name, 'w+') as f:
             f.write(private_key.save_pkcs1().decode())
 
         return public_key_name, private_key_name
@@ -40,7 +41,7 @@ class UtilTool:
             p = public_file.read()
 
         public_key = rsa.PublicKey.load_pkcs1(p)
-        return rsa.encrypt(msg, public_key)
+        return rsa.encrypt(msg.encode(encoding='utf-8'), public_key)
 
     # 读取私钥钥文件以解密信息
     @staticmethod
@@ -48,8 +49,9 @@ class UtilTool:
         with open(private_file, 'rb') as private_file:
             p = private_file.read()
 
-        private_key = rsa.PublicKey.load_pkcs1(p)
-        return rsa.decrypt(msg, private_key)
+        private_key = rsa.PrivateKey.load_pkcs1(p)
+        # return rsa.decrypt(msg.encode(encoding="utf-8"), private_key)
+        return rsa.decrypt(msg,  private_key)
 
     # 加密方法
     @staticmethod
@@ -79,3 +81,8 @@ class UtilTool:
         while len(value) % 16 != 0:
             value += '\0'
         return str.encode(value)  # 返回bytes
+
+    # 生成聊天id
+    @staticmethod
+    def gen_chat_id():
+        return str(uuid.uuid1()) + str(int(time.time()))

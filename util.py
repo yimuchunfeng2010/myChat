@@ -336,6 +336,7 @@ if __name__ == '__main__':
 
 
 # 下载文件
+#     receive_msg.download(receive_msg['FileName'])
     # receive_msg.text('./' + receive_msg['FileName'])
     # users = itchat.search_friends('曾元军')
     # userName = users[0]['UserName']

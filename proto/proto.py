@@ -3,7 +3,7 @@ from proto.util import *
 from config.config import *
 
 
-class ChatInfo():
+class ChatInfo(object):
     """聊天信息"""
 
     # 密钥信息
@@ -26,16 +26,25 @@ class ChatInfo():
     # 协商成功标志
     is_ready = False
 
+    # 聊天id协商成功标志
+    is_chat_id_ready = False
+
     # 时间戳
     time = ""
+
+    # 聊天者
+    chat_user_name = ""
 
     def __init__(self):
         """"初始化"""
         self.is_ready = False
+        self.is_chat_id_ready = False
         self.except_ack_count = 0
         self.actual_ack_count = 0
+        self.chat_user_name = ""
+        self.rsa_public_key_name = ""
+        self.rsa_private_key_name = ""
 
-        self.rsa_public_key, self.rsa_private_key = rsa.newkeys(RSA_KEY_LEN)
 
     def set_aes_key(self, key):
         self.aes_key = key
@@ -44,21 +53,21 @@ class ChatInfo():
         return self.aes_key
 
     def set_rsa_key(self, public_key, private_key):
-        self.rsa_public_key = public_key
-        self.rsa_private_key = private_key
+        self.rsa_public_key_name = public_key
+        self.rsa_private_key_name = private_key
 
     def get_rsa_key(self):
-        return self.rsa_public_key, self.rsa_private_key
+        return self.rsa_public_key_name, self.rsa_private_key_name
 
     def get_rsa_public_key(self):
-        return self.rsa_public_key
+        return self.rsa_public_key_name
 
     def get_rsa_private_key(self):
-        return self.rsa_private_key
+        return self.rsa_private_key_name
 
     def gen_new_rsa_key(self):
-        self.rsa_public_key, self.rsa_private_key = rsa.newkeys(RSA_KEY_LEN)
-        return self.rsa_public_key, self.rsa_private_key
+        # todo
+        return
 
 
 class ChatRoomInfo:
@@ -66,6 +75,7 @@ class ChatRoomInfo:
     use_name = ""
     nick_name = ""
     member_count = 0
+
     def __init__(self):
         pass
 
@@ -78,6 +88,7 @@ class FriendInfo:
 
     def __init__(self):
         pass
+
 
 class KeyInfo:
     aes_key = ""
@@ -97,4 +108,4 @@ chatObj.append(ChatInfo())
 
 for i in chatObj:
     print(i.aes_key)
-    print(i.rsa_private_key)
+    print(i.rsa_private_key_name)
