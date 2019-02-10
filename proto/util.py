@@ -4,6 +4,7 @@ import string
 import random
 import base64
 import uuid
+import os
 from Crypto.Cipher import AES
 from config.config import *
 
@@ -87,3 +88,15 @@ class UtilTool:
     @staticmethod
     def gen_chat_id():
         return str(uuid.uuid1()) + str(int(time.time()))
+
+    # 删除不用的密钥文件
+    @staticmethod
+    def remove_unused_file():
+        paths=list()
+        paths.append('./crypto_module/key_files/mine')
+        paths.append('./crypto_module/key_files/friend')
+        for path in paths:
+            for file in os.listdir(path):
+                path_file = os.path.join(path,file)
+                if os.path.isfile(path_file):
+                    os.remove(path_file)

@@ -322,6 +322,9 @@ def init_mychat():
     # 获取用户本身用户名
     get_owner_user_name()
 
+    # 删除无用的密钥文件
+    UtilTool.remove_unused_file()
+
     print("init success")
 
 
