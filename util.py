@@ -93,6 +93,27 @@ if __name__ == '__main__':
 #     t2.start()
 
 
+# from proto.proto import *
+#
+# aes_key = UtilTool.gen_aes_key()
+#
+# orgin_msg = aes_key
+# print("orgin ",orgin_msg)
+# receive_msg = dict()
+# public_key = './crypto_module/key_files/mine/@0fed2ebce0067847ecb7412bcc98db22a061ca9addd9ddfb4a12cecadff8ce72_1549713548_id_rsa.pub'
+# en_msg = UtilTool.encrypt_rsa_by_public_file(public_key, orgin_msg)
+#
+# aes_msg = "****" + en_msg.decode("ISO-8859-1")
+# print(aes_msg)
+#
+# pre_msg = aes_msg.lstrip("****")
+# pre_msg = pre_msg.encode("ISO-8859-1")
+# print("pre_msg", pre_msg)
+# private_key = './crypto_module/key_files/mine/@0fed2ebce0067847ecb7412bcc98db22a061ca9addd9ddfb4a12cecadff8ce72_1549713548_id_rsa.pri'
+#
+# msg = UtilTool.decrypt_rsa_by_private_file(private_key, pre_msg)
+# print(msg)
+
 # 发送文件
 # itchat.send("@fil@%s" % './tmp.py',toUserName='filehelper')
 

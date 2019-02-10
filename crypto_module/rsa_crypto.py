@@ -7,11 +7,11 @@ def get_rsa_key(user_name):
     (public_key, private_key) = rsa.newkeys(RSA_KEY_LEN)
     public_key_name = user_name + "public.file"
     private_key_name = user_name + "private.file"
-    with open(public_key_name, 'w+') as f:
-        f.write(public_key.save_pkcs1().decode())
-
-    with open(private_key_name, 'w+') as f:
-        f.write(private_key.save_pkcs1().decode())
+    # with open(public_key_name, 'w+') as f:
+    #     f.write(public_key.save_pkcs1().decode())
+    #
+    # with open(private_key_name, 'w+') as f:
+    #     f.write(private_key.save_pkcs1().decode())
 
     return public_key_name, private_key_name
 
@@ -45,11 +45,12 @@ def decrypt_rsa_by_private_file(private_file, msg):
         p = private_file.read()
 
     private_key = rsa.PrivateKey.load_pkcs1(p)
-    return rsa.decrypt(bytes(msg), private_key)
+    return rsa.decrypt(msg, private_key)
 
 
 # 测试代码
-test_message = 'Now is better...............'
+# test_message = 'Now is better...............'
+test_message = '2345'
 publicKey, privateKey = get_rsa_key("123")
 en_msg = encrypt_rsa_by_public_file(publicKey, test_message)
 print('Before encrypted:', en_msg)

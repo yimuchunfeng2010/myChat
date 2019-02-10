@@ -32,26 +32,31 @@ class UtilTool:
 
     @staticmethod
     def gen_aes_key():
-        return ''.join(random.sample(string.ascii_letters + string.digits + '~!@#$%^&*()_+=-`,./:;', AES_KEY_LEN))
+        return ''.join(random.sample(string.ascii_letters + string.digits, AES_KEY_LEN))
 
     # 读取公钥文件以加密信息
     @staticmethod
     def encrypt_rsa_by_public_file(public_file, msg):
+        print("public file ", public_file)
         with open(public_file, 'rb') as public_file:
             p = public_file.read()
 
         public_key = rsa.PublicKey.load_pkcs1(p)
-        return rsa.encrypt(msg.encode(encoding='utf-8'), public_key)
+        return rsa.encrypt(msg.encode(), public_key)
 
     # 读取私钥钥文件以解密信息
     @staticmethod
     def decrypt_rsa_by_private_file(private_file, msg):
+        print("start decrypt ",private_file)
         with open(private_file, 'rb') as private_file:
             p = private_file.read()
-
+        print("read file success")
         private_key = rsa.PrivateKey.load_pkcs1(p)
-        # return rsa.decrypt(msg.encode(encoding="utf-8"), private_key)
-        return rsa.decrypt(msg,  private_key)
+        print("load file success")
+        print("prepare to decrypt: ", msg)
+        de_inf0 = rsa.decrypt(msg, private_key)
+        print("decrypt success:", de_inf0)
+        return
 
     # 加密方法
     @staticmethod

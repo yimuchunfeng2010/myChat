@@ -19,8 +19,8 @@ owner_name = ''
 mutex = threading.Lock()
 
 msg_arr = []
-# cur_chatter_name = "曾元军"
-cur_chatter_name = "娟娟"
+# cur_chatter_name = "起风了"
+cur_chatter_name = "贝贝奶奶"
 
 cur_chatter = ""
 friends_list = {}
@@ -82,10 +82,14 @@ def say():
                         print("等待聊天协商完成超时,程序异常退出")
                         goto.start
 
-            print('我说：' + my_msg)
-            # 协商完成,加密通信
-            if cur_chatter in global_chat_info and global_chat_info[cur_chatter].is_ready is True:
-                en_msg = aes_encrypt(global_chat_info[global_name_id_map[cur_chatter]].aes_key, my_msg)
+        print('我说：' + my_msg)
+        # 协商完成,加密通信
+        if cur_chatter in global_name_id_map:
+            chat_id = global_name_id_map[cur_chatter]
+            if chat_id in global_chat_info and global_chat_info[chat_id].is_ready is True:
+                print("begin to chat")
+                en_msg = aes_encrypt(global_chat_info[chat_id].aes_key, my_msg)
+                print("en_msg ", en_msg, cur_chatter)
                 itchat.send_msg(en_msg, toUserName=cur_chatter)
 
 
@@ -144,11 +148,17 @@ def listen(receive_msg):
 
     if hasattr(receive_msg, "FromUserName"):
         if receive_msg.FromUserName in global_name_id_map:
-            chat_id = global_name_id_map[receive_msg.receive_msg.FromUserName]
+            chat_id = global_name_id_map[receive_msg.FromUserName]
+            print("chat_id", chat_id)
             if global_chat_info[chat_id].is_ready is True:
-                de_receive_msg = aes_decrypt(global_chat_info[cur_chatter].aes_key, receive_msg)
+                print("is_ready ", global_chat_info[chat_id].is_ready)
+                print("aes_key ", global_chat_info[chat_id].aes_key)
+                de_receive_msg = aes_decrypt(global_chat_info[chat_id].aes_key, receive_msg.Text)
             else:
                 de_receive_msg = receive_msg
+        else:
+            print("receive_msg.FromUserName not in global_name")
+            de_receive_msg = receive_msg
     else:
         de_receive_msg = receive_msg
 
@@ -191,7 +201,7 @@ def pro_rsa_pub(receive_msg):
     print("receive file, ", receive_msg)
     if hasattr(receive_msg, "Content") and "id_rsa.pub" in receive_msg.Content:
         # 接收到rsa公钥文件
-        print("id_rsa.pub ",receive_msg['FileName'])
+        print("id_rsa.pub ", receive_msg['FileName'])
         receive_msg.text('./crypto_module/key_files/friend/' + receive_msg['FileName'])
 
         # 记录公钥文件名(存在初始协商或者正在聊天中两种场景)
@@ -205,13 +215,17 @@ def pro_rsa_pub(receive_msg):
 
             global_chat_info[global_name_id_map[receive_msg.FromUserName]].key_info_list.append(key_info)
 
-            print("send aes_key ",key_info.aes_key)
+            print("send aes_key ", key_info.aes_key)
             # 用rsa 公钥加密 aes 密钥
-            aes_msg = UtilTool.encrypt_rsa_by_public_file('./crypto_module/key_files/friend/' + receive_msg['FileName'],
-                                                          key_info.aes_key)
+            # aes_msg = UtilTool.encrypt_rsa_by_public_file('./crypto_module/key_files/mine/' + receive_msg['FileName'],
+            #                                               key_info.aes_key)
 
+            aes_msg = key_info.aes_key
+            print("aes_key_en ", aes_msg)
             # **** 特殊字符，表示后序消息内容是rsa公钥加密过的aes密钥信息
-            aes_msg = "****" + aes_msg.decode('utf-8')
+            # aes_msg = "****" + aes_msg.decode('ISO-8859-1')
+            # 将user_name发送回去
+            aes_msg = "****" + aes_msg + "####" + owner_name
             # 发送信息
             itchat.send_msg(aes_msg, toUserName=receive_msg.FromUserName)
     else:
@@ -225,20 +239,27 @@ def aes_ack(receive_msg):
     global_chat_info[chat_id].actual_ack_count += 1
 
     key_info = KeyInfo()
-    key_info.user_name = receive_msg.FromUserName
-    key_info.time_stamp = UtilTool.get_cur_time_stamp()
 
+    key_info.time_stamp = UtilTool.get_cur_time_stamp()
     # 解密aes密钥
     print("chat_id", chat_id)
     print("public ", global_chat_info[chat_id].rsa_public_key_name)
     print("private ", global_chat_info[chat_id].rsa_private_key_name)
-    print("msg ", receive_msg.Text.lstrip("****"))
-    key_info.aes_key = UtilTool.decrypt_rsa_by_private_file(
-        global_chat_info[chat_id].rsa_private_key_name, receive_msg.Text.lstrip("****"))
+    print("msg ", receive_msg.Text.lstrip("****").encode("ISO-8859-1"))
+    pre_decrypt_msg = receive_msg.Text.lstrip("****")
+    user_name_index = pre_decrypt_msg.find("####")
 
+    key_info.user_name = pre_decrypt_msg[user_name_index + 4:]
+
+    pre_decrypt_msg = pre_decrypt_msg[:user_name_index]
+    # key_info.aes_key = UtilTool.decrypt_rsa_by_private_file(
+    #     global_chat_info[chat_id].rsa_private_key_name, pre_decrypt_msg.encode("ISO-8859-1"))
+
+    key_info.aes_key = pre_decrypt_msg
     print("aes_key ", key_info.aes_key)
     global_chat_info[chat_id].key_info_list.append(key_info)
 
+    print("chat_id key list", chat_id, global_chat_info[chat_id].key_info_list)
     # 若已获取足够确认信息，则向aes密钥协商完成，发送最终aes密钥
     if global_chat_info[chat_id].actual_ack_count == \
             global_chat_info[chat_id].except_ack_count:
@@ -250,8 +271,13 @@ def aes_ack(receive_msg):
 
         # 将公用aes密钥用每个好友各自的aes加密后发送
         for item in global_chat_info[chat_id].key_info_list:
+            print("item ", item.aes_key, item.user_name)
             send_msg = UtilTool.aes_encrypt(item.aes_key, global_chat_info[chat_id].aes_key)
+            # todo 暂时用receive_msg.FromUserName代替item.user_name
+            # send_msg = item.user_name + send_msg
             send_msg = item.user_name + send_msg
+            print("send_msg", send_msg, receive_msg.FromUserName)
+            # todo toUserName=receive_msg.FromUserName 改为 item.user_nae
             itchat.send_msg(send_msg, toUserName=receive_msg.FromUserName)
         print("密钥协商完成")
         global_chat_info[chat_id].is_ready = True
@@ -308,6 +334,7 @@ def init_friends():
         global_friend_info[f.UserName] = new_friend
 
         global_name_id_map[f.UserName] = ""
+        print(f.UserName, f.NickName, f.RemarkName)
     global cur_chatter
 
     itchat.get_chatrooms(update=True)
