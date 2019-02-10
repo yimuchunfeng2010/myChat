@@ -19,8 +19,8 @@ owner_name = ''
 mutex = threading.Lock()
 
 msg_arr = []
-# cur_chatter_name = "起风了"
-cur_chatter_name = "贝贝奶奶"
+cur_chatter_name = "起风了"
+# cur_chatter_name = "贝贝奶奶"
 
 cur_chatter = ""
 friends_list = {}
@@ -88,9 +88,9 @@ def say():
             chat_id = global_name_id_map[cur_chatter]
             if chat_id in global_chat_info and global_chat_info[chat_id].is_ready is True:
                 print("begin to chat")
-                en_msg = aes_encrypt(global_chat_info[chat_id].aes_key, my_msg)
-                print("en_msg ", en_msg, cur_chatter)
-                itchat.send_msg(en_msg, toUserName=cur_chatter)
+                cur_msg = aes_encrypt(global_chat_info[chat_id].aes_key, my_msg)
+                print("cur_msg ", cur_msg, cur_chatter)
+                itchat.send_msg(cur_msg, toUserName=cur_chatter)
 
 
 @itchat.msg_register([TEXT, PICTURE, FRIENDS, CARD, MAP, SHARING, RECORDING, VIDEO], isFriendChat=True,
@@ -157,7 +157,6 @@ def listen(receive_msg):
             else:
                 de_receive_msg = receive_msg
         else:
-            print("receive_msg.FromUserName not in global_name")
             de_receive_msg = receive_msg
     else:
         de_receive_msg = receive_msg
@@ -217,16 +216,29 @@ def pro_rsa_pub(receive_msg):
 
             print("send aes_key ", key_info.aes_key)
             # 用rsa 公钥加密 aes 密钥
-            # aes_msg = UtilTool.encrypt_rsa_by_public_file('./crypto_module/key_files/mine/' + receive_msg['FileName'],
-            #                                               key_info.aes_key)
+            aes_msg = UtilTool.encrypt_rsa_by_public_file('./crypto_module/key_files/friend/' + receive_msg['FileName'],
+                                                          key_info.aes_key)
 
-            aes_msg = key_info.aes_key
-            print("aes_key_en ", aes_msg)
             # **** 特殊字符，表示后序消息内容是rsa公钥加密过的aes密钥信息
-            # aes_msg = "****" + aes_msg.decode('ISO-8859-1')
-            # 将user_name发送回去
             aes_msg = "****" + aes_msg + "####" + owner_name
+
+            print("PPP ",aes_msg)
+            # todo 解密
+            tmp_msg = aes_msg.lstrip("****")
+            index = tmp_msg.find('####')
+            pre_msg = tmp_msg[:index]
+
+            pre_msg = pre_msg
+            # print("AAA-234", pre_msg)
+
+            public_file = receive_msg['FileName'].rstrip('.pub') + '.pri'
+            ret = UtilTool.decrypt_rsa_by_private_file('./crypto_module/key_files/mine/' + public_file,
+                                                       pre_msg)
+
+            # print("ret" ,ret)
             # 发送信息
+
+            print("aes_msg OOOO", aes_msg)
             itchat.send_msg(aes_msg, toUserName=receive_msg.FromUserName)
     else:
         print("receive file： ", receive_msg.FileName)
@@ -245,18 +257,33 @@ def aes_ack(receive_msg):
     print("chat_id", chat_id)
     print("public ", global_chat_info[chat_id].rsa_public_key_name)
     print("private ", global_chat_info[chat_id].rsa_private_key_name)
-    print("msg ", receive_msg.Text.lstrip("****").encode("ISO-8859-1"))
-    pre_decrypt_msg = receive_msg.Text.lstrip("****")
-    user_name_index = pre_decrypt_msg.find("####")
-
-    key_info.user_name = pre_decrypt_msg[user_name_index + 4:]
-
-    pre_decrypt_msg = pre_decrypt_msg[:user_name_index]
+    print("Text ", receive_msg.Text)
+    # pre_decrypt_msg = receive_msg.Text.lstrip("****")
+    # user_name_index = pre_decrypt_msg.find("####")
+    #
+    # key_info.user_name = pre_decrypt_msg[user_name_index + 4:]
+    #
+    # pre_decrypt_msg = pre_decrypt_msg[:user_name_index]
+    # print("msg ", pre_decrypt_msg.encode("ISO-8859-15"))
     # key_info.aes_key = UtilTool.decrypt_rsa_by_private_file(
-    #     global_chat_info[chat_id].rsa_private_key_name, pre_decrypt_msg.encode("ISO-8859-1"))
+    #     global_chat_info[chat_id].rsa_private_key_name, pre_decrypt_msg.encode("ISO-8859-15"))
 
-    key_info.aes_key = pre_decrypt_msg
-    print("aes_key ", key_info.aes_key)
+    tmp_msg = receive_msg.Text
+    tmp_msg = tmp_msg.lstrip("****")
+    index = tmp_msg.find('####')
+    pre_msg = tmp_msg[:index]
+    key_info.user_name = tmp_msg[index + 4:]
+    print("AAA", pre_msg)
+
+    print("pre_AAA",pre_msg)
+    pre_msg = pre_msg
+    print("UUU ",pre_msg)
+
+    de_aes_key = UtilTool.decrypt_rsa_by_private_file(global_chat_info[chat_id].rsa_private_key_name, pre_msg)
+    key_info.aes_key = de_aes_key.decode()
+
+
+    print("aes_key-123 ", key_info.aes_key)
     global_chat_info[chat_id].key_info_list.append(key_info)
 
     print("chat_id key list", chat_id, global_chat_info[chat_id].key_info_list)
@@ -274,7 +301,6 @@ def aes_ack(receive_msg):
             print("item ", item.aes_key, item.user_name)
             send_msg = UtilTool.aes_encrypt(item.aes_key, global_chat_info[chat_id].aes_key)
             # todo 暂时用receive_msg.FromUserName代替item.user_name
-            # send_msg = item.user_name + send_msg
             send_msg = item.user_name + send_msg
             print("send_msg", send_msg, receive_msg.FromUserName)
             # todo toUserName=receive_msg.FromUserName 改为 item.user_nae

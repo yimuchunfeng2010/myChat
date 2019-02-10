@@ -35,8 +35,6 @@ def aes_decrypt(key, my_msg):
     # 优先逆向解密base64成bytes
     base64_decrypted = base64.decodebytes(my_msg.encode(encoding='utf-8'))
     # 执行解密并转码返回str
-    print("aes.decrypt(base64_decrypted)", aes.decrypt(base64_decrypted))
-    # decrypted_text = str(aes.decrypt(base64_decrypted), encoding='utf-8').replace('\0', '')
     decrypted_text = str(aes.decrypt(base64_decrypted), encoding='utf-8').replace('\0', '')
     return decrypted_text
 
