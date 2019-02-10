@@ -37,30 +37,22 @@ class UtilTool:
     # 读取公钥文件以加密信息
     @staticmethod
     def encrypt_rsa_by_public_file(public_file, msg):
-        print("encrypt_rsa_by_public_file ", public_file, msg)
         with open(public_file, 'rb') as public_file:
             p = public_file.read()
 
         public_key = rsa.PublicKey.load_pkcs1(p)
         rsa_en_msg = rsa.encrypt(msg.encode(), public_key)
         encrypted_text = str(base64.encodebytes(rsa_en_msg), encoding='utf-8')
-        print("encrypted ", encrypted_text)
         return encrypted_text
 
     # 读取私钥钥文件以解密信息
     @staticmethod
     def decrypt_rsa_by_private_file(private_file, msg):
-        print("decrypt_rsa_by_private_file ", private_file,msg)
         with open(private_file, 'rb') as private_file:
             p = private_file.read()
-        print("read file success")
         private_key = rsa.PrivateKey.load_pkcs1(p)
-        print("load file success")
-        print("prepare to decrypt: ", msg)
         base64_decrypted = base64.decodebytes(msg.encode(encoding='utf-8'))
-        de_inf0 = rsa.decrypt(base64_decrypted, private_key)
-        print("decrypt success:", de_inf0)
-        return de_inf0
+        return rsa.decrypt(base64_decrypted, private_key)
 
     # 加密方法
     @staticmethod

@@ -17,7 +17,6 @@ def add_to_16(value):
 
 # 加密方法
 def aes_encrypt(key, my_msg):
-    print("aes_encrypt my_msg", my_msg,key)
     # 初始化加密器
     aes = AES.new(add_to_16(key), AES.MODE_ECB)
     # 先进行aes加密
@@ -29,7 +28,6 @@ def aes_encrypt(key, my_msg):
 
 # 解密方法
 def aes_decrypt(key, my_msg):
-    print("aes_decrypt my_msg ", my_msg, key)
     # 初始化加密器
     aes = AES.new(add_to_16(key), AES.MODE_ECB)
     # 优先逆向解密base64成bytes

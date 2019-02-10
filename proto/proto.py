@@ -45,7 +45,6 @@ class ChatInfo(object):
         self.rsa_public_key_name = ""
         self.rsa_private_key_name = ""
 
-
     def set_aes_key(self, key):
         self.aes_key = key
 
