@@ -115,7 +115,7 @@ if __name__ == '__main__':
 # print(msg)
 
 # 发送文件
-# itchat.send("@fil@%s" % './tmp.py',toUserName='filehelper')
+# itchat.send("@fil@%s" % './test.py',toUserName='filehelper')
 
 # 微信好友消息
 # {'MsgId': '9210430947494305964',

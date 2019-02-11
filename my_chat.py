@@ -17,8 +17,8 @@ importlib.reload(sys)
 owner_name = ''
 mutex = threading.Lock()
 
-# global_cur_chatter_name = "起风了"
-global_cur_chatter_name = "贝贝奶奶"
+global_cur_chatter_name = "起风了"
+# global_cur_chatter_name = "贝贝奶奶"
 
 global_cur_chatter = ""
 global_friends_list = {}

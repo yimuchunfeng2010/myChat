@@ -9,6 +9,7 @@ import re
 import importlib
 import os
 
+# 本文件代码用于学习itchat库
 importlib.reload(sys)
 
 msg_information = {}

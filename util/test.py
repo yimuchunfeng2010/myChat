@@ -1,5 +1,6 @@
 from proto.proto import *
 
+# 本文件用于验证测试python代码
 aes_key = UtilTool.gen_aes_key()
 
 orgin_msg = 'ljiNEqXDYUhJ0xsB8AO364cvGzTZPabF'
