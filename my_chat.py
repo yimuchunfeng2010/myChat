@@ -4,7 +4,6 @@ import os
 import sys
 import importlib
 import threading
-from goto import with_goto
 from constants.wx_key_type import *
 from constants.type import *
 from itchat.content import *
@@ -17,9 +16,8 @@ importlib.reload(sys)
 owner_name = ''
 mutex = threading.Lock()
 
-# global_cur_chatter_name = "起风了"
-global_cur_chatter_name = "贝贝奶奶"
-
+global_cur_chatter_name = "起风了"
+# global_cur_chatter_name = "贝贝奶奶"
 
 global_cur_chatter = ""
 global_friends_list = {}
@@ -35,7 +33,6 @@ global_chat_room_info = dict()
 global_friend_info = dict()
 
 
-@with_goto
 def say():
     global global_cur_chatter
     while True:
@@ -60,7 +57,6 @@ def say():
 
 # 微信消息类型 TEXT, PICTURE, FRIENDS, CARD, MAP, SHARING, RECORDING, VIDEO
 @itchat.msg_register([TEXT], isFriendChat=True, isGroupChat=True, isMpChat=True)
-@with_goto
 def listen(receive_msg):
     print('Receive New Msg:', receive_msg)
     global owner_name
@@ -77,7 +73,6 @@ def listen(receive_msg):
         if chat_id in global_chat_info:
             print('chat id 协商完成')
             global_chat_info[chat_id].is_id_ready = True
-
         else:
             print('聊天ID协商异常，程序退出', chat_id)
         return
@@ -98,7 +93,39 @@ def listen(receive_msg):
         print('密钥协商完成，开始加密聊天')
         return
 
+    # 开始加密聊天
     encrypt_chat(receive_msg)
+
+
+# 发起id协商
+def id_agreement(user_name):
+    chat_id = UtilTool.gen_chat_id()
+    itchat.send_msg(CHAT_ID_START + chat_id, toUserName=user_name)
+
+    new_chat = ChatInfo()
+    new_chat.chat_user_name = user_name
+    new_chat.is_id_ready = False
+    global_chat_info[chat_id] = new_chat
+
+    global_name_id_map[user_name] = chat_id
+
+    return
+
+
+# 响应确认id协商
+def id_ack(receive_msg):
+    global global_chat_info
+    global global_name_id_map
+    chat_id = receive_msg.Text.lstrip(CHAT_ID_START)
+    new_chat = ChatInfo()
+    new_chat.chat_user_name = receive_msg.FromUserName
+    new_chat.is_id_ready = True
+    global_chat_info[chat_id] = new_chat
+
+    global_name_id_map[receive_msg.FromUserName] = chat_id
+
+    # 发送确认消息
+    itchat.send_msg(CHAT_ID_ACK + receive_msg.Text.lstrip(CHAT_ID_START), toUserName=receive_msg.FromUserName)
 
 
 # 发起协商，生成RSA密钥对，并将公钥发给好友，密钥协商步骤一
@@ -208,10 +235,6 @@ def key_agreement_step_four(receive_msg):
     global_chat_info[chat_id].is_chat_ready = True
 
 
-def get_friends():
-    friends = itchat.get_friends(update=True)  # 获取微信好友列表，如果设置update=True将从服务器刷新列表
-
-
 def get_friends_chat_name(nick_name):
     if nick_name in global_friends_list.keys():
         return global_friends_list[nick_name]
@@ -273,35 +296,6 @@ def init_mychat():
     UtilTool.remove_unused_file()
 
     print('init success')
-
-
-def id_agreement(user_name):
-    chat_id = UtilTool.gen_chat_id()
-    itchat.send_msg(CHAT_ID_START + chat_id, toUserName=user_name)
-
-    new_chat = ChatInfo()
-    new_chat.chat_user_name = user_name
-    new_chat.is_id_ready = False
-    global_chat_info[chat_id] = new_chat
-
-    global_name_id_map[user_name] = chat_id
-
-    return
-
-
-def id_ack(receive_msg):
-    global global_chat_info
-    global global_name_id_map
-    chat_id = receive_msg.Text.lstrip(CHAT_ID_START)
-    new_chat = ChatInfo()
-    new_chat.chat_user_name = receive_msg.FromUserName
-    new_chat.is_id_ready = True
-    global_chat_info[chat_id] = new_chat
-
-    global_name_id_map[receive_msg.FromUserName] = chat_id
-
-    # 发送确认消息
-    itchat.send_msg(CHAT_ID_ACK + receive_msg.Text.lstrip(CHAT_ID_START), toUserName=receive_msg.FromUserName)
 
 
 def pro_key_agreement(user_name):
@@ -379,6 +373,7 @@ def encrypt_chat(receive_msg):
         print('someone:', de_receive_msg)
     else:
         print(chatter, '：', de_receive_msg)
+
 
 if __name__ == '__main__':
     itchat.auto_login()  # hotReload=True

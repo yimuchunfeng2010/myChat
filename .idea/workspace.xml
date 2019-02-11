@@ -5,9 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a79d4111-877a-43bb-b37f-fcd33e2e9a5d" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/crypto_module/key_files/friend/@0026cdb86467b29d35eed7af632d6e88f1dbeb6664433e6213abadabecd3c462_1549868626_id_rsa.pub" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/crypto_module/key_files/mine/@0026cdb86467b29d35eed7af632d6e88f1dbeb6664433e6213abadabecd3c462_1549868626_id_rsa.pri" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/crypto_module/key_files/mine/@0026cdb86467b29d35eed7af632d6e88f1dbeb6664433e6213abadabecd3c462_1549868626_id_rsa.pub" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/my_chat.py" beforeDir="false" afterPath="$PROJECT_DIR$/my_chat.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -18,7 +15,7 @@
   </component>
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/myChat$aes_crypto__1_.coverage" NAME="aes_crypto (1) Coverage Results" MODIFIED="1549854453844" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/crypto_module" />
-    <SUITE FILE_PATH="coverage/myChat$my_chat.coverage" NAME="my_chat Coverage Results" MODIFIED="1549869018447" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/myChat$my_chat.coverage" NAME="my_chat Coverage Results" MODIFIED="1549869233478" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/myChat$aes_crypto.coverage" NAME="aes_crypto Coverage Results" MODIFIED="1548469057916" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/crypto" />
     <SUITE FILE_PATH="coverage/myChat$tmp.coverage" NAME="tmp Coverage Results" MODIFIED="1549769332624" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/myChat$rsa.coverage" NAME="rsa Coverage Results" MODIFIED="1548426480863" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/crypto" />
@@ -31,8 +28,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/my_chat.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="399">
-              <caret line="21" lean-forward="true" selection-start-line="21" selection-end-line="21" />
+            <state relative-caret-position="380">
+              <caret line="20" lean-forward="true" selection-start-line="20" selection-end-line="20" />
               <folding>
                 <element signature="e#15#28#0" expanded="true" />
               </folding>
@@ -144,8 +141,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>encr</find>
-      <find>85</find>
       <find>aes_key-123</find>
       <find>item</find>
       <find>密钥协商</find>
@@ -174,6 +169,8 @@
       <find>start_key_agreement</find>
       <find>cur_chatter_name</find>
       <find>friends_list</find>
+      <find>get_friends</find>
+      <find>goto</find>
     </findStrings>
     <replaceStrings>
       <replace>'</replace>
@@ -414,12 +411,12 @@
       <workItem from="1549669835335" duration="6209000" />
       <workItem from="1549676131108" duration="59831000" />
       <workItem from="1549848765543" duration="10556000" />
-      <workItem from="1549867292754" duration="1095000" />
+      <workItem from="1549867292754" duration="1341000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="145409000" />
+    <option name="totallyTimeSpent" value="145655000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -439,12 +436,12 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32848233" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.6321746" visible="true" weight="0.27962577" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.6321746" weight="0.27962577" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3981289" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="Docker" order="6" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.4785772" weight="0.2983368" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="7" sideWeight="0.4785772" visible="true" weight="0.2983368" />
       <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.4995958" weight="0.32848233" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.502021" side_tool="true" weight="0.29895106" />
@@ -709,8 +706,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/my_chat.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="399">
-          <caret line="21" lean-forward="true" selection-start-line="21" selection-end-line="21" />
+        <state relative-caret-position="380">
+          <caret line="20" lean-forward="true" selection-start-line="20" selection-end-line="20" />
           <folding>
             <element signature="e#15#28#0" expanded="true" />
           </folding>
