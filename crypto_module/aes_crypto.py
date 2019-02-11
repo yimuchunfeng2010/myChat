@@ -36,12 +36,12 @@ def aes_decrypt(key, my_msg):
     decrypted_text = str(aes.decrypt(base64_decrypted), encoding='utf-8').replace('\0', '')
     return decrypted_text
 
-
-if __name__ == '__main__':
-    # 密文
-    aes_key = '''!@#$%^&*()_+=-.,'''
-    msg = '$chat'
-    en_msg = aes_encrypt(aes_key, msg)
-    print("加密后： ", en_msg)
-    de_msg = aes_decrypt(aes_key, en_msg)
-    print("解密后： ", de_msg)
+#
+# if __name__ == '__main__':
+#     # 密文
+#     aes_key = '''!@#$%^&*()_+=-.,'''
+#     msg = '$chat'
+#     en_msg = aes_encrypt(aes_key, msg)
+#     print("加密后： ", en_msg)
+#     de_msg = aes_decrypt(aes_key, en_msg)
+#     print("解密后： ", de_msg)

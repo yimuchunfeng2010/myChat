@@ -85,65 +85,63 @@ def say():
         if cur_chatter in global_name_id_map:
             chat_id = global_name_id_map[cur_chatter]
             if chat_id in global_chat_info and global_chat_info[chat_id].is_ready is True:
-                cur_msg = aes_encrypt(global_chat_info[chat_id].aes_key, my_msg)
+                cur_msg = UtilTool.aes_encrypt(global_chat_info[chat_id].aes_key, my_msg)
                 itchat.send_msg(cur_msg, toUserName=cur_chatter)
 
 
-@itchat.msg_register([TEXT, PICTURE, FRIENDS, CARD, MAP, SHARING, RECORDING, VIDEO], isFriendChat=True,
-                     isGroupChat=True, isMpChat=True)
+# 微信消息类型 TEXT, PICTURE, FRIENDS, CARD, MAP, SHARING, RECORDING, VIDEO
+@itchat.msg_register([TEXT], isFriendChat=True, isGroupChat=True, isMpChat=True)
 @with_goto
 def listen(receive_msg):
     print("Receive New Msg:", receive_msg)
     global owner_name
 
-    if hasattr(receive_msg, "Text"):
+    if not hasattr(receive_msg, 'Text'):
+        return
         # 接收到chat_id
-        if receive_msg.Text.startswith("%%%%"):
-            chat_id = receive_msg.Text.lstrip("%%%%")
-            new_chat = ChatInfo()
-            new_chat.chat_user_name = receive_msg.FromUserName
-            new_chat.is_chat_id_ready = True
-            global_chat_info[chat_id] = new_chat
+    if receive_msg.Text.startswith("%%%%"):
+        chat_id = receive_msg.Text.lstrip("%%%%")
+        new_chat = ChatInfo()
+        new_chat.chat_user_name = receive_msg.FromUserName
+        new_chat.is_chat_id_ready = True
+        global_chat_info[chat_id] = new_chat
 
-            global_name_id_map[receive_msg.FromUserName] = chat_id
+        global_name_id_map[receive_msg.FromUserName] = chat_id
 
-            # 发送确认消息
-            itchat.send_msg("!!!!" + receive_msg.Text.lstrip("%%%%"), toUserName=receive_msg.FromUserName)
-            return
-        # 接受到chat_id确认消息
-        if receive_msg.Text.startswith("!!!!"):
-            chat_id = receive_msg.Text.lstrip("!!!!")
-            if chat_id in global_chat_info:
-                print("chat id 协商完成")
-                global_chat_info[chat_id].is_chat_id_ready = True
+        # 发送确认消息
+        itchat.send_msg("!!!!" + receive_msg.Text.lstrip("%%%%"), toUserName=receive_msg.FromUserName)
+        return
+    # 接受到chat_id确认消息
+    if receive_msg.Text.startswith("!!!!"):
+        chat_id = receive_msg.Text.lstrip("!!!!")
+        if chat_id in global_chat_info:
+            print("chat id 协商完成")
+            global_chat_info[chat_id].is_chat_id_ready = True
 
-            else:
-                print("聊天ID协商异常，程序退出,id", chat_id)
-            return
+        else:
+            print("聊天ID协商异常，程序退出,id", chat_id)
+        return
 
-        #  收到aes密钥，返回密钥协商步骤三
-        if receive_msg.Text.startswith("****"):
-            print("密钥协商步骤三")
-            if receive_msg.FromUserName not in global_name_id_map:
-                print("密钥协商异常, 程序退出")
-            else:
-                aes_ack(receive_msg)
-            return
+    #  收到aes密钥，返回密钥协商步骤三
+    if receive_msg.Text.startswith("****"):
+        print("密钥协商步骤三")
+        if receive_msg.FromUserName not in global_name_id_map:
+            print("密钥协商异常, 程序退出")
+        else:
+            aes_ack(receive_msg)
+        return
 
-        # 保存aes密钥, 密钥协商步骤四
-        if receive_msg.Text.startswith(owner_name) and receive_msg.FromUserName in global_name_id_map:
-            print("密钥协商步骤四")
-            save_aes(receive_msg)
-            print("密钥协商完成，开始加密通信")
-            return
+    # 保存aes密钥, 密钥协商步骤四
+    if receive_msg.Text.startswith(owner_name) and receive_msg.FromUserName in global_name_id_map:
+        print("密钥协商步骤四")
+        save_aes(receive_msg)
+        print("密钥协商完成，开始加密通信")
+        return
 
-    if hasattr(receive_msg, "FromUserName"):
-        if receive_msg.FromUserName in global_name_id_map:
-            chat_id = global_name_id_map[receive_msg.FromUserName]
-            if global_chat_info[chat_id].is_ready is True:
-                de_receive_msg = aes_decrypt(global_chat_info[chat_id].aes_key, receive_msg.Text)
-            else:
-                de_receive_msg = receive_msg
+    if receive_msg.FromUserName in global_name_id_map:
+        chat_id = global_name_id_map[receive_msg.FromUserName]
+        if global_chat_info[chat_id].is_ready is True:
+            de_receive_msg = UtilTool.aes_decrypt(global_chat_info[chat_id].aes_key, receive_msg.Text)
         else:
             de_receive_msg = receive_msg
     else:
@@ -165,8 +163,8 @@ def start_key_agreement(chat_id):
 
     # 群聊天以群组名作为聊天id, 好友聊天则以两个好友用户名为id
     if user_name.startswith(FROM_CHATROOM):
-        chatroom_info = itchat.search_chatrooms(userName=user_name)
-        global_chat_info[chat_id].except_ack_count = chatroom_info["MemberCount"] - 1
+        chat_room_info = itchat.search_chatrooms(userName=user_name)
+        global_chat_info[chat_id].except_ack_count = chat_room_info["MemberCount"] - 1
     else:
         global_chat_info[chat_id].except_ack_count = 1
 
@@ -255,7 +253,7 @@ def aes_ack(receive_msg):
 def save_aes(receive_msg):
     chat_id = global_name_id_map[receive_msg.FromUserName]
     de_aes_key = aes_decrypt(global_chat_info[chat_id].key_info_list[0].aes_key,
-                             receive_msg.Text.lstrip(owner_name))
+                                      receive_msg.Text.lstrip(owner_name))
     global_chat_info[chat_id].aes_key = de_aes_key
     global_chat_info[chat_id].is_ready = True
     print("密钥协商完成，开始加密聊天")
@@ -338,6 +336,7 @@ def send_chat_id(user_name):
     global_chat_info[chat_id] = new_chat
 
     global_name_id_map[user_name] = chat_id
+
     return
 
 

@@ -98,13 +98,13 @@ class KeyInfo:
         pass
 
 
-# 测试代码
-chat = ChatInfo()
-print(type(chat.aes_key))
-chatObj = list()
-chatObj.append(ChatInfo())
-chatObj.append(ChatInfo())
-
-for i in chatObj:
-    print(i.aes_key)
-    print(i.rsa_private_key_name)
+# # 测试代码
+# chat = ChatInfo()
+# print(type(chat.aes_key))
+# chatObj = list()
+# chatObj.append(ChatInfo())
+# chatObj.append(ChatInfo())
+#
+# for i in chatObj:
+#     print(i.aes_key)
+#     print(i.rsa_private_key_name)

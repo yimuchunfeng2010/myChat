@@ -50,11 +50,11 @@ def decrypt_rsa_by_private_file(private_file, msg):
 
 # 测试代码
 # test_message = 'Now is better...............'
-test_message = '2345'
-publicKey, privateKey = get_rsa_key("123")
-en_msg = encrypt_rsa_by_public_file(publicKey, test_message)
-print('Before encrypted:', en_msg)
-
-print(type(en_msg))
-de_msg = decrypt_rsa_by_private_file(privateKey, en_msg)
-print('After encrypted:', de_msg)
+# test_message = '2345'
+# publicKey, privateKey = get_rsa_key("123")
+# en_msg = encrypt_rsa_by_public_file(publicKey, test_message)
+# print('Before encrypted:', en_msg)
+#
+# print(type(en_msg))
+# de_msg = decrypt_rsa_by_private_file(privateKey, en_msg)
+# print('After encrypted:', de_msg)
