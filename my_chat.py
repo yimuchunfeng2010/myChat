@@ -68,16 +68,7 @@ def listen(receive_msg):
         return
         # 接收到chat_id
     if receive_msg.Text.startswith(CHAT_ID_START):
-        chat_id = receive_msg.Text.lstrip(CHAT_ID_START)
-        new_chat = ChatInfo()
-        new_chat.chat_user_name = receive_msg.FromUserName
-        new_chat.is_id_ready = True
-        global_chat_info[chat_id] = new_chat
-
-        global_name_id_map[receive_msg.FromUserName] = chat_id
-
-        # 发送确认消息
-        itchat.send_msg(CHAT_ID_ACK + receive_msg.Text.lstrip(CHAT_ID_START), toUserName=receive_msg.FromUserName)
+        id_ack(receive_msg)
         return
     # 接受到chat_id确认消息
     if receive_msg.Text.startswith(CHAT_ID_ACK):
@@ -315,6 +306,21 @@ def id_agreement(user_name):
     return
 
 
+def id_ack(receive_msg):
+    global global_chat_info
+    global global_name_id_map
+    chat_id = receive_msg.Text.lstrip(CHAT_ID_START)
+    new_chat = ChatInfo()
+    new_chat.chat_user_name = receive_msg.FromUserName
+    new_chat.is_id_ready = True
+    global_chat_info[chat_id] = new_chat
+
+    global_name_id_map[receive_msg.FromUserName] = chat_id
+
+    # 发送确认消息
+    itchat.send_msg(CHAT_ID_ACK + receive_msg.Text.lstrip(CHAT_ID_START), toUserName=receive_msg.FromUserName)
+
+
 def pro_key_agreement(user_name):
     #  查询user_id
     global global_friends_list
@@ -363,6 +369,7 @@ def is_key_agreement_ready():
             return True
     else:
         return False
+
 
 if __name__ == '__main__':
     itchat.auto_login()  # hotReload=True
