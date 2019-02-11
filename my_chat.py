@@ -13,7 +13,7 @@ sys.path.append(os.getcwd() + '/constants')
 
 importlib.reload(sys)
 
-owner_name = ''
+my_name = ''
 mutex = threading.Lock()
 
 global_cur_chatter_name = "AA"
@@ -64,7 +64,7 @@ def say():
 @itchat.msg_register([TEXT], isFriendChat=True, isGroupChat=True, isMpChat=True)
 def listen(receive_msg):
     print('Receive New Msg:', receive_msg)
-    global owner_name
+    global my_name
 
     if not hasattr(receive_msg, 'Text'):
         return
@@ -91,7 +91,7 @@ def listen(receive_msg):
         return
 
     # 保存aes密钥, 密钥协商步骤四
-    if receive_msg.Text.startswith(owner_name) and receive_msg.FromUserName in global_name_id_map:
+    if receive_msg.Text.startswith(my_name) and receive_msg.FromUserName in global_name_id_map:
         print('密钥协商步骤四')
         key_agreement_step_four(receive_msg)
         print('密钥协商完成，开始加密聊天')
@@ -178,7 +178,7 @@ def key_agreement_step_two(receive_msg):
                                                           key_info.aes_key)
 
             # AES_KEY，表示后序消息内容是rsa公钥加密过的aes密钥信息
-            aes_msg = AES_KEY + aes_msg + CONNECTOR + owner_name
+            aes_msg = AES_KEY + aes_msg + CONNECTOR + my_name
 
             itchat.send_msg(aes_msg, toUserName=receive_msg.FromUserName)
     else:
@@ -231,26 +231,19 @@ def key_agreement_step_three(receive_msg):
 def key_agreement_step_four(receive_msg):
     chat_id = global_name_id_map[receive_msg.FromUserName]
     de_aes_key = UtilTool.aes_decrypt(global_chat_info[chat_id].key_info_list[0].aes_key,
-                                      receive_msg.Text.lstrip(owner_name))
+                                      receive_msg.Text.lstrip(my_name))
     global_chat_info[chat_id].aes_key = de_aes_key
     global_chat_info[chat_id].is_chat_ready = True
     global_chat_info[chat_id].time = UtilTool.get_cur_time_stamp()
 
 
-def get_owner_user_name():
-    global owner_name
-    friends = itchat.get_friends(update=True)
-    owner = friends[0]
-    if WX_KEY_USERNAME in owner:
-        owner_name = owner[WX_KEY_USERNAME]
-    else:
-        owner_name = ""
-
-
 def init_friends():
     #  获取好友信息
-    friends = itchat.get_friends(update=True)  # 获取微信好友列表，如果设置update=True将从服务器刷新列表
     global global_friends_list
+    global my_name
+    friends = itchat.get_friends(update=True)  # 获取微信好友列表，如果设置update=True将从服务器刷新列表
+    my_name = friends[0].UserName
+
     for f in friends:
         if f.RemarkName != "":
             global_friends_list[f.RemarkName] = f.UserName
@@ -285,23 +278,9 @@ def init_friends():
     global_cur_chatter = global_friends_list[global_cur_chatter_name]
 
 
-# 获取聊天室信息
-def init_chatrooms():
-    rooms = itchat.get_chatrooms(update=True)
-    for _, val in enumerate(rooms):
-        chat_room = ChatRoomInfo()
-        chat_room.nick_name = val.NickName
-        chat_room.use_name = val.UserName
-        chat_room.member_count = val.MemberCount
-        global_chat_room_info[val.NickName] = chat_room
-        global_name_id_map[val.UserName] = ""
-
-
 def init_mychat():
     #  获取朋友列表
     init_friends()
-    # 获取用户本身用户名
-    get_owner_user_name()
 
     # 删除无用的密钥文件
     UtilTool.remove_unused_file()

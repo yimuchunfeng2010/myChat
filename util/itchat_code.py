@@ -115,3 +115,15 @@ def information(msg):
 
 itchat.auto_login(hotReload=True)
 itchat.run()
+
+
+# 获取聊天室信息
+def init_chatrooms():
+    rooms = itchat.get_chatrooms(update=True)
+    for _, val in enumerate(rooms):
+        chat_room = ChatRoomInfo()
+        chat_room.nick_name = val.NickName
+        chat_room.use_name = val.UserName
+        chat_room.member_count = val.MemberCount
+        global_chat_room_info[val.NickName] = chat_room
+        global_name_id_map[val.UserName] = ""

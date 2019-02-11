@@ -2,13 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a79d4111-877a-43bb-b37f-fcd33e2e9a5d" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/CHANGEME.md" beforeDir="false" afterPath="$PROJECT_DIR$/CHANGEME.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crypto_module/key_files/friend/@54c4395bb4028a1fe9346ddbc73e65d9bdd6738df421a97d1db1303d206a4b7c_1549882979_id_rsa.pub" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/crypto_module/key_files/mine/@54c4395bb4028a1fe9346ddbc73e65d9bdd6738df421a97d1db1303d206a4b7c_1549882979_id_rsa.pri" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/crypto_module/key_files/mine/@54c4395bb4028a1fe9346ddbc73e65d9bdd6738df421a97d1db1303d206a4b7c_1549882979_id_rsa.pub" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/my_chat.py" beforeDir="false" afterPath="$PROJECT_DIR$/my_chat.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project.yml" beforeDir="false" afterPath="$PROJECT_DIR$/project.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/proto/proto.py" beforeDir="false" afterPath="$PROJECT_DIR$/proto/proto.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/util/itchat_code.py" beforeDir="false" afterPath="$PROJECT_DIR$/util/itchat_code.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -18,10 +13,10 @@
   </component>
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/myChat$aes_crypto__1_.coverage" NAME="aes_crypto (1) Coverage Results" MODIFIED="1549854453844" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/crypto_module" />
-    <SUITE FILE_PATH="coverage/myChat$my_chat.coverage" NAME="my_chat Coverage Results" MODIFIED="1549885836594" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/myChat$my_chat.coverage" NAME="my_chat Coverage Results" MODIFIED="1549886687665" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/myChat$aes_crypto.coverage" NAME="aes_crypto Coverage Results" MODIFIED="1548469057916" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/crypto" />
     <SUITE FILE_PATH="coverage/myChat$tmp.coverage" NAME="tmp Coverage Results" MODIFIED="1549769332624" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/myChat$line_count.coverage" NAME="line_count Coverage Results" MODIFIED="1549882164189" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/util" />
+    <SUITE FILE_PATH="coverage/myChat$line_count.coverage" NAME="line_count Coverage Results" MODIFIED="1549886076776" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/util" />
     <SUITE FILE_PATH="coverage/myChat$rsa.coverage" NAME="rsa Coverage Results" MODIFIED="1548426480863" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/crypto" />
     <SUITE FILE_PATH="coverage/myChat$util.coverage" NAME="util Coverage Results" MODIFIED="1549706548583" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/myChat$rsa_crypto__1_.coverage" NAME="rsa_crypto (1) Coverage Results" MODIFIED="1548638822460" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/crypto_module" />
@@ -29,11 +24,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/my_chat.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1200">
-              <caret line="206" selection-start-line="206" selection-end-line="206" />
+            <state relative-caret-position="375">
+              <caret line="282" column="18" lean-forward="true" selection-start-line="282" selection-start-column="18" selection-end-line="282" selection-end-column="18" />
               <folding>
                 <element signature="e#15#28#0" expanded="true" />
               </folding>
@@ -42,10 +37,19 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/constants/wx_key_type.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="222">
+              <caret line="27" selection-start-line="27" selection-end-line="27" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/util/line_count.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="415">
-              <caret line="40" lean-forward="true" selection-start-line="40" selection-end-line="40" />
+            <state relative-caret-position="323">
+              <caret line="21" column="43" lean-forward="true" selection-start-line="21" selection-start-column="43" selection-end-line="21" selection-end-column="43" />
             </state>
           </provider>
         </entry>
@@ -68,26 +72,14 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/CHANGEME.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
               <first_editor relative-caret-position="668">
-                <caret line="50" column="18" selection-start-line="50" selection-start-column="18" selection-end-line="50" selection-end-column="18" />
+                <caret line="50" column="2" selection-start-line="50" selection-start-column="2" selection-end-line="50" selection-end-column="18" />
               </first_editor>
               <second_editor />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/crypto_module/aes_crypto.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="912">
-              <caret line="48" lean-forward="true" selection-start-line="40" selection-start-column="23" selection-end-line="48" />
-              <folding>
-                <element signature="e#12#25#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -104,8 +96,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/util/itchat_code.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="209">
-              <caret line="19" column="53" lean-forward="true" selection-start-line="19" selection-start-column="53" selection-end-line="19" selection-end-column="53" />
+            <state relative-caret-position="605">
+              <caret line="128" column="45" selection-start-line="128" selection-start-column="45" selection-end-line="128" selection-end-column="45" />
             </state>
           </provider>
         </entry>
@@ -142,9 +134,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>****</find>
-      <find>####</find>
-      <find>/crypto_module</find>
       <find>is</find>
       <find>is_ready</find>
       <find>Chat</find>
@@ -172,6 +161,9 @@
       <find>global_chat_info[chat_id].expect_ack_count</find>
       <find>CCC</find>
       <find>expect_ack_count</find>
+      <find>owner_name</find>
+      <find>get_owner_user_name</find>
+      <find>init_chatrooms</find>
     </findStrings>
     <replaceStrings>
       <replace>'</replace>
@@ -183,6 +175,7 @@
       <replace>global_cur_chatter_name</replace>
       <replace>global_friends_list</replace>
       <replace>expect_ack_count</replace>
+      <replace>my_name</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -208,13 +201,13 @@
         <option value="$PROJECT_DIR$/proto/util.py" />
         <option value="$PROJECT_DIR$/crypto_module/aes_crypto.py" />
         <option value="$PROJECT_DIR$/util/tmp.py" />
-        <option value="$PROJECT_DIR$/util/itchat_code.py" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/util/line_count.py" />
         <option value="$PROJECT_DIR$/proto/proto.py" />
-        <option value="$PROJECT_DIR$/my_chat.py" />
         <option value="$PROJECT_DIR$/project.yml" />
         <option value="$PROJECT_DIR$/CHANGEME.md" />
+        <option value="$PROJECT_DIR$/util/itchat_code.py" />
+        <option value="$PROJECT_DIR$/my_chat.py" />
       </list>
     </option>
   </component>
@@ -430,12 +423,12 @@
       <workItem from="1549676131108" duration="59831000" />
       <workItem from="1549848765543" duration="10556000" />
       <workItem from="1549867292754" duration="1341000" />
-      <workItem from="1549869913503" duration="6049000" />
+      <workItem from="1549869913503" duration="6612000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="151704000" />
+    <option name="totallyTimeSpent" value="152267000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -455,12 +448,12 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32848233" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.6321746" weight="0.27962577" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.6321746" visible="true" weight="0.27962577" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3981289" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="Docker" order="6" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.4785772" visible="true" weight="0.1933472" />
+      <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.4785772" weight="0.1933472" />
       <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.4995958" weight="0.32848233" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.502021" side_tool="true" weight="0.29895106" />
@@ -541,13 +534,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/sample.sol" />
     <entry file="file://$PROJECT_DIR$/construct_sample.txt" />
-    <entry file="file://$PROJECT_DIR$/constants/wx_key_type.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="513">
-          <caret line="27" column="27" selection-start-line="27" selection-start-column="19" selection-end-line="27" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/AppData/Roaming/Python/Python37/site-packages/itchat/core.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="89">
@@ -672,13 +658,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/util/itchat_code.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="19" column="53" lean-forward="true" selection-start-line="19" selection-start-column="53" selection-end-line="19" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/key_agreement.py">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -705,27 +684,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/util/line_count.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="415">
-          <caret line="40" lean-forward="true" selection-start-line="40" selection-end-line="40" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/proto/proto.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="23">
           <caret line="17" column="4" selection-start-line="17" selection-start-column="4" selection-end-line="17" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/my_chat.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1200">
-          <caret line="206" selection-start-line="206" selection-end-line="206" />
-          <folding>
-            <element signature="e#15#28#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -740,9 +702,40 @@
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
           <first_editor relative-caret-position="668">
-            <caret line="50" column="18" selection-start-line="50" selection-start-column="18" selection-end-line="50" selection-end-column="18" />
+            <caret line="50" column="2" selection-start-line="50" selection-start-column="2" selection-end-line="50" selection-end-column="18" />
           </first_editor>
           <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/util/line_count.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="21" column="43" lean-forward="true" selection-start-line="21" selection-start-column="43" selection-end-line="21" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/constants/wx_key_type.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="222">
+          <caret line="27" selection-start-line="27" selection-end-line="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/util/itchat_code.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="605">
+          <caret line="128" column="45" selection-start-line="128" selection-start-column="45" selection-end-line="128" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/my_chat.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="282" column="18" lean-forward="true" selection-start-line="282" selection-start-column="18" selection-end-line="282" selection-end-column="18" />
+          <folding>
+            <element signature="e#15#28#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
