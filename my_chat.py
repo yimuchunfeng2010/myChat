@@ -9,7 +9,6 @@ from constants.wx_key_type import *
 from constants.type import *
 from itchat.content import *
 from proto.proto import *
-# from crypto_module.aes_crypto import *
 
 sys.path.append(os.getcwd() + '/constants')
 
@@ -19,8 +18,8 @@ owner_name = ''
 mutex = threading.Lock()
 
 msg_arr = []
-# cur_chatter_name = "起风了"
-cur_chatter_name = "贝贝奶奶"
+cur_chatter_name = "起风了"
+# cur_chatter_name = "贝贝奶奶"
 
 cur_chatter = ""
 friends_list = {}
@@ -76,11 +75,13 @@ def say():
                 while global_chat_info[global_name_id_map[cur_chatter]].is_ready is not True:
                     time.sleep(1)
                     # 10s超时
-                    if cnt >= 5:
+                    if cnt >= 10:
                         print("等待聊天协商完成超时,程序异常退出")
                         goto.start
+        if my_msg.startswith("$chat"):
+            goto.start
 
-        print('我说：' + my_msg)
+        print('我：' + my_msg)
         # 协商完成,加密通信
         if cur_chatter in global_name_id_map:
             chat_id = global_name_id_map[cur_chatter]
@@ -147,7 +148,12 @@ def listen(receive_msg):
     else:
         de_receive_msg = receive_msg
 
-    print(de_receive_msg)
+    if receive_msg.FromUserName in global_friend_info:
+        if global_friend_info[receive_msg.FromUserName].remark_name != '':
+            chatter = global_friend_info[receive_msg.FromUserName].remark_name
+        else:
+            chatter = global_friend_info[receive_msg.FromUserName].nick_name
+    print(chatter, "： ", de_receive_msg)
 
 
 # 发起协商，生成RSA密钥对，并将公钥发给好友，密钥协商步骤一
