@@ -5,12 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a79d4111-877a-43bb-b37f-fcd33e2e9a5d" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/constants/type.py" beforeDir="false" afterPath="$PROJECT_DIR$/constants/type.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crypto_module/key_files/friend/@718d74a063f52d71744c54c1d630acb3a8d006b5596507a07e85cf60b6f63323_1549851846_id_rsa.pub" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/crypto_module/key_files/mine/@718d74a063f52d71744c54c1d630acb3a8d006b5596507a07e85cf60b6f63323_1549851846_id_rsa.pri" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/crypto_module/key_files/mine/@718d74a063f52d71744c54c1d630acb3a8d006b5596507a07e85cf60b6f63323_1549851846_id_rsa.pub" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crypto_module/aes_crypto.py" beforeDir="false" afterPath="$PROJECT_DIR$/crypto_module/aes_crypto.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crypto_module/key_files/friend/@7354529fee5543454a34d5b993871bd18ebcd35576560e2310db53bbf8f463cf_1549853088_id_rsa.pub" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/crypto_module/key_files/mine/@7354529fee5543454a34d5b993871bd18ebcd35576560e2310db53bbf8f463cf_1549853088_id_rsa.pri" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/crypto_module/key_files/mine/@7354529fee5543454a34d5b993871bd18ebcd35576560e2310db53bbf8f463cf_1549853088_id_rsa.pub" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/my_chat.py" beforeDir="false" afterPath="$PROJECT_DIR$/my_chat.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/proto/proto.py" beforeDir="false" afterPath="$PROJECT_DIR$/proto/proto.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project.yml" beforeDir="false" afterPath="$PROJECT_DIR$/project.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/proto/util.py" beforeDir="false" afterPath="$PROJECT_DIR$/proto/util.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -19,8 +21,8 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/myChat$aes_crypto__1_.coverage" NAME="aes_crypto (1) Coverage Results" MODIFIED="1549767307595" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/crypto_module" />
-    <SUITE FILE_PATH="coverage/myChat$my_chat.coverage" NAME="my_chat Coverage Results" MODIFIED="1549852980354" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/myChat$aes_crypto__1_.coverage" NAME="aes_crypto (1) Coverage Results" MODIFIED="1549854453844" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/crypto_module" />
+    <SUITE FILE_PATH="coverage/myChat$my_chat.coverage" NAME="my_chat Coverage Results" MODIFIED="1549854532582" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/myChat$aes_crypto.coverage" NAME="aes_crypto Coverage Results" MODIFIED="1548469057916" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/crypto" />
     <SUITE FILE_PATH="coverage/myChat$tmp.coverage" NAME="tmp Coverage Results" MODIFIED="1549769332624" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/myChat$rsa.coverage" NAME="rsa Coverage Results" MODIFIED="1548426480863" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/crypto" />
@@ -30,14 +32,23 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/my_chat.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="198">
-              <caret line="138" column="28" selection-start-line="138" selection-start-column="28" selection-end-line="138" selection-end-column="28" />
+            <state relative-caret-position="456">
+              <caret line="24" column="17" lean-forward="true" selection-start-line="24" selection-start-column="17" selection-end-line="24" selection-end-column="17" />
               <folding>
                 <element signature="e#15#28#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/util.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1774">
+              <caret line="95" column="4" lean-forward="true" selection-start-line="95" selection-start-column="4" selection-end-line="115" />
             </state>
           </provider>
         </entry>
@@ -51,14 +62,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/README.md">
-          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-            <state split_layout="SPLIT">
-              <first_editor relative-caret-position="19">
-                <caret line="1" column="30" selection-start-line="1" selection-start-column="30" selection-end-line="1" selection-end-column="30" />
-              </first_editor>
-              <second_editor />
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/project.yml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret column="14" selection-start-column="14" selection-end-column="14" />
             </state>
           </provider>
         </entry>
@@ -76,31 +84,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/project.yml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="14" selection-start-column="14" selection-end-column="14" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/crypto_module/rsa_crypto.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="646">
-              <caret line="52" selection-start-line="52" selection-start-column="2" selection-end-line="59" selection-end-column="35" />
-              <folding>
-                <element signature="e#0#10#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/crypto_module/aes_crypto.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="302">
-              <caret line="29" column="4" selection-start-line="29" selection-start-column="4" selection-end-line="29" selection-end-column="4" />
+            <state relative-caret-position="912">
+              <caret line="48" lean-forward="true" selection-start-line="40" selection-start-column="23" selection-end-line="48" />
               <folding>
                 <element signature="e#12#25#0" expanded="true" />
               </folding>
@@ -109,22 +96,19 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/proto/proto.py">
+        <entry file="file://$USER_HOME$/.PyCharm2018.3/system/python_stubs/747531054/builtins.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="304">
-              <caret line="67" selection-start-line="67" selection-end-line="67" />
-              <folding>
-                <element signature="e#0#10#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="196">
+              <caret line="4742" column="8" selection-start-line="4742" selection-start-column="8" selection-end-line="4742" selection-end-column="8" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/proto/util.py">
+        <entry file="file://$PROJECT_DIR$/proto/proto.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="208">
-              <caret line="74" selection-start-line="74" selection-end-line="74" />
+            <state relative-caret-position="532">
+              <caret line="67" selection-start-line="67" selection-end-line="67" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
@@ -141,6 +125,18 @@
           </provider>
         </entry>
       </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/proto/util.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="207">
+              <caret line="82" column="37" selection-start-line="82" selection-start-column="37" selection-end-line="82" selection-end-column="37" />
+              <folding>
+                <element signature="e#0#10#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
     </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
@@ -152,7 +148,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>pre_AAA</find>
       <find>decr</find>
       <find>AAA-234</find>
       <find>8859</find>
@@ -182,13 +177,14 @@
       <find>Chat</find>
       <find>ChatInfo</find>
       <find>tmp</find>
+      <find>密钥协商完成，开始加密通信</find>
     </findStrings>
     <replaceStrings>
       <replace>'</replace>
       <replace>global_chat_info</replace>
       <replace>is_chat_ready</replace>
-      <replace>is_id_ready</replace>
       <replace>chat_room_info</replace>
+      <replace>is_id_ready</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -208,15 +204,15 @@
         <option value="$PROJECT_DIR$/util.py" />
         <option value="$PROJECT_DIR$/config/config.py" />
         <option value="$PROJECT_DIR$/tmp.py" />
-        <option value="$PROJECT_DIR$/proto/util.py" />
-        <option value="$PROJECT_DIR$/crypto_module/aes_crypto.py" />
         <option value="$PROJECT_DIR$/crypto_module/rsa_crypto.py" />
-        <option value="$PROJECT_DIR$/project.yml" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/CHANGEME.md" />
         <option value="$PROJECT_DIR$/constants/type.py" />
         <option value="$PROJECT_DIR$/proto/proto.py" />
+        <option value="$PROJECT_DIR$/proto/util.py" />
+        <option value="$PROJECT_DIR$/crypto_module/aes_crypto.py" />
         <option value="$PROJECT_DIR$/my_chat.py" />
+        <option value="$PROJECT_DIR$/project.yml" />
       </list>
     </option>
   </component>
@@ -407,8 +403,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.my_chat" />
-        <item itemvalue="Python.tmp" />
         <item itemvalue="Python.aes_crypto (1)" />
+        <item itemvalue="Python.tmp" />
         <item itemvalue="Python.rsa_crypto" />
         <item itemvalue="Python.util" />
       </list>
@@ -436,12 +432,12 @@
       <workItem from="1548922090191" duration="28095000" />
       <workItem from="1549669835335" duration="6209000" />
       <workItem from="1549676131108" duration="59831000" />
-      <workItem from="1549848765543" duration="4367000" />
+      <workItem from="1549848765543" duration="5846000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="138125000" />
+    <option name="totallyTimeSpent" value="139604000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -456,12 +452,12 @@
     <frame x="1912" y="-8" width="1841" height="1096" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.13587873" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.13587873" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32867134" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.6321746" visible="true" weight="0.35966736" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.6321746" visible="true" weight="0.35966736" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3981289" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -588,24 +584,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/.PyCharm2018.3/system/python_stubs/747531054/builtins.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="139">
-          <caret line="2046" column="8" selection-start-line="2046" selection-start-column="8" selection-end-line="2046" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/config/config.py">
       <provider selected="true" editor-type-id="text-editor">
         <state>
           <caret column="17" selection-start-column="17" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/util.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="121">
-          <caret line="95" column="4" lean-forward="true" selection-start-line="95" selection-start-column="4" selection-end-line="115" />
         </state>
       </provider>
     </entry>
@@ -637,13 +619,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tmp.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="133">
-          <caret line="7" column="134" selection-start-line="7" selection-start-column="14" selection-end-line="7" selection-end-column="134" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/crypto_module/rsa_crypto.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="646">
@@ -651,13 +626,6 @@
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/project.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="14" selection-start-column="14" selection-end-column="14" />
         </state>
       </provider>
     </entry>
@@ -681,10 +649,48 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/constants/type.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="684">
+          <caret line="36" lean-forward="true" selection-start-line="36" selection-end-line="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/util.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1774">
+          <caret line="95" column="4" lean-forward="true" selection-start-line="95" selection-start-column="4" selection-end-line="115" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tmp.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="133">
+          <caret line="7" column="134" selection-start-line="7" selection-start-column="14" selection-end-line="7" selection-end-column="134" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.PyCharm2018.3/system/python_stubs/747531054/builtins.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="196">
+          <caret line="4742" column="8" selection-start-line="4742" selection-start-column="8" selection-end-line="4742" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/proto/proto.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="532">
+          <caret line="67" selection-start-line="67" selection-end-line="67" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/proto/util.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="208">
-          <caret line="74" selection-start-line="74" selection-end-line="74" />
+        <state relative-caret-position="207">
+          <caret line="82" column="37" selection-start-line="82" selection-start-column="37" selection-end-line="82" selection-end-column="37" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>
@@ -693,38 +699,28 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/crypto_module/aes_crypto.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="302">
-          <caret line="29" column="4" selection-start-line="29" selection-start-column="4" selection-end-line="29" selection-end-column="4" />
+        <state relative-caret-position="912">
+          <caret line="48" lean-forward="true" selection-start-line="40" selection-start-column="23" selection-end-line="48" />
           <folding>
             <element signature="e#12#25#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/constants/type.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="684">
-          <caret line="36" lean-forward="true" selection-start-line="36" selection-end-line="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/proto/proto.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="67" selection-start-line="67" selection-end-line="67" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/my_chat.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="138" column="28" selection-start-line="138" selection-start-column="28" selection-end-line="138" selection-end-column="28" />
+        <state relative-caret-position="456">
+          <caret line="24" column="17" lean-forward="true" selection-start-line="24" selection-start-column="17" selection-end-line="24" selection-end-column="17" />
           <folding>
             <element signature="e#15#28#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/project.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="14" selection-start-column="14" selection-end-column="14" />
         </state>
       </provider>
     </entry>

@@ -148,12 +148,16 @@ def listen(receive_msg):
     else:
         de_receive_msg = receive_msg
 
+    chatter = ''
     if receive_msg.FromUserName in global_friend_info:
         if global_friend_info[receive_msg.FromUserName].remark_name != '':
             chatter = global_friend_info[receive_msg.FromUserName].remark_name
         else:
             chatter = global_friend_info[receive_msg.FromUserName].nick_name
-    print(chatter, '：', de_receive_msg)
+    if cur_chatter == '':
+        print('someone:', de_receive_msg)
+    else:
+        print(chatter, '：', de_receive_msg)
 
 
 # 发起协商，生成RSA密钥对，并将公钥发给好友，密钥协商步骤一
