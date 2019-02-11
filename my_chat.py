@@ -9,7 +9,7 @@ from constants.wx_key_type import *
 from constants.type import *
 from itchat.content import *
 from proto.proto import *
-from crypto_module.aes_crypto import *
+# from crypto_module.aes_crypto import *
 
 sys.path.append(os.getcwd() + '/constants')
 
@@ -19,8 +19,8 @@ owner_name = ''
 mutex = threading.Lock()
 
 msg_arr = []
-cur_chatter_name = "起风了"
-# cur_chatter_name = "贝贝奶奶"
+# cur_chatter_name = "起风了"
+cur_chatter_name = "贝贝奶奶"
 
 cur_chatter = ""
 friends_list = {}
@@ -252,8 +252,7 @@ def aes_ack(receive_msg):
 # 向所有聊天好友发送协商一致的aes密钥，密钥协商步骤四
 def save_aes(receive_msg):
     chat_id = global_name_id_map[receive_msg.FromUserName]
-    de_aes_key = aes_decrypt(global_chat_info[chat_id].key_info_list[0].aes_key,
-                                      receive_msg.Text.lstrip(owner_name))
+    de_aes_key = UtilTool.aes_decrypt(global_chat_info[chat_id].key_info_list[0].aes_key, receive_msg.Text.lstrip(owner_name))
     global_chat_info[chat_id].aes_key = de_aes_key
     global_chat_info[chat_id].is_ready = True
     print("密钥协商完成，开始加密聊天")
