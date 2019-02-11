@@ -15,7 +15,7 @@ class ChatInfo(object):
     chat_master = False
 
     # 期望确认消息个数
-    except_ack_count = 0
+    expect_ack_count = 0
 
     # 实际已确认消息个数
     actual_ack_count = 0
@@ -39,7 +39,7 @@ class ChatInfo(object):
         """"初始化"""
         self.is_chat_ready = False
         self.is_id_ready = False
-        self.except_ack_count = 0
+        self.expect_ack_count = 0
         self.actual_ack_count = 0
         self.chat_user_name = ""
         self.rsa_public_key_name = ""
@@ -86,8 +86,13 @@ class FriendInfo:
     use_name = ""
     nick_name = ""
     remark_name = ""
+    friend_count = 0
 
     def __init__(self):
+        self.use_name = ""
+        self.nick_name = ""
+        self.remark_name = ""
+        self.friend_count = 0
         pass
 
 

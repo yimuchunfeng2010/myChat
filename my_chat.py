@@ -16,7 +16,7 @@ importlib.reload(sys)
 owner_name = ''
 mutex = threading.Lock()
 
-global_cur_chatter_name = "起风了"
+global_cur_chatter_name = "AA"
 # global_cur_chatter_name = "贝贝奶奶"
 
 global_cur_chatter = ""
@@ -76,10 +76,9 @@ def listen(receive_msg):
     if receive_msg.Text.startswith(CHAT_ID_ACK):
         chat_id = receive_msg.Text.lstrip(CHAT_ID_ACK)
         if chat_id in global_chat_info:
-            print('chat id 协商完成')
-            global_chat_info[chat_id].is_id_ready = True
+            global_chat_info[chat_id].expect_ack_count = global_chat_info[chat_id].expect_ack_count + 1
         else:
-            print('聊天ID协商异常，程序退出', chat_id)
+            print('聊天ID协商异常，程序退出')
         return
 
     #  收到aes密钥，返回密钥协商步骤三
@@ -121,6 +120,7 @@ def id_agreement(user_name):
 def id_ack(receive_msg):
     global global_chat_info
     global global_name_id_map
+
     chat_id = receive_msg.Text.lstrip(CHAT_ID_START)
     new_chat = ChatInfo()
     new_chat.chat_user_name = receive_msg.FromUserName
@@ -143,13 +143,6 @@ def key_agreement_step_one(chat_id):
         return
     public_key_name, private_key_name = UtilTool.gen_ras_key(user_name)
     mutex.acquire(timeout=10)
-
-    # 计算预期确认消息数
-    if user_name.startswith(FROM_CHATROOM):
-        chat_room_info = itchat.search_chatrooms(userName=user_name)
-        global_chat_info[chat_id].except_ack_count = chat_room_info['MemberCount'] - 1
-    else:
-        global_chat_info[chat_id].except_ack_count = 1
 
     # 记录密钥
     global_chat_info[chat_id].rsa_private_key_name = MINE_KEY_PATH + private_key_name
@@ -213,7 +206,7 @@ def key_agreement_step_three(receive_msg):
 
     # 若已获取足够确认信息，则向aes密钥协商完成，发送最终aes密钥
     if global_chat_info[chat_id].actual_ack_count == \
-            global_chat_info[chat_id].except_ack_count:
+            global_chat_info[chat_id].expect_ack_count:
 
         if len(global_chat_info[chat_id].key_info_list) == 0:
             print('aes empty')
@@ -244,13 +237,6 @@ def key_agreement_step_four(receive_msg):
     global_chat_info[chat_id].time = UtilTool.get_cur_time_stamp()
 
 
-def get_friends_chat_name(nick_name):
-    if nick_name in global_friends_list.keys():
-        return global_friends_list[nick_name]
-    else:
-        return ""
-
-
 def get_owner_user_name():
     global owner_name
     friends = itchat.get_friends(update=True)
@@ -262,6 +248,7 @@ def get_owner_user_name():
 
 
 def init_friends():
+    #  获取好友信息
     friends = itchat.get_friends(update=True)  # 获取微信好友列表，如果设置update=True将从服务器刷新列表
     global global_friends_list
     for f in friends:
@@ -274,12 +261,27 @@ def init_friends():
         new_friend.use_name = f.UserName
         new_friend.nick_name = f.NickName
         new_friend.remark_name = f.RemarkName
+        new_friend.friend_count = 1
         global_friend_info[f.UserName] = new_friend
 
         global_name_id_map[f.UserName] = ""
-    global global_cur_chatter
 
-    itchat.get_chatrooms(update=True)
+    # 获取群信息
+    rooms = itchat.get_chatrooms(update=True)
+    for room in rooms:
+        if room.RemarkName != "":
+            global_friends_list[room.RemarkName] = room.UserName
+        else:
+            global_friends_list[room.NickName] = room.UserName
+
+        new_friend = FriendInfo()
+        new_friend.use_name = room.UserName
+        new_friend.nick_name = room.NickName
+        new_friend.remark_name = room.RemarkName
+        new_friend.friend_count = room.MemberCount
+        global_friend_info[room.UserName] = new_friend
+
+    global global_cur_chatter
     global_cur_chatter = global_friends_list[global_cur_chatter_name]
 
 
@@ -323,19 +325,20 @@ def pro_key_agreement(user_name):
         # 密钥协商已完成，直接切换用户
         global_cur_chatter = s_chatter
     else:
-        # 测试好友是否加密聊天在线
-        test_friends_online(s_chatter)
-        # 协商聊天id
+
+        # 协商聊天id及测试好友加密聊天在线人数
         id_agreement(s_chatter)
 
-        # 等待chat_id协商完成，超时则返回
-        cnt = 0
-        while global_chat_info[global_name_id_map[s_chatter]].is_id_ready is False:
-            time.sleep(1)
-            # 5s超时
-            if cnt >= 5:
-                print("聊天ID超时")
-                return
+        # 延时10s,以等待好友响应id_ack
+        time.sleep(10)
+
+        if global_chat_info[global_name_id_map[s_chatter]].expect_ack_count == 0:
+            print("当前无好友加密聊天在线")
+            return
+
+        # 设置id_ready 状态
+        global_chat_info[global_name_id_map[s_chatter]].is_id_ready = True
+        print("ID协商完成")
 
         print("密钥协商步骤一")
         key_agreement_step_one(global_name_id_map[s_chatter])
@@ -349,10 +352,6 @@ def pro_key_agreement(user_name):
                 return
         # 密钥协商成功，切换当前聊天对象
         global_cur_chatter = s_chatter
-
-
-def test_friends_online(user_id):
-    pass
 
 
 def is_key_agreement_ready():
