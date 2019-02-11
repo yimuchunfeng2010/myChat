@@ -12,7 +12,7 @@ class ChatInfo(object):
     rsa_private_key_name = ""
 
     # 主聊天者(发起加密聊天的好友)
-    chat_master = ""
+    chat_master = False
 
     # 期望确认消息个数
     except_ack_count = 0
@@ -44,6 +44,8 @@ class ChatInfo(object):
         self.chat_user_name = ""
         self.rsa_public_key_name = ""
         self.rsa_private_key_name = ""
+        self.chat_master = False
+        self.time = ""
 
     def set_aes_key(self, key):
         self.aes_key = key

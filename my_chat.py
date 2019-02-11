@@ -22,8 +22,10 @@ global_cur_chatter_name = "起风了"
 global_cur_chatter = ""
 global_friends_list = {}
 
+# 聊天信息
 global_chat_info = dict()
 
+# 用户名与聊天ID映射表
 global_name_id_map = dict()
 
 # 聊天室信息
@@ -32,12 +34,15 @@ global_chat_room_info = dict()
 # 好友信息
 global_friend_info = dict()
 
+# 群好友加密通信在线人数
+global_friend_online_count = 0
+
 
 def say():
     global global_cur_chatter
     while True:
-        print('我: ', end='')
         my_msg = input()
+        print('我: ', end='')
 
         # 选择/切换聊天对象
         if my_msg.startswith(CHAT_START):
@@ -223,6 +228,9 @@ def key_agreement_step_three(receive_msg):
 
         print("密钥协商完成，开始加密聊天")
         global_chat_info[chat_id].is_chat_ready = True
+        global_chat_info[chat_id].chat_master = True
+        global_chat_info[chat_id].time = UtilTool.get_cur_time_stamp()
+
         return
 
 
@@ -233,6 +241,7 @@ def key_agreement_step_four(receive_msg):
                                       receive_msg.Text.lstrip(owner_name))
     global_chat_info[chat_id].aes_key = de_aes_key
     global_chat_info[chat_id].is_chat_ready = True
+    global_chat_info[chat_id].time = UtilTool.get_cur_time_stamp()
 
 
 def get_friends_chat_name(nick_name):
@@ -314,8 +323,11 @@ def pro_key_agreement(user_name):
         # 密钥协商已完成，直接切换用户
         global_cur_chatter = s_chatter
     else:
+        # 测试好友是否加密聊天在线
+        test_friends_online(s_chatter)
         # 协商聊天id
         id_agreement(s_chatter)
+
         # 等待chat_id协商完成，超时则返回
         cnt = 0
         while global_chat_info[global_name_id_map[s_chatter]].is_id_ready is False:
@@ -337,6 +349,10 @@ def pro_key_agreement(user_name):
                 return
         # 密钥协商成功，切换当前聊天对象
         global_cur_chatter = s_chatter
+
+
+def test_friends_online(user_id):
+    pass
 
 
 def is_key_agreement_ready():
@@ -375,13 +391,24 @@ def encrypt_chat(receive_msg):
         print(chatter, '：', de_receive_msg)
 
 
+# 周期性更新密钥
+def update_key():
+    for chat_id, chat_info in global_chat_info:
+        # 重新协商只能由主发起
+        if chat_info.chat_master is False:
+            continue
+        cur_time = UtilTool.get_cur_time_stamp()
+
+
 if __name__ == '__main__':
     itchat.auto_login()  # hotReload=True
     init_mychat()
     # 启动线程
     t1 = threading.Thread(target=say)
     t2 = threading.Thread(target=listen, args=(u'',))
+    t3 = threading.Thread(target=update_key())
     t1.start()
     t2.start()
+    # t3.start()
 
     itchat.run()
