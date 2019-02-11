@@ -18,8 +18,8 @@ owner_name = ''
 mutex = threading.Lock()
 
 msg_arr = []
-cur_chatter_name = "起风了"
-# cur_chatter_name = "贝贝奶奶"
+# cur_chatter_name = "起风了"
+cur_chatter_name = "贝贝奶奶"
 
 cur_chatter = ""
 friends_list = {}
@@ -38,50 +38,17 @@ global_friend_info = dict()
 @with_goto
 def say():
     while True:
-        label.start
         global cur_chatter
+        print('我: ', end='')
         my_msg = input()
         # 切换聊天对象
         if my_msg.startswith(CHAT_START):
-            global friends_list
-            # cur_chatter = friends_list[my_msg.lstrip("$chat ")]
-            # todo 暂时不切换聊天对象
-            cur_chatter = friends_list[cur_chatter_name]
+            user_name = my_msg.lstrip("$chat ")
+            pro_key_agreement(user_name)
 
-            # 判断是否已经加密
-            if cur_chatter in global_name_id_map and global_name_id_map[cur_chatter] in global_chat_info and \
-                    global_chat_info[global_name_id_map[cur_chatter]].is_chat_ready is True:
-                cur_chatter = friends_list[cur_chatter_name]
-            else:
-                # todo 未启动加密，则启动加密协商，
-
-                # todo 首先测试对方是否支持加密聊天
-
-                # 协商聊天id
-                send_chat_id(cur_chatter)
-                # 等待chat_id协商完成，超时则返回
-                cnt = 0
-                while global_chat_info[global_name_id_map[cur_chatter]].is_id_ready is False:
-                    time.sleep(1)
-                    # 10s超时
-                    if cnt >= 5:
-                        print("等待聊天id协商完成超时")
-                        goto.start
-
-                print("密钥协商步骤一")
-                start_key_agreement(global_name_id_map[cur_chatter])
-
-                cnt = 0
-                while global_chat_info[global_name_id_map[cur_chatter]].is_chat_ready is not True:
-                    time.sleep(1)
-                    # 10s超时
-                    if cnt >= 10:
-                        print("等待聊天协商完成超时,程序异常退出")
-                        goto.start
         if my_msg.startswith("$chat"):
-            goto.start
+            continue
 
-        print('我：' + my_msg)
         # 协商完成,加密通信
         if cur_chatter in global_name_id_map:
             chat_id = global_name_id_map[cur_chatter]
@@ -346,6 +313,47 @@ def send_chat_id(user_name):
     global_name_id_map[user_name] = chat_id
 
     return
+
+
+def pro_key_agreement(user_name):
+    #  查询user_id
+    global friends_list
+    global cur_chatter
+    s_chatter = friends_list[user_name]
+
+    # todo 暂时不切换聊天对象
+    # cur_chatter = friends_list[cur_chatter_name]
+
+    # 判断是否已经加密
+    if s_chatter in global_name_id_map and global_name_id_map[s_chatter] in global_chat_info and \
+            global_chat_info[global_name_id_map[s_chatter]].is_chat_ready is True:
+        # 密钥协商已完成，直接切换用户
+        cur_chatter = friends_list[s_chatter]
+    else:
+
+        # 协商聊天id
+        send_chat_id(s_chatter)
+        # 等待chat_id协商完成，超时则返回
+        cnt = 0
+        while global_chat_info[global_name_id_map[s_chatter]].is_id_ready is False:
+            time.sleep(1)
+            # 5s超时
+            if cnt >= 5:
+                print("聊天ID超时")
+                return
+
+        print("密钥协商步骤一")
+        start_key_agreement(global_name_id_map[s_chatter])
+
+        cnt = 0
+        while global_chat_info[global_name_id_map[s_chatter]].is_chat_ready is not True:
+            time.sleep(1)
+            # 10s超时
+            if cnt >= 10:
+                print("等待聊天协商完成超时,程序异常退出")
+                return
+        # 密钥协商成功，切换当前聊天对象
+        cur_chatter = s_chatter
 
 
 if __name__ == '__main__':
