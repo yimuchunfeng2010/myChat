@@ -13,9 +13,9 @@ MSG_TYPE = [MSG_TYPE__TEXT, MSG_TYPE__FRIENDS, MSG_TYPE__ATTACHMENT, MSG_TYPE__V
             MSG_TYPE__RECORDING, MSG_TYPE__CARD, MSG_TYPE__MAP, MSG_TYPE__SHARING]
 
 # 特殊字符串
-PUBLIC_KEY_PREFIX = '$@@$'  # RSA公钥前缀
-SECRET_KEY_PREFIX = '@$$@'  # AES密钥前缀
-FINAL_AES_KEY_PREFIX = '%**%' # 协商一致AES密钥前缀
+# PUBLIC_KEY_PREFIX = '$@@$'  # RSA公钥前缀
+# SECRET_KEY_PREFIX = '@$$@'  # AES密钥前缀
+# FINAL_AES_KEY_PREFIX = '%**%' # 协商一致AES密钥前缀
 
 # 消息来源类型
 FROM_CHATROOM = '@@' # 聊天室消息
@@ -27,3 +27,10 @@ CHAT_ID_START = '%%%%'
 CHAT_ID_ACK = '!!!!'
 AES_KEY = '****'
 CONNECTOR = '____'
+
+# 密钥文件存放路径
+MINE_KEY_PATH = "./crypto_module/key_files/mine/"
+FRIEND_KEY_PATH = "./crypto_module/key_files/friend/"
+
+# 密钥文件后缀
+PUBLIC_KEY_SUFFIX = 'id_rsa.pub'

@@ -24,10 +24,10 @@ class ChatInfo(object):
     key_info_list = list()
 
     # 协商成功标志
-    is_ready = False
+    is_chat_ready = False
 
     # 聊天id协商成功标志
-    is_chat_id_ready = False
+    is_id_ready = False
 
     # 时间戳
     time = ""
@@ -37,8 +37,8 @@ class ChatInfo(object):
 
     def __init__(self):
         """"初始化"""
-        self.is_ready = False
-        self.is_chat_id_ready = False
+        self.is_chat_ready = False
+        self.is_id_ready = False
         self.except_ack_count = 0
         self.actual_ack_count = 0
         self.chat_user_name = ""
