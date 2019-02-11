@@ -321,16 +321,12 @@ def pro_key_agreement(user_name):
     global cur_chatter
     s_chatter = friends_list[user_name]
 
-    # todo 暂时不切换聊天对象
-    # cur_chatter = friends_list[cur_chatter_name]
-
     # 判断是否已经加密
     if s_chatter in global_name_id_map and global_name_id_map[s_chatter] in global_chat_info and \
             global_chat_info[global_name_id_map[s_chatter]].is_chat_ready is True:
         # 密钥协商已完成，直接切换用户
-        cur_chatter = friends_list[s_chatter]
+        cur_chatter = s_chatter
     else:
-
         # 协商聊天id
         send_chat_id(s_chatter)
         # 等待chat_id协商完成，超时则返回
