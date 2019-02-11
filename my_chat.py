@@ -17,8 +17,9 @@ importlib.reload(sys)
 owner_name = ''
 mutex = threading.Lock()
 
-global_cur_chatter_name = "起风了"
-# global_cur_chatter_name = "贝贝奶奶"
+# global_cur_chatter_name = "起风了"
+global_cur_chatter_name = "贝贝奶奶"
+
 
 global_cur_chatter = ""
 global_friends_list = {}
@@ -97,25 +98,7 @@ def listen(receive_msg):
         print('密钥协商完成，开始加密聊天')
         return
 
-    if receive_msg.FromUserName in global_name_id_map:
-        chat_id = global_name_id_map[receive_msg.FromUserName]
-        if global_chat_info[chat_id].is_chat_ready is True:
-            de_receive_msg = UtilTool.aes_decrypt(global_chat_info[chat_id].aes_key, receive_msg.Text)
-        else:
-            de_receive_msg = receive_msg
-    else:
-        de_receive_msg = receive_msg
-
-    chatter = ''
-    if receive_msg.FromUserName in global_friend_info:
-        if global_friend_info[receive_msg.FromUserName].remark_name != '':
-            chatter = global_friend_info[receive_msg.FromUserName].remark_name
-        else:
-            chatter = global_friend_info[receive_msg.FromUserName].nick_name
-    if global_cur_chatter == '':
-        print('someone:', de_receive_msg)
-    else:
-        print(chatter, '：', de_receive_msg)
+    encrypt_chat(receive_msg)
 
 
 # 发起协商，生成RSA密钥对，并将公钥发给好友，密钥协商步骤一
@@ -370,6 +353,32 @@ def is_key_agreement_ready():
     else:
         return False
 
+
+def encrypt_chat(receive_msg):
+    global global_name_id_map
+    global global_chat_info
+    global global_friend_info
+    global global_cur_chatter
+
+    if receive_msg.FromUserName in global_name_id_map:
+        chat_id = global_name_id_map[receive_msg.FromUserName]
+        if global_chat_info[chat_id].is_chat_ready is True:
+            de_receive_msg = UtilTool.aes_decrypt(global_chat_info[chat_id].aes_key, receive_msg.Text)
+        else:
+            de_receive_msg = receive_msg
+    else:
+        de_receive_msg = receive_msg
+
+    chatter = ''
+    if receive_msg.FromUserName in global_friend_info:
+        if global_friend_info[receive_msg.FromUserName].remark_name != '':
+            chatter = global_friend_info[receive_msg.FromUserName].remark_name
+        else:
+            chatter = global_friend_info[receive_msg.FromUserName].nick_name
+    if global_cur_chatter == '':
+        print('someone:', de_receive_msg)
+    else:
+        print(chatter, '：', de_receive_msg)
 
 if __name__ == '__main__':
     itchat.auto_login()  # hotReload=True
