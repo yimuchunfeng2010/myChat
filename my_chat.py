@@ -42,7 +42,7 @@ def say():
         global cur_chatter
         my_msg = input()
         # 切换聊天对象
-        if my_msg.startswith("$chat"):
+        if my_msg.startswith(CHAT_START):
             global friends_list
             # cur_chatter = friends_list[my_msg.lstrip("$chat ")]
             # todo 暂时不切换聊天对象
@@ -100,8 +100,8 @@ def listen(receive_msg):
     if not hasattr(receive_msg, 'Text'):
         return
         # 接收到chat_id
-    if receive_msg.Text.startswith("%%%%"):
-        chat_id = receive_msg.Text.lstrip("%%%%")
+    if receive_msg.Text.startswith(CHAT_ID_START):
+        chat_id = receive_msg.Text.lstrip(CHAT_ID_START)
         new_chat = ChatInfo()
         new_chat.chat_user_name = receive_msg.FromUserName
         new_chat.is_chat_id_ready = True
@@ -110,11 +110,11 @@ def listen(receive_msg):
         global_name_id_map[receive_msg.FromUserName] = chat_id
 
         # 发送确认消息
-        itchat.send_msg("!!!!" + receive_msg.Text.lstrip("%%%%"), toUserName=receive_msg.FromUserName)
+        itchat.send_msg(CHAT_ID_ACK + receive_msg.Text.lstrip(CHAT_ID_START), toUserName=receive_msg.FromUserName)
         return
     # 接受到chat_id确认消息
-    if receive_msg.Text.startswith("!!!!"):
-        chat_id = receive_msg.Text.lstrip("!!!!")
+    if receive_msg.Text.startswith(CHAT_ID_ACK):
+        chat_id = receive_msg.Text.lstrip(CHAT_ID_ACK)
         if chat_id in global_chat_info:
             print("chat id 协商完成")
             global_chat_info[chat_id].is_chat_id_ready = True
@@ -124,7 +124,7 @@ def listen(receive_msg):
         return
 
     #  收到aes密钥，返回密钥协商步骤三
-    if receive_msg.Text.startswith("****"):
+    if receive_msg.Text.startswith(AES_KEY):
         print("密钥协商步骤三")
         if receive_msg.FromUserName not in global_name_id_map:
             print("密钥协商异常, 程序退出")
@@ -153,7 +153,7 @@ def listen(receive_msg):
             chatter = global_friend_info[receive_msg.FromUserName].remark_name
         else:
             chatter = global_friend_info[receive_msg.FromUserName].nick_name
-    print(chatter, "： ", de_receive_msg)
+    print(chatter, "：", de_receive_msg)
 
 
 # 发起协商，生成RSA密钥对，并将公钥发给好友，密钥协商步骤一
@@ -207,7 +207,7 @@ def pro_rsa_pub(receive_msg):
                                                           key_info.aes_key)
 
             # **** 特殊字符，表示后序消息内容是rsa公钥加密过的aes密钥信息
-            aes_msg = "****" + aes_msg + "####" + owner_name
+            aes_msg = AES_KEY + aes_msg + CONNECTOR + owner_name
 
             itchat.send_msg(aes_msg, toUserName=receive_msg.FromUserName)
     else:
@@ -224,10 +224,10 @@ def aes_ack(receive_msg):
     key_info.time_stamp = UtilTool.get_cur_time_stamp()
 
     tmp_msg = receive_msg.Text
-    tmp_msg = tmp_msg.lstrip("****")
-    index = tmp_msg.find('####')
+    tmp_msg = tmp_msg.lstrip(AES_KEY)
+    index = tmp_msg.find(CONNECTOR)
     pre_msg = tmp_msg[:index]
-    key_info.user_name = tmp_msg[index + 4:]
+    key_info.user_name = tmp_msg[index + len(CONNECTOR):]
 
     pre_msg = pre_msg
 
@@ -333,7 +333,7 @@ def init_mychat():
 
 def send_chat_id(user_name):
     chat_id = UtilTool.gen_chat_id()
-    itchat.send_msg("%%%%" + chat_id, toUserName=user_name)
+    itchat.send_msg(CHAT_ID_START + chat_id, toUserName=user_name)
 
     new_chat = ChatInfo()
     new_chat.chat_user_name = user_name

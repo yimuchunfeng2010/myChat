@@ -5,9 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a79d4111-877a-43bb-b37f-fcd33e2e9a5d" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/crypto_module/key_files/friend/@8dc5fb1559d79a4bff3027fb348683d04fc7efb71edba9298267eb395d14473b_1549850492_id_rsa.pub" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/crypto_module/key_files/mine/@8dc5fb1559d79a4bff3027fb348683d04fc7efb71edba9298267eb395d14473b_1549850492_id_rsa.pri" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/crypto_module/key_files/mine/@8dc5fb1559d79a4bff3027fb348683d04fc7efb71edba9298267eb395d14473b_1549850492_id_rsa.pub" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/constants/type.py" beforeDir="false" afterPath="$PROJECT_DIR$/constants/type.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crypto_module/key_files/friend/@72354b1a7ff90e254e2714aada7cf82d5711fef5cc1e62ae6c4cba384e6e0594_1549851207_id_rsa.pub" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/crypto_module/key_files/mine/@72354b1a7ff90e254e2714aada7cf82d5711fef5cc1e62ae6c4cba384e6e0594_1549851207_id_rsa.pri" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/crypto_module/key_files/mine/@72354b1a7ff90e254e2714aada7cf82d5711fef5cc1e62ae6c4cba384e6e0594_1549851207_id_rsa.pub" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/my_chat.py" beforeDir="false" afterPath="$PROJECT_DIR$/my_chat.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -18,7 +19,7 @@
   </component>
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/myChat$aes_crypto__1_.coverage" NAME="aes_crypto (1) Coverage Results" MODIFIED="1549767307595" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/crypto_module" />
-    <SUITE FILE_PATH="coverage/myChat$my_chat.coverage" NAME="my_chat Coverage Results" MODIFIED="1549851158050" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/myChat$my_chat.coverage" NAME="my_chat Coverage Results" MODIFIED="1549851790249" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/myChat$aes_crypto.coverage" NAME="aes_crypto Coverage Results" MODIFIED="1548469057916" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/crypto" />
     <SUITE FILE_PATH="coverage/myChat$tmp.coverage" NAME="tmp Coverage Results" MODIFIED="1549769332624" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/myChat$rsa.coverage" NAME="rsa Coverage Results" MODIFIED="1548426480863" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/crypto" />
@@ -31,11 +32,20 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/my_chat.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="155" column="20" selection-start-line="155" selection-start-column="20" selection-end-line="155" selection-end-column="20" />
+            <state relative-caret-position="554">
+              <caret line="155" column="21" selection-start-line="155" selection-start-column="21" selection-end-line="155" selection-end-column="21" />
               <folding>
                 <element signature="e#15#28#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/constants/type.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="475">
+              <caret line="28" column="9" selection-start-line="28" selection-end-line="28" selection-end-column="9" />
             </state>
           </provider>
         </entry>
@@ -98,19 +108,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://E:/Program Files/Lib/base64.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="9956">
-              <caret line="526" column="13" selection-start-line="526" selection-start-column="13" selection-end-line="526" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/proto/proto.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="188">
-              <caret line="84" column="4" selection-start-line="84" selection-start-column="4" selection-end-line="84" selection-end-column="4" />
+              <caret line="67" selection-start-line="67" selection-end-line="67" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
@@ -150,10 +151,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>pro</find>
-      <find>ISO</find>
-      <find>****</find>
-      <find>de</find>
       <find>rsa</find>
       <find>rypt_rsa_by</find>
       <find>g_pre_msg</find>
@@ -180,6 +177,10 @@
       <find>aes</find>
       <find>friends_list</find>
       <find>global_friend_info</find>
+      <find>%%%</find>
+      <find>!!!!</find>
+      <find>****</find>
+      <find>####</find>
     </findStrings>
     <replaceStrings>
       <replace>'</replace>
@@ -201,7 +202,6 @@
         <option value="$PROJECT_DIR$/crypto/rsa_crypto.py" />
         <option value="$PROJECT_DIR$/crypto/aes_crypto.py" />
         <option value="$PROJECT_DIR$/endecryption/aes_crypto.py" />
-        <option value="$PROJECT_DIR$/constants/type.py" />
         <option value="$PROJECT_DIR$/util.py" />
         <option value="$PROJECT_DIR$/config/config.py" />
         <option value="$PROJECT_DIR$/tmp.py" />
@@ -212,6 +212,7 @@
         <option value="$PROJECT_DIR$/project.yml" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/CHANGEME.md" />
+        <option value="$PROJECT_DIR$/constants/type.py" />
         <option value="$PROJECT_DIR$/my_chat.py" />
       </list>
     </option>
@@ -432,12 +433,12 @@
       <workItem from="1548922090191" duration="28095000" />
       <workItem from="1549669835335" duration="6209000" />
       <workItem from="1549676131108" duration="59831000" />
-      <workItem from="1549848765543" duration="2474000" />
+      <workItem from="1549848765543" duration="3127000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="136232000" />
+    <option name="totallyTimeSpent" value="136885000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -466,7 +467,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.4995958" weight="0.32848233" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.502021" side_tool="true" weight="0.29895106" />
-      <window_info anchor="bottom" id="Python Console" order="11" sideWeight="0.497979" weight="0.31118882" />
+      <window_info anchor="bottom" id="Python Console" order="11" sideWeight="0.497979" weight="0.3108108" />
       <window_info anchor="bottom" id="TODO" order="12" sideWeight="0.4995958" weight="0.32867134" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -591,13 +592,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/constants/type.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="259">
-          <caret line="20" selection-start-line="20" selection-end-line="20" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/config/config.py">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -704,10 +698,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/constants/type.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="475">
+          <caret line="28" column="9" selection-start-line="28" selection-end-line="28" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/proto/proto.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="188">
-          <caret line="84" column="4" selection-start-line="84" selection-start-column="4" selection-end-line="84" selection-end-column="4" />
+          <caret line="67" selection-start-line="67" selection-end-line="67" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>
@@ -716,8 +717,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/my_chat.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="155" column="20" selection-start-line="155" selection-start-column="20" selection-end-line="155" selection-end-column="20" />
+        <state relative-caret-position="554">
+          <caret line="155" column="21" selection-start-line="155" selection-start-column="21" selection-end-line="155" selection-end-column="21" />
           <folding>
             <element signature="e#15#28#0" expanded="true" />
           </folding>
