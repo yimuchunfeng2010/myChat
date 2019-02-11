@@ -21,7 +21,7 @@ mutex = threading.Lock()
 global_cur_chatter_name = "贝贝奶奶"
 
 global_cur_chatter = ""
-friends_list = {}
+global_friends_list = {}
 
 global_chat_info = dict()
 
@@ -239,8 +239,8 @@ def get_friends():
 
 
 def get_friends_chat_name(nick_name):
-    if nick_name in friends_list.keys():
-        return friends_list[nick_name]
+    if nick_name in global_friends_list.keys():
+        return global_friends_list[nick_name]
     else:
         return ""
 
@@ -257,12 +257,12 @@ def get_owner_user_name():
 
 def init_friends():
     friends = itchat.get_friends(update=True)  # 获取微信好友列表，如果设置update=True将从服务器刷新列表
-    global friends_list
+    global global_friends_list
     for f in friends:
         if f.RemarkName != "":
-            friends_list[f.RemarkName] = f.UserName
+            global_friends_list[f.RemarkName] = f.UserName
         else:
-            friends_list[f.NickName] = f.UserName
+            global_friends_list[f.NickName] = f.UserName
 
         new_friend = FriendInfo()
         new_friend.use_name = f.UserName
@@ -274,7 +274,7 @@ def init_friends():
     global global_cur_chatter
 
     itchat.get_chatrooms(update=True)
-    global_cur_chatter = friends_list[global_cur_chatter_name]
+    global_cur_chatter = global_friends_list[global_cur_chatter_name]
 
 
 # 获取聊天室信息
@@ -317,9 +317,13 @@ def id_agreement(user_name):
 
 def pro_key_agreement(user_name):
     #  查询user_id
-    global friends_list
+    global global_friends_list
     global global_cur_chatter
-    s_chatter = friends_list[user_name]
+    if user_name in global_friends_list:
+        s_chatter = global_friends_list[user_name]
+    else:
+        print("用户不存在，请输入正确的用户名")
+        return
 
     # 判断是否已经加密
     if s_chatter in global_name_id_map and global_name_id_map[s_chatter] in global_chat_info and \
