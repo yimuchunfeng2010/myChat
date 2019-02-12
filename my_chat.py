@@ -6,7 +6,7 @@ import importlib
 import threading
 from constants.type import *
 from itchat.content import *
-from proto.proto import *
+from proto.info import *
 
 sys.path.append(os.getcwd() + '/constants')
 

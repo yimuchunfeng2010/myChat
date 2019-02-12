@@ -23,10 +23,10 @@ class UtilTool:
         (public_key, private_key) = rsa.newkeys(RSA_KEY_LEN)
         public_key_name = user_name + "_" + time_stamp + "_id_rsa.pub"
         private_key_name = user_name + "_" + time_stamp + "_id_rsa.pri"
-        with open("./crypto_module/key_files/mine/" + public_key_name, 'w+') as f:
+        with open("./key_module/key_files/mine/" + public_key_name, 'w+') as f:
             f.write(public_key.save_pkcs1().decode())
 
-        with open("./crypto_module/key_files/mine/" + private_key_name, 'w+') as f:
+        with open("./key_module/key_files/mine/" + private_key_name, 'w+') as f:
             f.write(private_key.save_pkcs1().decode())
 
         return public_key_name, private_key_name
@@ -93,8 +93,8 @@ class UtilTool:
     @staticmethod
     def remove_unused_file():
         paths=list()
-        paths.append('./crypto_module/key_files/mine')
-        paths.append('./crypto_module/key_files/friend')
+        paths.append('./key_module/key_files/mine')
+        paths.append('./key_module/key_files/friend')
         for path in paths:
             for file in os.listdir(path):
                 path_file = os.path.join(path,file)
