@@ -1,3 +1,2 @@
 QR.png
-*.id_rsa.pri
-*.id_rsa.pub
+key_module/key_files/
