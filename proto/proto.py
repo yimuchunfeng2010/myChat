@@ -92,14 +92,17 @@ class FriendInfo:
 
 
 class KeyInfo:
+    """
+        密钥信息
+    """
+    user_id = ""
     aes_key = ""
-    user_name = ""
     time_stamp = ""
 
-    def __init__(self):
-        self.aes_key = ""
-        self.user_name = ""
-        self.time_stamp = ""
+    def __init__(self, user_id='', aes_key='', time_stamp=''):
+        self.user_id = user_id
+        self.aes_key = aes_key
+        self.time_stamp = time_stamp
 
 # # 测试代码
 # chat = ChatInfo()

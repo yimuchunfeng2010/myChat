@@ -166,9 +166,7 @@ def key_agreement_step_two(receive_msg):
             global_chat_info[global_name_id_map[receive_msg.FromUserName]].rsa_public_key_name = receive_msg.FileName
 
             # 生成aes公钥
-            key_info = KeyInfo()
-            key_info.aes_key = UtilTool.gen_aes_key()
-            key_info.time_stamp = str(int(time.time()))
+            key_info = KeyInfo("", UtilTool.gen_aes_key(), UtilTool.get_cur_time_stamp())
 
             global_chat_info[global_name_id_map[receive_msg.FromUserName]].key_info_list.append(key_info)
 
@@ -195,10 +193,7 @@ def key_agreement_step_three(receive_msg):
 
     aes_key = UtilTool.decrypt_rsa_by_private_file(global_chat_info[chat_id].rsa_private_key_name, en_msg)
 
-    key_info = KeyInfo()
-    key_info.user_id = my_msg[index + len(CONNECTOR):]
-    key_info.time_stamp = UtilTool.get_cur_time_stamp()
-    key_info.aes_key = aes_key.decode()
+    key_info = KeyInfo(my_msg[index + len(CONNECTOR):], aes_key.decode(), UtilTool.get_cur_time_stamp())
 
     # 加入aes密钥列表
     global_chat_info[chat_id].key_info_list.append(key_info)
@@ -282,55 +277,56 @@ def init_mychat():
 
     # 初始化当前聊天好友
     init_current_friend()
+
     # 删除无用的密钥文件
     UtilTool.remove_unused_file()
 
     print('init success')
 
 
-def pro_key_agreement(user_id):
+def pro_key_agreement(user_name):
     #  查询user_id
     global global_friends_list
     global global_cur_chatter
-    if user_id in global_friends_list:
-        s_chatter = global_friends_list[user_id]
+    if user_name in global_friends_list:
+        user_id = global_friends_list[user_name]
     else:
         print("用户不存在，请输入正确的用户名")
         return
 
     # 判断是否已经加密
-    if s_chatter in global_name_id_map and global_name_id_map[s_chatter] in global_chat_info and \
-            global_chat_info[global_name_id_map[s_chatter]].is_chat_ready is True:
+    if user_id in global_name_id_map and global_name_id_map[user_id] in global_chat_info and \
+            global_chat_info[global_name_id_map[user_id]].is_chat_ready is True:
         # 密钥协商已完成，直接切换用户
-        global_cur_chatter = s_chatter
+        global_cur_chatter = user_id
     else:
 
         # 协商聊天id及测试好友加密聊天在线人数
-        id_agreement(s_chatter)
+        id_agreement(user_id)
 
         # 延时10s,以等待好友响应id_ack
         time.sleep(10)
 
-        if global_chat_info[global_name_id_map[s_chatter]].expect_ack_count == 0:
+        if global_chat_info[global_name_id_map[user_id]].expect_ack_count == 0:
             print("当前无好友加密聊天在线")
             return
 
         # 设置id_ready 状态
-        global_chat_info[global_name_id_map[s_chatter]].is_id_ready = True
+        global_chat_info[global_name_id_map[user_id]].is_id_ready = True
         print("ID协商完成")
 
         print("密钥协商步骤一")
-        key_agreement_step_one(global_name_id_map[s_chatter])
+        key_agreement_step_one(global_name_id_map[user_id])
 
         cnt = 0
-        while global_chat_info[global_name_id_map[s_chatter]].is_chat_ready is not True:
+        while global_chat_info[global_name_id_map[user_id]].is_chat_ready is not True:
             time.sleep(1)
             # 10s超时
             if cnt >= 10:
                 print("等待聊天协商完成超时,程序异常退出")
                 return
         # 密钥协商成功，切换当前聊天对象
-        global_cur_chatter = s_chatter
+        global_cur_chatter = user_id
 
 
 def is_key_agreement_ready():
