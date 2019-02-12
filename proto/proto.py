@@ -32,8 +32,11 @@ class ChatInfo(object):
     # 时间戳
     time = ""
 
-    # 聊天者
-    chat_user_name = ""
+    # 好友ID
+    user_id = ""
+
+    # 好友名称
+    user_name = ""
 
     def __init__(self):
         """"初始化"""
@@ -46,6 +49,7 @@ class ChatInfo(object):
         self.rsa_private_key_name = ""
         self.chat_master = False
         self.time = ""
+        self.user_name = ""
 
     def set_aes_key(self, key):
         self.aes_key = key
@@ -71,29 +75,20 @@ class ChatInfo(object):
         return
 
 
-class ChatRoomInfo:
-    '''微信群信息'''
-    use_name = ""
-    nick_name = ""
-    member_count = 0
-
-    def __init__(self):
-        pass
-
-
 class FriendInfo:
-    '''微信好友信息'''
-    use_name = ""
+    """
+    微信好友信息
+    """
+    user_id = ""
     nick_name = ""
     remark_name = ""
     friend_count = 0
 
-    def __init__(self):
-        self.use_name = ""
-        self.nick_name = ""
-        self.remark_name = ""
-        self.friend_count = 0
-        pass
+    def __init__(self, user_id='', nick_name='', remark_name='', friend_count=0):
+        self.user_id = user_id
+        self.nick_name = nick_name
+        self.remark_name = remark_name
+        self.friend_count = friend_count
 
 
 class KeyInfo:
@@ -102,8 +97,9 @@ class KeyInfo:
     time_stamp = ""
 
     def __init__(self):
-        pass
-
+        self.aes_key = ""
+        self.user_name = ""
+        self.time_stamp = ""
 
 # # 测试代码
 # chat = ChatInfo()

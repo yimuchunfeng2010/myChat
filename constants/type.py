@@ -22,7 +22,7 @@ FROM_CHATROOM = '@@' # 聊天室消息
 FROM_FRIEND = '@' # 好友消息
 
 # 密钥协商特殊字符串
-CHAT_START = '$chat'
+CHAT_START = '@'
 CHAT_ID_START = '%%%%'
 CHAT_ID_ACK = '!!!!'
 AES_KEY = '****'
