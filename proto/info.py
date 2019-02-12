@@ -27,38 +27,11 @@ class MyInfo(object):
     def set_user_name_to_user_id(self, user_name, user_id):
         self.user_name_to_user_id[user_name] = user_id
 
-    def add_chat_id_to_chat_info(self, chat_id, chat_info):
-        self.user_name_to_user_id[chat_id] = chat_info
-
-    def add_user_id_to_chat_id(self, user_id, chat_id):
-        self.user_name_to_user_id[user_id] = chat_id
-
-    def add_user_id_to_friend_info(self, user_id, friend_info):
-        self.user_name_to_user_id[user_id] = friend_info
-
     def get_user_name_to_user_id(self, user_name):
         return self.user_name_to_user_id[user_name]
 
-    def get_chat_id_to_chat_info(self, chat_id):
-        return self.user_name_to_user_id[chat_id]
-
-    def get_user_id_to_chat_id(self, user_id):
-        return self.user_name_to_user_id[user_id]
-
-    def get_user_id_to_friend_info(self, user_id):
-        return self.user_name_to_user_id[user_id]
-
     def del_user_name_to_user_id(self, user_name):
         self.user_name_to_user_id.pop(user_name)
-
-    def del_chat_id_to_chat_info(self, chat_id):
-        self.user_name_to_user_id.pop(chat_id)
-
-    def del_user_id_to_chat_id(self, user_id):
-        self.user_name_to_user_id.pop(user_id)
-
-    def del_user_id_to_friend_info(self, user_id):
-        self.user_name_to_user_id.pop(user_id)
 
     def check_user_name_to_user_id(self, user_name):
         if user_name in self.user_name_to_user_id:
@@ -66,20 +39,47 @@ class MyInfo(object):
         else:
             return False
 
+    def add_chat_id_to_chat_info(self, chat_id, chat_info):
+        self.chat_id_to_chat_info[chat_id] = chat_info
+
+    def get_chat_id_to_chat_info(self, chat_id):
+        return self.chat_id_to_chat_info[chat_id]
+
+    def del_chat_id_to_chat_info(self, chat_id):
+        self.chat_id_to_chat_info.pop(chat_id)
+
     def check_chat_id_to_chat_info(self, chat_id):
-        if chat_id in self.user_name_to_user_id:
+        if chat_id in self.chat_id_to_chat_info:
             return True
         else:
             return False
+
+    def add_user_id_to_chat_id(self, user_id, chat_id):
+        self.user_id_to_chat_id[user_id] = chat_id
+
+    def get_user_id_to_chat_id(self, user_id):
+        return self.user_id_to_chat_id[user_id]
+
+    def del_user_id_to_chat_id(self, user_id):
+        self.user_id_to_chat_id.pop(user_id)
 
     def check_user_id_to_chat_id(self, user_id):
-        if user_id in self.user_name_to_user_id:
+        if user_id in self.user_id_to_chat_id:
             return True
         else:
             return False
 
+    def add_user_id_to_friend_info(self, user_id, friend_info):
+        self.user_id_to_friend_info[user_id] = friend_info
+
+    def get_user_id_to_friend_info(self, user_id):
+        return self.user_id_to_friend_info[user_id]
+
+    def del_user_id_to_friend_info(self, user_id):
+        self.user_id_to_friend_info.pop(user_id)
+
     def check_user_id_to_friend_info(self, user_id):
-        if user_id in self.user_name_to_user_id:
+        if user_id in self.user_id_to_friend_info:
             return True
         else:
             return False

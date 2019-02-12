@@ -2,6 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a79d4111-877a-43bb-b37f-fcd33e2e9a5d" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/key_module/key_files/friend/@@d8b01379d9dee81d6b46ae355e00514c32b361933fe8536da26289650c649491_1549975432_id_rsa.pub" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/key_module/key_files/mine/@@d8b01379d9dee81d6b46ae355e00514c32b361933fe8536da26289650c649491_1549975432_id_rsa.pri" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/key_module/key_files/mine/@@d8b01379d9dee81d6b46ae355e00514c32b361933fe8536da26289650c649491_1549975432_id_rsa.pub" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/my_chat.py" beforeDir="false" afterPath="$PROJECT_DIR$/my_chat.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/proto/info.py" beforeDir="false" afterPath="$PROJECT_DIR$/proto/info.py" afterDir="false" />
     </list>
@@ -13,7 +16,7 @@
   </component>
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/myChat$aes_crypto__1_.coverage" NAME="aes_crypto (1) Coverage Results" MODIFIED="1549854453844" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/crypto_module" />
-    <SUITE FILE_PATH="coverage/myChat$my_chat.coverage" NAME="my_chat Coverage Results" MODIFIED="1549975382971" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/myChat$my_chat.coverage" NAME="my_chat Coverage Results" MODIFIED="1549979068464" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/myChat$aes_crypto.coverage" NAME="aes_crypto Coverage Results" MODIFIED="1548469057916" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/crypto" />
     <SUITE FILE_PATH="coverage/myChat$tmp.coverage" NAME="tmp Coverage Results" MODIFIED="1549769332624" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/myChat$line_count.coverage" NAME="line_count Coverage Results" MODIFIED="1549886076776" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/util" />
@@ -27,8 +30,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/my_chat.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="257" column="24" selection-start-line="257" selection-start-column="24" selection-end-line="257" selection-end-column="24" />
+            <state relative-caret-position="131">
+              <caret line="185" lean-forward="true" selection-start-line="185" selection-end-line="185" />
               <folding>
                 <element signature="e#24#37#0" expanded="true" />
               </folding>
@@ -83,8 +86,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/proto/info.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="491">
-              <caret line="59" column="48" selection-start-line="59" selection-start-column="48" selection-end-line="59" selection-end-column="48" />
+            <state relative-caret-position="274">
+              <caret line="65" column="8" selection-start-line="65" selection-start-column="8" selection-end-line="65" selection-end-column="8" />
             </state>
           </provider>
         </entry>
@@ -110,16 +113,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>actual_ack_count</find>
-      <find>except_ack_count</find>
-      <find>global_chat_info[chat_id].expect_ack_count</find>
-      <find>CCC</find>
-      <find>expect_ack_count</find>
-      <find>owner_name</find>
-      <find>get_owner_user_name</find>
-      <find>update_key</find>
-      <find>chat_user_name</find>
-      <find>use_name</find>
       <find>use_id</find>
       <find>ChatRoomInfo</find>
       <find>init_chatrooms</find>
@@ -130,16 +123,26 @@
       <find>keyin</find>
       <find>global_friend_online_count</find>
       <find>global_chat_room_info</find>
-      <find>global_name_id_map</find>
       <find>global_cur_chatter</find>
       <find>global_chat_info</find>
       <find>global_friend_info</find>
       <find>pro_key_agreement</find>
       <find>ChatInfo</find>
       <find>my_info</find>
-      <find>global_friends_list</find>
       <find>add_user_name_to_user_id</find>
       <find>user_name_to_user_id</find>
+      <find>global_friends_list</find>
+      <find>global_name_id_map</find>
+      <find>密钥协商异常, 程序退出</find>
+      <find>add_user</find>
+      <find>密钥协商步骤二</find>
+      <find>id_agreement</find>
+      <find>add_user_id_to_chat_id</find>
+      <find>BBB</find>
+      <find>密钥协商步骤三</find>
+      <find>check_user_id_to_chat_id</find>
+      <find>my_info.get_user_id_to_chat_id</find>
+      <find>print</find>
     </findStrings>
     <replaceStrings>
       <replace>'</replace>
@@ -417,12 +420,12 @@
       <workItem from="1549867292754" duration="1341000" />
       <workItem from="1549869913503" duration="6612000" />
       <workItem from="1549969702648" duration="1530000" />
-      <workItem from="1549971778519" duration="3584000" />
+      <workItem from="1549971778519" duration="7352000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="157381000" />
+    <option name="totallyTimeSpent" value="161149000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -442,7 +445,7 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32848233" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.6321746" visible="true" weight="0.27962577" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.6321746" visible="true" weight="0.44698545" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3981289" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -704,15 +707,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/proto/info.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="491">
-          <caret line="59" column="48" selection-start-line="59" selection-start-column="48" selection-end-line="59" selection-end-column="48" />
+        <state relative-caret-position="274">
+          <caret line="65" column="8" selection-start-line="65" selection-start-column="8" selection-end-line="65" selection-end-column="8" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/my_chat.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="257" column="24" selection-start-line="257" selection-start-column="24" selection-end-line="257" selection-end-column="24" />
+        <state relative-caret-position="131">
+          <caret line="185" lean-forward="true" selection-start-line="185" selection-end-line="185" />
           <folding>
             <element signature="e#24#37#0" expanded="true" />
           </folding>
