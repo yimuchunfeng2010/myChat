@@ -1,6 +1,5 @@
-# coding:utf-8
+# -*- coding: utf-8 -*-
 import itchat
-import os
 import sys
 import importlib
 import threading
@@ -18,27 +17,23 @@ mutex = threading.Lock()
 global_cur_chatter_name = "AA"
 # global_cur_chatter_name = "贝贝奶奶"
 
-global_cur_chatter = ""
-global_friends_list = {}
+global_cur_chatter_id = ""
 
-# 聊天信息
+# 好友信息表(包括群) remark_name -> user_id
+global_friends_list = dict()
+
+# 聊天信息 chat_id -> chat_info()
 global_chat_info = dict()
 
-# 用户名与聊天ID映射表
+# 用户ID与聊天ID映射表 user_id -> chat_id
 global_name_id_map = dict()
 
-# 聊天室信息
-global_chat_room_info = dict()
-
-# 好友信息
+# 好友信息 user_id -> friend_info()
 global_friend_info = dict()
-
-# 群好友加密通信在线人数
-global_friend_online_count = 0
 
 
 def say():
-    global global_cur_chatter
+    global global_cur_chatter_id
     while True:
         my_msg = input()
         print('我: ', end='')
@@ -46,15 +41,15 @@ def say():
         # 选择/切换聊天对象
         if my_msg.startswith(CHAT_START):
             user_name = my_msg.lstrip(CHAT_START)
-            pro_key_agreement(user_name)
+            launch_key_agreement(user_name)
             continue
 
         # 协商完成,加密通信
         if is_key_agreement_ready():
-            chat_id = global_name_id_map[global_cur_chatter]
+            chat_id = global_name_id_map[global_cur_chatter_id]
             # 加密信息
             en_msg = UtilTool.aes_encrypt(global_chat_info[chat_id].aes_key, my_msg)
-            itchat.send_msg(en_msg, toUserName=global_cur_chatter)
+            itchat.send_msg(en_msg, toUserName=global_cur_chatter_id)
         else:
             print("密钥协商未完成，请等待协商完成")
 
@@ -67,15 +62,17 @@ def listen(receive_msg):
 
     if not hasattr(receive_msg, 'Text'):
         return
-        # 接收到chat_id
+
+    # 接收到chat_id
     if receive_msg.Text.startswith(CHAT_ID_START):
         id_ack(receive_msg)
         return
+
     # 接受到chat_id确认消息
     if receive_msg.Text.startswith(CHAT_ID_ACK):
         chat_id = receive_msg.Text.lstrip(CHAT_ID_ACK)
         if chat_id in global_chat_info:
-            global_chat_info[chat_id].expect_ack_count = global_chat_info[chat_id].expect_ack_count + 1
+            global_chat_info[chat_id].expect_ack_count += 1
         else:
             print('聊天ID协商异常，程序退出')
         return
@@ -105,7 +102,7 @@ def id_agreement(user_id):
     chat_id = UtilTool.gen_chat_id()
     itchat.send_msg(CHAT_ID_START + chat_id, toUserName=user_id)
 
-    new_chat = ChatInfo()
+    new_chat = ChatUnit()
     new_chat.user_id = user_id
     new_chat.is_id_ready = False
     global_chat_info[chat_id] = new_chat
@@ -121,7 +118,7 @@ def id_ack(receive_msg):
     global global_name_id_map
 
     chat_id = receive_msg.Text.lstrip(CHAT_ID_START)
-    new_chat = ChatInfo()
+    new_chat = ChatUnit()
     new_chat.user_id = receive_msg.FromUserName
     new_chat.is_id_ready = True
     global_chat_info[chat_id] = new_chat
@@ -264,8 +261,8 @@ def init_rooms():
 
 
 def init_current_friend():
-    global global_cur_chatter
-    global_cur_chatter = global_friends_list[global_cur_chatter_name]
+    global global_cur_chatter_id
+    global_cur_chatter_id = global_friends_list[global_cur_chatter_name]
 
 
 def init_mychat():
@@ -284,10 +281,10 @@ def init_mychat():
     print('init success')
 
 
-def pro_key_agreement(user_name):
+def launch_key_agreement(user_name):
     #  查询user_id
     global global_friends_list
-    global global_cur_chatter
+    global global_cur_chatter_id
     if user_name in global_friends_list:
         user_id = global_friends_list[user_name]
     else:
@@ -298,7 +295,7 @@ def pro_key_agreement(user_name):
     if user_id in global_name_id_map and global_name_id_map[user_id] in global_chat_info and \
             global_chat_info[global_name_id_map[user_id]].is_chat_ready is True:
         # 密钥协商已完成，直接切换用户
-        global_cur_chatter = user_id
+        global_cur_chatter_id = user_id
     else:
 
         # 协商聊天id及测试好友加密聊天在线人数
@@ -326,12 +323,12 @@ def pro_key_agreement(user_name):
                 print("等待聊天协商完成超时,程序异常退出")
                 return
         # 密钥协商成功，切换当前聊天对象
-        global_cur_chatter = user_id
+        global_cur_chatter_id = user_id
 
 
 def is_key_agreement_ready():
-    if global_cur_chatter in global_name_id_map:
-        chat_id = global_name_id_map[global_cur_chatter]
+    if global_cur_chatter_id in global_name_id_map:
+        chat_id = global_name_id_map[global_cur_chatter_id]
         if chat_id in global_chat_info and global_chat_info[chat_id].is_chat_ready is True:
             return True
     else:
@@ -342,7 +339,7 @@ def encrypt_chat(receive_msg):
     global global_name_id_map
     global global_chat_info
     global global_friend_info
-    global global_cur_chatter
+    global global_cur_chatter_id
 
     if receive_msg.FromUserName in global_name_id_map:
         chat_id = global_name_id_map[receive_msg.FromUserName]
@@ -359,7 +356,7 @@ def encrypt_chat(receive_msg):
             chatter = global_friend_info[receive_msg.FromUserName].remark_name
         else:
             chatter = global_friend_info[receive_msg.FromUserName].nick_name
-    if global_cur_chatter == '':
+    if global_cur_chatter_id == '':
         print('someone:', de_receive_msg)
     else:
         print(chatter, '：', de_receive_msg)

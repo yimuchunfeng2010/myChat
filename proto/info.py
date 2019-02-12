@@ -3,7 +3,65 @@ from proto.util import *
 from config.config import *
 
 
-class ChatInfo(object):
+class MyInfo(object):
+    """"信息类"""
+
+    # 好友信息表(包括群) remark_name -> user_id //global_friends_list
+    user_name_to_user_id = dict()
+
+    # 聊天信息 chat_id -> chat_info() //global_chat_info
+    chat_id_to_chat_info = dict()
+
+    # 用户ID与聊天ID映射表 user_id -> chat_id // global_name_id_map
+    user_id_to_chat_id = dict()
+
+    # 好友信息 user_id -> friend_info() // global_friend_info
+    user_id_to_friend_info = dict()
+
+    def __init__(self):
+        self.user_name_to_user_id = dict()
+        self.chat_id_to_chat_info = dict()
+        self.user_id_to_chat_id = dict()
+        self.user_id_to_friend_info = dict()
+
+    def set_user_name_to_user_id(self, user_name, user_id):
+        self.user_name_to_user_id[user_name] = user_id
+
+    def add_chat_id_to_chat_info(self, chat_id, chat_info):
+        self.user_name_to_user_id[chat_id] = chat_info
+
+    def add_user_id_to_chat_id(self, user_id, chat_id):
+        self.user_name_to_user_id[user_id] = chat_id
+
+    def add_user_id_to_friend_info(self, user_id, friend_info):
+        self.user_name_to_user_id[user_id] = friend_info
+
+    def get_user_name_to_user_id(self, user_name):
+        return self.user_name_to_user_id[user_name]
+
+    def get_chat_id_to_chat_info(self, chat_id):
+        return self.user_name_to_user_id[chat_id]
+
+    def get_user_id_to_chat_id(self, user_id):
+        return self.user_name_to_user_id[user_id]
+
+    def get_user_id_to_friend_info(self, user_id):
+        return self.user_name_to_user_id[user_id]
+
+    def del_user_name_to_user_id(self, user_name):
+        self.user_name_to_user_id.pop(user_name)
+
+    def del_chat_id_to_chat_info(self, chat_id):
+        self.user_name_to_user_id.pop(chat_id)
+
+    def del_user_id_to_chat_id(self, user_id):
+        self.user_name_to_user_id.pop(user_id)
+
+    def del_user_id_to_friend_info(self, user_id):
+        self.user_name_to_user_id.pop(user_id)
+
+
+class ChatUnit(object):
     """聊天信息"""
 
     # 密钥信息
@@ -105,11 +163,11 @@ class KeyInfo:
         self.time_stamp = time_stamp
 
 # # 测试代码
-# chat = ChatInfo()
+# chat = ChatUnit()
 # print(type(chat.aes_key))
 # chatObj = list()
-# chatObj.append(ChatInfo())
-# chatObj.append(ChatInfo())
+# chatObj.append(ChatUnit())
+# chatObj.append(ChatUnit())
 #
 # for i in chatObj:
 #     print(i.aes_key)
