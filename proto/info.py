@@ -39,7 +39,7 @@ class MyInfo(object):
         else:
             return False
 
-    def add_chat_id_to_chat_info(self, chat_id, chat_info):
+    def set_chat_id_to_chat_info(self, chat_id, chat_info):
         self.chat_id_to_chat_info[chat_id] = chat_info
 
     def get_chat_id_to_chat_info(self, chat_id):
@@ -54,7 +54,7 @@ class MyInfo(object):
         else:
             return False
 
-    def add_user_id_to_chat_id(self, user_id, chat_id):
+    def set_user_id_to_chat_id(self, user_id, chat_id):
         self.user_id_to_chat_id[user_id] = chat_id
 
     def get_user_id_to_chat_id(self, user_id):
@@ -69,7 +69,7 @@ class MyInfo(object):
         else:
             return False
 
-    def add_user_id_to_friend_info(self, user_id, friend_info):
+    def set_user_id_to_friend_info(self, user_id, friend_info):
         self.user_id_to_friend_info[user_id] = friend_info
 
     def get_user_id_to_friend_info(self, user_id):

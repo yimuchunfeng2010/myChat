@@ -25,9 +25,6 @@ global_cur_chatter_id = ""
 # 聊天信息 chat_id -> chat_info()
 global_chat_info = dict()
 
-# 好友信息 user_id -> friend_info()
-global_friend_info = dict()
-
 
 def say():
     global global_cur_chatter_id
@@ -104,7 +101,7 @@ def id_agreement(user_id):
     new_chat.is_id_ready = False
     global_chat_info[chat_id] = new_chat
 
-    my_info.add_user_id_to_chat_id(user_id, chat_id)
+    my_info.set_user_id_to_chat_id(user_id, chat_id)
 
     return
 
@@ -119,7 +116,7 @@ def id_ack(receive_msg):
     new_chat.is_id_ready = True
     global_chat_info[chat_id] = new_chat
 
-    my_info.add_user_id_to_chat_id(receive_msg.FromUserName, chat_id)
+    my_info.set_user_id_to_chat_id(receive_msg.FromUserName, chat_id)
 
     # 发送确认消息
     itchat.send_msg(CHAT_ID_ACK + receive_msg.Text.lstrip(CHAT_ID_START), toUserName=receive_msg.FromUserName)
@@ -236,9 +233,9 @@ def init_friends():
         else:
             my_info.set_user_name_to_user_id(friend.NickName, friend.UserName)
 
-        global_friend_info[friend.UserName] = FriendInfo(friend.UserName, friend.NickName, friend.RemarkName, 1)
+        my_info.set_user_id_to_friend_info(friend.UserName, FriendInfo(friend.UserName, friend.NickName, friend.RemarkName, 1))
 
-        my_info.add_user_id_to_chat_id(friend.UserName, "")
+        my_info.set_user_id_to_chat_id(friend.UserName, "")
 
 
 def init_rooms():
@@ -250,9 +247,8 @@ def init_rooms():
         else:
             my_info.set_user_name_to_user_id(room.NickName, room.UserName)
 
-        global_friend_info[room.UserName] = FriendInfo(room.UserName, room.NickName, room.RemarkName, room.MemberCount)
-
-        my_info.add_user_id_to_chat_id(room.UserName, "")
+        my_info.set_user_id_to_friend_info(room.UserName, FriendInfo(room.UserName, room.NickName, room.RemarkName, room.MemberCount))
+        my_info.set_user_id_to_chat_id(room.UserName, "")
 
 
 def init_current_friend():
@@ -331,7 +327,6 @@ def is_key_agreement_ready():
 
 def encrypt_chat(receive_msg):
     global global_chat_info
-    global global_friend_info
     global global_cur_chatter_id
 
     if my_info.check_user_id_to_chat_id(receive_msg.FromUserName):
@@ -344,11 +339,12 @@ def encrypt_chat(receive_msg):
         de_receive_msg = receive_msg
 
     chatter = ''
-    if receive_msg.FromUserName in global_friend_info:
-        if global_friend_info[receive_msg.FromUserName].remark_name != '':
-            chatter = global_friend_info[receive_msg.FromUserName].remark_name
+    if my_info.check_user_id_to_friend_info(receive_msg.FromUserName):
+        friend_info = my_info.get_user_id_to_friend_info(receive_msg.FromUserName)
+        if friend_info.remark_name != '':
+            chatter = friend_info.remark_name
         else:
-            chatter = global_friend_info[receive_msg.FromUserName].nick_name
+            chatter = friend_info.nick_name
     if global_cur_chatter_id == '':
         print('someone:', de_receive_msg)
     else:
