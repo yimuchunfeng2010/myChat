@@ -60,6 +60,30 @@ class MyInfo(object):
     def del_user_id_to_friend_info(self, user_id):
         self.user_name_to_user_id.pop(user_id)
 
+    def check_user_name_to_user_id(self, user_name):
+        if user_name in self.user_name_to_user_id:
+            return True
+        else:
+            return False
+
+    def check_chat_id_to_chat_info(self, chat_id):
+        if chat_id in self.user_name_to_user_id:
+            return True
+        else:
+            return False
+
+    def check_user_id_to_chat_id(self, user_id):
+        if user_id in self.user_name_to_user_id:
+            return True
+        else:
+            return False
+
+    def check_user_id_to_friend_info(self, user_id):
+        if user_id in self.user_name_to_user_id:
+            return True
+        else:
+            return False
+
 
 class ChatUnit(object):
     """聊天信息"""

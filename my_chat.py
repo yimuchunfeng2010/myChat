@@ -14,6 +14,9 @@ importlib.reload(sys)
 my_id = ''
 mutex = threading.Lock()
 
+# 信息类对象
+my_info = MyInfo()
+
 global_cur_chatter_name = "AA"
 # global_cur_chatter_name = "贝贝奶奶"
 
@@ -230,16 +233,15 @@ def key_agreement_step_four(receive_msg):
 
 def init_friends():
     #  获取好友信息
-    global global_friends_list
     global my_id
     friends = itchat.get_friends(update=True)  # 获取微信好友列表，如果设置update=True将从服务器刷新列表
     my_id = friends[0].UserName
 
     for friend in friends:
         if friend.RemarkName != "":
-            global_friends_list[friend.RemarkName] = friend.UserName
+            my_info.set_user_name_to_user_id(friend.RemarkName, friend.UserName)
         else:
-            global_friends_list[friend.NickName] = friend.UserName
+            my_info.set_user_name_to_user_id(friend.NickName, friend.UserName)
 
         global_friend_info[friend.UserName] = FriendInfo(friend.UserName, friend.NickName, friend.RemarkName, 1)
 
@@ -251,9 +253,9 @@ def init_rooms():
     rooms = itchat.get_chatrooms(update=True)
     for room in rooms:
         if room.RemarkName != "":
-            global_friends_list[room.RemarkName] = room.UserName
+            my_info.set_user_name_to_user_id(room.RemarkName,room.UserName)
         else:
-            global_friends_list[room.NickName] = room.UserName
+            my_info.set_user_name_to_user_id(room.NickName, room.UserName)
 
         global_friend_info[room.UserName] = FriendInfo(room.UserName, room.NickName, room.RemarkName, room.MemberCount)
 
@@ -262,7 +264,7 @@ def init_rooms():
 
 def init_current_friend():
     global global_cur_chatter_id
-    global_cur_chatter_id = global_friends_list[global_cur_chatter_name]
+    global_cur_chatter_id = my_info.get_user_name_to_user_id(global_cur_chatter_name)
 
 
 def init_mychat():
@@ -283,10 +285,9 @@ def init_mychat():
 
 def launch_key_agreement(user_name):
     #  查询user_id
-    global global_friends_list
     global global_cur_chatter_id
-    if user_name in global_friends_list:
-        user_id = global_friends_list[user_name]
+    if my_info.check_user_name_to_user_id(user_name):
+        user_id = my_info.get_user_name_to_user_id(user_name)
     else:
         print("用户不存在，请输入正确的用户名")
         return
