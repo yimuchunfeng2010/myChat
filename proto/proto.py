@@ -157,6 +157,8 @@ class KeyAgreement(object):
         chat_id = in_my_info.get_user_id_to_chat_id(receive_msg.FromUserName)
         chat_info = in_my_info.get_chat_id_to_chat_info(chat_id)
 
+        print("aes_key", chat_info.key_info_list[0].aes_key)
+        print("Text", receive_msg.Text)
         de_aes_key = UtilTool.aes_decrypt(chat_info.key_info_list[0].aes_key,
                                           receive_msg.Text.lstrip(in_my_id))
         chat_info.aes_key = de_aes_key

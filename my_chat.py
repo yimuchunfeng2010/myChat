@@ -90,6 +90,7 @@ def listen(receive_msg):
     if receive_msg.Type == WX_TEXT and receive_msg.Text.startswith(my_id) and my_info.check_user_id_to_chat_id(
             receive_msg.FromUserName):
         print('密钥协商步骤四')
+        print("my_id", my_id)
         KeyAgreement.key_agreement_step_four(receive_msg, my_id, my_info)
         print('密钥协商完成，开始加密聊天')
         return
