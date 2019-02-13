@@ -181,13 +181,30 @@ class KeyInfo:
         self.aes_key = aes_key
         self.time_stamp = time_stamp
 
-# # 测试代码
-# chat = ChatUnit()
-# print(type(chat.aes_key))
-# chatObj = list()
-# chatObj.append(ChatUnit())
-# chatObj.append(ChatUnit())
-#
-# for i in chatObj:
-#     print(i.aes_key)
-#     print(i.rsa_private_key_name)
+
+class CurrentChatterInfo(object):
+    """当前聊天者信息"""
+    user_id = ""
+    user_name = ""
+
+    def __init__(self, user_id="", user_name="AA"):
+        self.user_id = user_id
+        self.user_name = user_name
+
+    def set_user_id(self, user_id):
+        self.user_id = user_id
+
+    def set_user_name(self, user_name):
+        self.user_name = user_name
+
+    def get_user_id(self):
+        return self.user_id
+
+    def get_user_name(self):
+        return self.user_name
+
+    def is_current_empty(self):
+        if self.user_name == "" or self.user_id == "":
+            return True
+        else:
+            return False

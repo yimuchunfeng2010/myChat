@@ -21,14 +21,11 @@ mutex = threading.Lock()
 # 信息类对象
 my_info = MyInfo()
 
-global_cur_chatter_name = "AA"
-# global_cur_chatter_name = "贝贝奶奶"
-
-global_cur_chatter_id = ""
+# 当前聊天者信息
+cur_chatter_info = CurrentChatterInfo()
 
 
 def say():
-    global global_cur_chatter_id
     while True:
         my_msg = input()
         print('我: ', end='')
@@ -36,17 +33,17 @@ def say():
         # 选择/切换聊天对象
         if my_msg.startswith(CHAT_START):
             user_name = my_msg.lstrip(CHAT_START)
-            global_cur_chatter_id = KeyAgreement.launch_key_agreement(user_name, my_info)
+            cur_chatter_info.user_id = KeyAgreement.launch_key_agreement(user_name, my_info)
             continue
 
         # 协商完成,加密通信
-        if IdAgreement.is_key_agreement_ready(my_info, global_cur_chatter_id):
-            chat_id = my_info.get_user_id_to_chat_id(global_cur_chatter_id)
+        if IdAgreement.is_key_agreement_ready(my_info, cur_chatter_info.user_id):
+            chat_id = my_info.get_user_id_to_chat_id(cur_chatter_info.user_id)
             # 加密信息
             chat_info = my_info.get_chat_id_to_chat_info(chat_id)
             ase_key = chat_info.aes_key
             en_msg = UtilTool.aes_encrypt(ase_key, my_msg)
-            itchat.send_msg(en_msg, toUserName=global_cur_chatter_id)
+            itchat.send_msg(en_msg, toUserName=cur_chatter_info.user_id)
         else:
             print("密钥协商未完成，请等待协商完成")
 
@@ -93,17 +90,16 @@ def listen(receive_msg):
     if receive_msg.Type == WX_TEXT and receive_msg.Text.startswith(my_id) and my_info.check_user_id_to_chat_id(
             receive_msg.FromUserName):
         print('密钥协商步骤四')
-        print("my_id",my_id)
+        print("my_id", my_id)
         KeyAgreement.key_agreement_step_four(receive_msg, my_id, my_info)
         print('密钥协商完成，开始加密聊天')
         return
 
     # 开始加密聊天
-    UtilTool.encrypt_chat(receive_msg, global_cur_chatter_id, my_info)
+    UtilTool.encrypt_chat(receive_msg, cur_chatter_info.user_id, my_info)
 
 
 def init_mychat():
-    global global_cur_chatter_id
     global my_id
     # 初始化朋友列表
     my_id = UtilTool.init_friends(my_info)
@@ -112,7 +108,7 @@ def init_mychat():
     UtilTool.init_rooms(my_info)
 
     # 初始化当前聊天好友
-    global_cur_chatter_id = UtilTool.init_current_friend(global_cur_chatter_name, my_info)
+    cur_chatter_info.user_id = UtilTool.init_current_friend(cur_chatter_info.user_name, my_info)
 
     # 删除无用的密钥文件
     UtilTool.remove_unused_file()
