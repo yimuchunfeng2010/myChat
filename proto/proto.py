@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 import itchat
+import time
 from constants.type import *
 from proto.info import *
+from proto.util import UtilTool
 
 """密钥协议文件"""
 
@@ -99,12 +101,14 @@ class KeyAgreement(object):
                 chat_info.rsa_public_key_name = receive_msg.FileName
                 chat_info.key_info_list.append(key_info)
 
+                print("TTT",chat_info.key_info_list[0].aes_key)
                 # 用rsa公钥加密aes密钥, 接收方用rsa私钥进行解密
                 aes_msg = UtilTool.encrypt_rsa_by_public_file(FRIEND_KEY_PATH + receive_msg['FileName'],
                                                               key_info.aes_key)
 
                 # AES_KEY，表示后序消息内容是rsa公钥加密过的aes密钥信息
                 aes_msg = AES_KEY + aes_msg + CONNECTOR + in_my_id
+                print("RRR",aes_msg)
                 itchat.send_msg(aes_msg, toUserName=receive_msg.FromUserName)
         else:
             print("receive file： ", receive_msg.FileName)
@@ -139,6 +143,7 @@ class KeyAgreement(object):
                 print("LLL", item.aes_key)
                 key_msg = UtilTool.aes_encrypt(item.aes_key, chat_info.aes_key)
                 send_msg = item.user_id + key_msg
+                print("PPP",send_msg, receive_msg.FromUserName)
                 itchat.send_msg(send_msg, toUserName=receive_msg.FromUserName)
 
             print("密钥协商完成，开始加密聊天")
@@ -154,8 +159,60 @@ class KeyAgreement(object):
         chat_id = in_my_info.get_user_id_to_chat_id(receive_msg.FromUserName)
         chat_info = in_my_info.get_chat_id_to_chat_info(chat_id)
 
+        print("UUUU",chat_info.key_info_list[0].aes_key)
+        print("KKK",receive_msg.Text.lstrip(in_my_id)," ",in_my_id)
         de_aes_key = UtilTool.aes_decrypt(chat_info.key_info_list[0].aes_key,
                                           receive_msg.Text.lstrip(in_my_id))
         chat_info.aes_key = de_aes_key
         chat_info.is_chat_ready = True
         chat_info.time = UtilTool.get_cur_time_stamp()
+
+    #  发起密钥协商
+    @staticmethod
+    def launch_key_agreement(user_name, in_my_info):
+        #  查询user_id
+        global global_cur_chatter_id
+        if in_my_info.check_user_name_to_user_id(user_name):
+            user_id = in_my_info.get_user_name_to_user_id(user_name)
+        else:
+            print("用户不存在，请输入正确的用户名")
+            return
+
+        # 判断是否已经加密
+        if in_my_info.check_user_id_to_chat_id(user_id) and in_my_info.check_chat_id_to_chat_info(user_id):
+            chat_id = in_my_info.get_user_id_to_chat_id(user_id)
+            chat_info = in_my_info.get_chat_id_to_chat_info(chat_id)
+            if chat_info.is_chat_ready is True:
+                # 密钥协商已完成，直接切换用户
+                global_cur_chatter_id = user_id
+        else:
+
+            # 协商聊天id及测试好友加密聊天在线人数
+            IdAgreement.id_agreement(user_id, in_my_info)
+
+            # 延时10s,以等待好友响应id_ack
+            time.sleep(5)
+
+            chat_id = in_my_info.get_user_id_to_chat_id(user_id)
+            chat_info = in_my_info.get_chat_id_to_chat_info(chat_id)
+
+            if chat_info.expect_ack_count == 0:
+                print("当前无好友加密聊天在线")
+                return
+
+                # 设置id_ready 状态
+                chat_info.is_id_ready = True
+            print("ID协商完成")
+
+            print("密钥协商步骤一")
+            KeyAgreement.key_agreement_step_one(in_my_info.get_user_id_to_chat_id(user_id), in_my_info)
+
+            cnt = 0
+            while chat_info.is_chat_ready is not True:
+                time.sleep(1)
+                # 10s超时
+                if cnt >= 10:
+                    print("等待聊天协商完成超时,程序异常退出")
+                    return
+            # 密钥协商成功，切换当前聊天对象
+            return user_id

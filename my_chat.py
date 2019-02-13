@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import itchat
 import sys
+import os
 import importlib
 import threading
 from constants.type import *
@@ -8,6 +9,7 @@ from itchat.content import *
 from proto.info import *
 from proto.proto import IdAgreement
 from proto.proto import KeyAgreement
+from proto.util import UtilTool
 
 sys.path.append(os.getcwd() + '/constants')
 
@@ -34,7 +36,7 @@ def say():
         # 选择/切换聊天对象
         if my_msg.startswith(CHAT_START):
             user_name = my_msg.lstrip(CHAT_START)
-            launch_key_agreement(user_name)
+            global_cur_chatter_id = KeyAgreement.launch_key_agreement(user_name, my_info)
             continue
 
         # 协商完成,加密通信
@@ -82,7 +84,7 @@ def listen(receive_msg):
     if receive_msg.Type == WX_TEXT and receive_msg.Text.startswith(AES_KEY):
         print('密钥协商步骤三')
         if my_info.check_user_id_to_chat_id(receive_msg.FromUserName):
-            KeyAgreement.key_agreement_step_three(receive_msg,my_info)
+            KeyAgreement.key_agreement_step_three(receive_msg, my_info)
         else:
             print('密钥协商异常, 程序退出')
         return
@@ -91,143 +93,31 @@ def listen(receive_msg):
     if receive_msg.Type == WX_TEXT and receive_msg.Text.startswith(my_id) and my_info.check_user_id_to_chat_id(
             receive_msg.FromUserName):
         print('密钥协商步骤四')
+        print("my_id",my_id)
         KeyAgreement.key_agreement_step_four(receive_msg, my_id, my_info)
         print('密钥协商完成，开始加密聊天')
         return
 
     # 开始加密聊天
-    encrypt_chat(receive_msg)
-
-
-def init_friends():
-    #  获取好友信息
-    global my_id
-    friends = itchat.get_friends(update=True)  # 获取微信好友列表，如果设置update=True将从服务器刷新列表
-    my_id = friends[0].UserName
-
-    for friend in friends:
-        if friend.RemarkName != "":
-            my_info.set_user_name_to_user_id(friend.RemarkName, friend.UserName)
-        else:
-            my_info.set_user_name_to_user_id(friend.NickName, friend.UserName)
-
-        my_info.set_user_id_to_friend_info(friend.UserName,
-                                           FriendInfo(friend.UserName, friend.NickName, friend.RemarkName, 1))
-
-        my_info.set_user_id_to_chat_id(friend.UserName, "")
-
-
-def init_rooms():
-    # 获取群信息
-    rooms = itchat.get_chatrooms(update=True)
-    for room in rooms:
-        if room.RemarkName != "":
-            my_info.set_user_name_to_user_id(room.RemarkName, room.UserName)
-        else:
-            my_info.set_user_name_to_user_id(room.NickName, room.UserName)
-
-        my_info.set_user_id_to_friend_info(room.UserName,
-                                           FriendInfo(room.UserName, room.NickName, room.RemarkName, room.MemberCount))
-        my_info.set_user_id_to_chat_id(room.UserName, "")
-
-
-def init_current_friend():
-    global global_cur_chatter_id
-    global_cur_chatter_id = my_info.get_user_name_to_user_id(global_cur_chatter_name)
+    UtilTool.encrypt_chat(receive_msg, global_cur_chatter_id, my_info)
 
 
 def init_mychat():
+    global global_cur_chatter_id
+    global my_id
     # 初始化朋友列表
-    init_friends()
+    my_id = UtilTool.init_friends(my_info)
 
     # 初始化好友群信息
-    init_rooms()
+    UtilTool.init_rooms(my_info)
 
     # 初始化当前聊天好友
-    init_current_friend()
+    global_cur_chatter_id = UtilTool.init_current_friend(global_cur_chatter_name, my_info)
 
     # 删除无用的密钥文件
     UtilTool.remove_unused_file()
 
     print('init success')
-
-
-def launch_key_agreement(user_name):
-    #  查询user_id
-    global global_cur_chatter_id
-    if my_info.check_user_name_to_user_id(user_name):
-        user_id = my_info.get_user_name_to_user_id(user_name)
-    else:
-        print("用户不存在，请输入正确的用户名")
-        return
-
-    # 判断是否已经加密
-    if my_info.check_user_id_to_chat_id(user_id) and my_info.check_chat_id_to_chat_info(user_id):
-        chat_id = my_info.get_user_id_to_chat_id(user_id)
-        chat_info = my_info.get_chat_id_to_chat_info(chat_id)
-        if chat_info.is_chat_ready is True:
-            # 密钥协商已完成，直接切换用户
-            global_cur_chatter_id = user_id
-    else:
-
-        # 协商聊天id及测试好友加密聊天在线人数
-        IdAgreement.id_agreement(user_id, my_info)
-
-        # 延时10s,以等待好友响应id_ack
-        time.sleep(5)
-
-        chat_id = my_info.get_user_id_to_chat_id(user_id)
-        chat_info = my_info.get_chat_id_to_chat_info(chat_id)
-
-        if chat_info.expect_ack_count == 0:
-            print("当前无好友加密聊天在线")
-            return
-
-            # 设置id_ready 状态
-            chat_info.is_id_ready = True
-        print("ID协商完成")
-
-        print("密钥协商步骤一")
-        KeyAgreement.key_agreement_step_one(my_info.get_user_id_to_chat_id(user_id),my_info)
-
-        cnt = 0
-        while chat_info.is_chat_ready is not True:
-            time.sleep(1)
-            # 10s超时
-            if cnt >= 10:
-                print("等待聊天协商完成超时,程序异常退出")
-                return
-        # 密钥协商成功，切换当前聊天对象
-        global_cur_chatter_id = user_id
-
-
-def encrypt_chat(receive_msg):
-    global global_cur_chatter_id
-
-    if my_info.check_user_id_to_chat_id(receive_msg.FromUserName):
-        chat_id = my_info.get_user_id_to_chat_id(receive_msg.FromUserName)
-        if my_info.check_chat_id_to_chat_info(chat_id):
-            chat_info = my_info.get_chat_id_to_chat_info(chat_id)
-            if chat_info.is_chat_ready is True:
-                de_receive_msg = UtilTool.aes_decrypt(chat_info.aes_key, receive_msg.Text)
-            else:
-                de_receive_msg = receive_msg
-        else:
-            de_receive_msg = receive_msg
-    else:
-        de_receive_msg = receive_msg
-
-    chatter = ''
-    if my_info.check_user_id_to_friend_info(receive_msg.FromUserName):
-        friend_info = my_info.get_user_id_to_friend_info(receive_msg.FromUserName)
-        if friend_info.remark_name != '':
-            chatter = friend_info.remark_name
-        else:
-            chatter = friend_info.nick_name
-    if global_cur_chatter_id == '':
-        print('someone:', de_receive_msg)
-    else:
-        print(chatter, '：', de_receive_msg)
 
 
 if __name__ == '__main__':

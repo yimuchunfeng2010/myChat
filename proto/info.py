@@ -1,8 +1,3 @@
-import rsa
-from proto.util import *
-from config.config import *
-
-
 class MyInfo(object):
     """"信息类"""
 
