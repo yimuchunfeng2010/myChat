@@ -25,6 +25,7 @@ my_info = MyInfo()
 cur_chatter_info = ChatterInfo()
 
 
+# 发送消息
 def say():
     while True:
         my_msg = input()
@@ -48,7 +49,7 @@ def say():
             print("密钥协商未完成，请等待协商完成")
 
 
-# 微信消息类型 TEXT, PICTURE, FRIENDS, CARD, MAP, SHARING, RECORDING, VIDEO
+# 接收消息
 @itchat.msg_register([TEXT, ATTACHMENT], isFriendChat=True, isGroupChat=True, isMpChat=True)
 def listen(receive_msg):
     print('Receive New Msg:', receive_msg)

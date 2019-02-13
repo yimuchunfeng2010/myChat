@@ -35,7 +35,7 @@ class UtilTool:
 
     @staticmethod
     def gen_aes_key():
-        return ''.join(random.sample(string.ascii_letters + string.digits, AES_KEY_LEN))
+        return ''.join(random.sample(string.ascii_letters + string.digits + '\'`!@#$%^&*()-_+=/.,<>;:', AES_KEY_LEN))
 
     # 读取公钥文件以加密信息
     @staticmethod

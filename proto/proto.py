@@ -140,10 +140,8 @@ class KeyAgreement(object):
 
             # 将公用aes密钥用每个好友各自的aes加密后发送
             for item in chat_info.key_info_list:
-                print("LLL", item.aes_key)
                 key_msg = UtilTool.aes_encrypt(item.aes_key, chat_info.aes_key)
                 send_msg = item.user_id + key_msg
-                print("PPP",send_msg, receive_msg.FromUserName)
                 itchat.send_msg(send_msg, toUserName=receive_msg.FromUserName)
 
             print("密钥协商完成，开始加密聊天")
@@ -159,8 +157,6 @@ class KeyAgreement(object):
         chat_id = in_my_info.get_user_id_to_chat_id(receive_msg.FromUserName)
         chat_info = in_my_info.get_chat_id_to_chat_info(chat_id)
 
-        print("UUUU",chat_info.key_info_list[0].aes_key)
-        print("KKK",receive_msg.Text.lstrip(in_my_id)," ",in_my_id)
         de_aes_key = UtilTool.aes_decrypt(chat_info.key_info_list[0].aes_key,
                                           receive_msg.Text.lstrip(in_my_id))
         chat_info.aes_key = de_aes_key
