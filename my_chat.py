@@ -22,7 +22,7 @@ mutex = threading.Lock()
 my_info = MyInfo()
 
 # 当前聊天者信息
-cur_chatter_info = CurrentChatterInfo()
+cur_chatter_info = ChatterInfo()
 
 
 def say():
@@ -52,7 +52,6 @@ def say():
 @itchat.msg_register([TEXT, ATTACHMENT], isFriendChat=True, isGroupChat=True, isMpChat=True)
 def listen(receive_msg):
     print('Receive New Msg:', receive_msg)
-    global my_id
 
     if not hasattr(receive_msg, 'Text') and not hasattr(receive_msg, 'Type'):
         return
@@ -90,7 +89,6 @@ def listen(receive_msg):
     if receive_msg.Type == WX_TEXT and receive_msg.Text.startswith(my_id) and my_info.check_user_id_to_chat_id(
             receive_msg.FromUserName):
         print('密钥协商步骤四')
-        print("my_id", my_id)
         KeyAgreement.key_agreement_step_four(receive_msg, my_id, my_info)
         print('密钥协商完成，开始加密聊天')
         return
@@ -100,7 +98,6 @@ def listen(receive_msg):
 
 
 def init_mychat():
-    global my_id
     # 初始化朋友列表
     my_id = UtilTool.init_friends(my_info)
 

@@ -182,7 +182,7 @@ class KeyInfo:
         self.time_stamp = time_stamp
 
 
-class CurrentChatterInfo(object):
+class ChatterInfo(object):
     """当前聊天者信息"""
     user_id = ""
     user_name = ""
