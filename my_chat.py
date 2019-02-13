@@ -99,6 +99,7 @@ def listen(receive_msg):
 
 
 def init_mychat():
+    global my_id
     # 初始化朋友列表
     my_id = UtilTool.init_friends(my_info)
 
