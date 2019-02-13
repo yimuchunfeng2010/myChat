@@ -72,7 +72,7 @@ class KeyAgreement(object):
         chat_info = in_my_info.get_chat_id_to_chat_info(chat_id)
         user_id = chat_info.user_id
 
-        public_key_name, private_key_name = UtilTool.gen_ras_key(user_id)
+        public_key_name, private_key_name = UtilTool.gen_rsa_key(user_id)
 
         # 记录密钥
         chat_info.rsa_private_key_name = MINE_KEY_PATH + private_key_name

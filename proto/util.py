@@ -19,7 +19,7 @@ class UtilTool:
         return str(int(time.time()))
 
     @staticmethod
-    def gen_ras_key(user_name=""):
+    def gen_rsa_key(user_name=""):
         time_stamp = UtilTool.get_cur_time_stamp()
 
         (public_key, private_key) = rsa.newkeys(RSA_KEY_LEN)
@@ -37,7 +37,7 @@ class UtilTool:
     def gen_aes_key():
         my_key = ''
         for i in range(AES_KEY_LEN):
-            byte = random.sample(string.ascii_letters + string.digits + '\'`!@#$%^&*()-_+=/.,<>;:', 1)
+            byte = random.sample(string.ascii_letters + string.digits + string.punctuation, 1)
             my_key += byte[0]
         return my_key
 
