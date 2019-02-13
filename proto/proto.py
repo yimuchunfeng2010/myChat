@@ -3,10 +3,11 @@ import itchat
 from constants.type import *
 from proto.info import *
 
-""""密钥协议文件"""
+"""密钥协议文件"""
 
 
 class IdAgreement(object):
+    """ID协商"""
 
     def __init__(self):
         pass
@@ -50,3 +51,111 @@ class IdAgreement(object):
                     return True
         else:
             return False
+
+
+class KeyAgreement(object):
+    """密钥协商"""
+
+    def __init__(self):
+        pass
+
+    # 发起协商，生成RSA密钥对，并将公钥发给好友，密钥协商步骤一
+    @staticmethod
+    def key_agreement_step_one(chat_id, in_my_info):
+        # 生成RSA密钥对
+        if in_my_info.check_chat_id_to_chat_info(chat_id) is False:
+            print('未找到用户名')
+            return
+
+        chat_info = in_my_info.get_chat_id_to_chat_info(chat_id)
+        user_id = chat_info.user_id
+
+        public_key_name, private_key_name = UtilTool.gen_ras_key(user_id)
+
+        # 记录密钥
+        chat_info.rsa_private_key_name = MINE_KEY_PATH + private_key_name
+        chat_info.rsa_public_key_name = MINE_KEY_PATH + public_key_name
+
+        # 发送RSA公钥文件
+        itchat.send_file(chat_info.rsa_public_key_name, toUserName=user_id)
+
+    # # 密钥协商步骤二， 收到rsa公钥文件，本地生成aes秘钥并用rsa公钥加密发送给加密通信协商发起者
+    @staticmethod
+    def key_agreement_step_two(receive_msg, in_my_id, in_my_info):
+        print('密钥协商步骤二')
+        print('receive file', receive_msg)
+        if hasattr(receive_msg, 'Content') and PUBLIC_KEY_SUFFIX in receive_msg.Content:
+            # 接收到rsa公钥文件
+            receive_msg.text(FRIEND_KEY_PATH + receive_msg['FileName'])
+
+            # 记录公钥文件名(存在初始协商或者正在聊天中两种场景)
+            if in_my_info.check_user_id_to_chat_id(receive_msg.FromUserName):
+                chat_id = in_my_info.get_user_id_to_chat_id(receive_msg.FromUserName)
+
+                # 生成aes公钥
+                key_info = KeyInfo("", UtilTool.gen_aes_key(), UtilTool.get_cur_time_stamp())
+
+                chat_info = in_my_info.get_chat_id_to_chat_info(chat_id)
+                chat_info.rsa_public_key_name = receive_msg.FileName
+                chat_info.key_info_list.append(key_info)
+
+                # 用rsa公钥加密aes密钥, 接收方用rsa私钥进行解密
+                aes_msg = UtilTool.encrypt_rsa_by_public_file(FRIEND_KEY_PATH + receive_msg['FileName'],
+                                                              key_info.aes_key)
+
+                # AES_KEY，表示后序消息内容是rsa公钥加密过的aes密钥信息
+                aes_msg = AES_KEY + aes_msg + CONNECTOR + in_my_id
+                itchat.send_msg(aes_msg, toUserName=receive_msg.FromUserName)
+        else:
+            print("receive file： ", receive_msg.FileName)
+
+    # 收到好友AES密钥确认,密钥协商步骤三
+    @staticmethod
+    def key_agreement_step_three(receive_msg, in_my_info):
+        chat_id = in_my_info.get_user_id_to_chat_id(receive_msg.FromUserName)
+        chat_info = in_my_info.get_chat_id_to_chat_info(chat_id)
+        chat_info.actual_ack_count += 1
+
+        my_msg = receive_msg.Text.lstrip(AES_KEY)
+        index = my_msg.find(CONNECTOR)
+        en_msg = my_msg[:index]
+
+        aes_key = UtilTool.decrypt_rsa_by_private_file(chat_info.rsa_private_key_name, en_msg)
+
+        key_info = KeyInfo(my_msg[index + len(CONNECTOR):], aes_key.decode(), UtilTool.get_cur_time_stamp())
+
+        # 加入aes密钥列表
+        chat_info.key_info_list.append(key_info)
+
+        # 若已获取足够确认信息，则向aes密钥协商完成，发送最终aes密钥
+        if chat_info.actual_ack_count == chat_info.expect_ack_count:
+            if len(chat_info.key_info_list) == 0:
+                print('aes empty')
+                return
+            chat_info.aes_key = key_info.aes_key  # todo 暂时定为最后一个密钥为公用密钥
+
+            # 将公用aes密钥用每个好友各自的aes加密后发送
+            for item in chat_info.key_info_list:
+                print("LLL", item.aes_key)
+                key_msg = UtilTool.aes_encrypt(item.aes_key, chat_info.aes_key)
+                send_msg = item.user_id + key_msg
+                itchat.send_msg(send_msg, toUserName=receive_msg.FromUserName)
+
+            print("密钥协商完成，开始加密聊天")
+            chat_info.is_chat_ready = True
+            chat_info.chat_master = True
+            chat_info.time = UtilTool.get_cur_time_stamp()
+
+            return
+
+    # 向所有聊天好友发送协商一致的aes密钥，密钥协商步骤四
+    @staticmethod
+    def key_agreement_step_four(receive_msg, in_my_id, in_my_info):
+        chat_id = in_my_info.get_user_id_to_chat_id(receive_msg.FromUserName)
+        chat_info = in_my_info.get_chat_id_to_chat_info(chat_id)
+
+        de_aes_key = UtilTool.aes_decrypt(chat_info.key_info_list[0].aes_key,
+                                          receive_msg.Text.lstrip(in_my_id))
+        chat_info.aes_key = de_aes_key
+        chat_info.is_chat_ready = True
+        chat_info.time = UtilTool.get_cur_time_stamp()
