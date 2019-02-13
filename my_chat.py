@@ -50,21 +50,21 @@ def say():
 
 
 # 微信消息类型 TEXT, PICTURE, FRIENDS, CARD, MAP, SHARING, RECORDING, VIDEO
-@itchat.msg_register([TEXT], isFriendChat=True, isGroupChat=True, isMpChat=True)
+@itchat.msg_register([TEXT, ATTACHMENT], isFriendChat=True, isGroupChat=True, isMpChat=True)
 def listen(receive_msg):
     print('Receive New Msg:', receive_msg)
     global my_id
 
-    if not hasattr(receive_msg, 'Text'):
+    if not hasattr(receive_msg, 'Text') and not hasattr(receive_msg, 'Type'):
         return
 
     # 接收到chat_id
-    if receive_msg.Text.startswith(CHAT_ID_START):
+    if receive_msg.Type == WX_TEXT and receive_msg.Text.startswith(CHAT_ID_START):
         IdAgreement.id_ack(receive_msg, my_info)
         return
 
     # 接受到chat_id确认消息
-    if receive_msg.Text.startswith(CHAT_ID_ACK):
+    if receive_msg.Type == WX_TEXT and receive_msg.Text.startswith(CHAT_ID_ACK):
         chat_id = receive_msg.Text.lstrip(CHAT_ID_ACK)
         if my_info.check_chat_id_to_chat_info(chat_id):
             chat_info = my_info.get_chat_id_to_chat_info(chat_id)
@@ -73,8 +73,13 @@ def listen(receive_msg):
             print('聊天ID协商异常，程序退出')
         return
 
+    # 收到rsa公钥文件，密钥协商步骤二
+    if receive_msg.Type == WX_ATTACHMENT:
+        key_agreement_step_two(receive_msg)
+        return
+
     #  收到aes密钥，返回密钥协商步骤三
-    if receive_msg.Text.startswith(AES_KEY):
+    if receive_msg.Type == WX_TEXT and receive_msg.Text.startswith(AES_KEY):
         print('密钥协商步骤三')
         if my_info.check_user_id_to_chat_id(receive_msg.FromUserName):
             key_agreement_step_three(receive_msg)
@@ -83,7 +88,8 @@ def listen(receive_msg):
         return
 
     # 保存aes密钥, 密钥协商步骤四
-    if receive_msg.Text.startswith(my_id) and my_info.check_user_id_to_chat_id(receive_msg.FromUserName):
+    if receive_msg.Type == WX_TEXT and receive_msg.Text.startswith(my_id) and my_info.check_user_id_to_chat_id(
+            receive_msg.FromUserName):
         print('密钥协商步骤四')
         key_agreement_step_four(receive_msg)
         print('密钥协商完成，开始加密聊天')
@@ -115,8 +121,8 @@ def key_agreement_step_one(chat_id):
     itchat.send_file(chat_info.rsa_public_key_name, toUserName=user_id)
 
 
-# 密钥协商步骤二， 收到rsa公钥文件，本地生成aes秘钥并用rsa公钥加密发送给加密通信协商发起者
-@itchat.msg_register([ATTACHMENT], isFriendChat=True, isGroupChat=True, isMpChat=True)
+# # 密钥协商步骤二， 收到rsa公钥文件，本地生成aes秘钥并用rsa公钥加密发送给加密通信协商发起者
+# @itchat.msg_register([ATTACHMENT], isFriendChat=True, isGroupChat=True, isMpChat=True)
 def key_agreement_step_two(receive_msg):
     print('密钥协商步骤二')
     print('receive file', receive_msg)
@@ -297,6 +303,7 @@ def launch_key_agreement(user_name):
                 return
         # 密钥协商成功，切换当前聊天对象
         global_cur_chatter_id = user_id
+
 
 def encrypt_chat(receive_msg):
     global global_cur_chatter_id

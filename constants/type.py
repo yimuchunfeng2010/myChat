@@ -29,3 +29,7 @@ FRIEND_KEY_PATH = "./key_module/key_files/friend/"
 
 # 密钥文件后缀
 PUBLIC_KEY_SUFFIX = 'id_rsa.pub'
+
+# 微信消息类型
+WX_ATTACHMENT = 'Attachment'
+WX_TEXT = 'Text'
