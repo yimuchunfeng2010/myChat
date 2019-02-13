@@ -6,6 +6,7 @@ import threading
 from constants.type import *
 from itchat.content import *
 from proto.info import *
+from proto.proto import IdAgreement
 
 sys.path.append(os.getcwd() + '/constants')
 
@@ -36,7 +37,7 @@ def say():
             continue
 
         # 协商完成,加密通信
-        if is_key_agreement_ready():
+        if IdAgreement.is_key_agreement_ready(my_info, global_cur_chatter_id):
             chat_id = my_info.get_user_id_to_chat_id(global_cur_chatter_id)
             # 加密信息
             chat_info = my_info.get_chat_id_to_chat_info(chat_id)
@@ -59,7 +60,7 @@ def listen(receive_msg):
 
     # 接收到chat_id
     if receive_msg.Text.startswith(CHAT_ID_START):
-        id_ack(receive_msg)
+        IdAgreement.id_ack(receive_msg, my_info)
         return
 
     # 接受到chat_id确认消息
@@ -90,35 +91,6 @@ def listen(receive_msg):
 
     # 开始加密聊天
     encrypt_chat(receive_msg)
-
-
-# 发起id协商
-def id_agreement(user_id):
-    chat_id = UtilTool.gen_chat_id()
-    itchat.send_msg(CHAT_ID_START + chat_id, toUserName=user_id)
-
-    new_chat = ChatUnit()
-    new_chat.user_id = user_id
-    new_chat.is_id_ready = False
-    my_info.set_chat_id_to_chat_info(chat_id, new_chat)
-
-    my_info.set_user_id_to_chat_id(user_id, chat_id)
-
-    return
-
-
-# 响应确认id协商
-def id_ack(receive_msg):
-    chat_id = receive_msg.Text.lstrip(CHAT_ID_START)
-    new_chat = ChatUnit()
-    new_chat.user_id = receive_msg.FromUserName
-    new_chat.is_id_ready = True
-    my_info.set_chat_id_to_chat_info(chat_id, new_chat)
-
-    my_info.set_user_id_to_chat_id(receive_msg.FromUserName, chat_id)
-
-    # 发送确认消息
-    itchat.send_msg(CHAT_ID_ACK + receive_msg.Text.lstrip(CHAT_ID_START), toUserName=receive_msg.FromUserName)
 
 
 # 发起协商，生成RSA密钥对，并将公钥发给好友，密钥协商步骤一
@@ -297,7 +269,7 @@ def launch_key_agreement(user_name):
     else:
 
         # 协商聊天id及测试好友加密聊天在线人数
-        id_agreement(user_id)
+        IdAgreement.id_agreement(user_id, my_info)
 
         # 延时10s,以等待好友响应id_ack
         time.sleep(5)
@@ -325,18 +297,6 @@ def launch_key_agreement(user_name):
                 return
         # 密钥协商成功，切换当前聊天对象
         global_cur_chatter_id = user_id
-
-
-def is_key_agreement_ready():
-    if my_info.check_user_id_to_chat_id(global_cur_chatter_id):
-        chat_id = my_info.get_user_id_to_chat_id(global_cur_chatter_id)
-        if my_info.check_chat_id_to_chat_info(chat_id):
-            chat_info = my_info.get_chat_id_to_chat_info(chat_id)
-            if chat_info.is_chat_ready is True:
-                return True
-    else:
-        return False
-
 
 def encrypt_chat(receive_msg):
     global global_cur_chatter_id
