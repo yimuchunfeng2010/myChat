@@ -31,7 +31,7 @@ def say():
         my_msg = input()
         print('我: ', end='')
 
-        # 选择/切换聊天对象
+        # 选择/切换聊天对象,开始加密聊天
         if my_msg.startswith(CHAT_START):
             user_name = my_msg.lstrip(CHAT_START)
             cur_chatter_info.user_id = KeyAgreement.launch_key_agreement(user_name, my_info)
@@ -57,12 +57,12 @@ def listen(receive_msg):
     if not hasattr(receive_msg, 'Text') and not hasattr(receive_msg, 'Type'):
         return
 
-    # 接收到chat_id
+    # ID协商步骤二
     if receive_msg.Type == WX_TEXT and receive_msg.Text.startswith(CHAT_ID_START):
         IdAgreement.id_ack(receive_msg, my_info)
         return
 
-    # 接受到chat_id确认消息
+    # ID协商步骤三
     if receive_msg.Type == WX_TEXT and receive_msg.Text.startswith(CHAT_ID_ACK):
         chat_id = receive_msg.Text.lstrip(CHAT_ID_ACK)
         if my_info.check_chat_id_to_chat_info(chat_id):
@@ -72,12 +72,12 @@ def listen(receive_msg):
             print('聊天ID协商异常，程序退出')
         return
 
-    # 收到rsa公钥文件，密钥协商步骤二
+    # 密钥协商步骤二
     if receive_msg.Type == WX_ATTACHMENT:
         KeyAgreement.key_agreement_step_two(receive_msg, my_id, my_info)
         return
 
-    #  收到aes密钥，返回密钥协商步骤三
+    # 密钥协商步骤三
     if receive_msg.Type == WX_TEXT and receive_msg.Text.startswith(AES_KEY):
         print('密钥协商步骤三')
         if my_info.check_user_id_to_chat_id(receive_msg.FromUserName):
@@ -86,11 +86,9 @@ def listen(receive_msg):
             print('密钥协商异常, 程序退出')
         return
 
-    # 保存aes密钥, 密钥协商步骤四
+    # 密钥协商步骤四
     if receive_msg.Type == WX_TEXT and receive_msg.Text.startswith(my_id) and my_info.check_user_id_to_chat_id(
             receive_msg.FromUserName):
-        print('密钥协商步骤四')
-        print("my_id", my_id)
         KeyAgreement.key_agreement_step_four(receive_msg, my_id, my_info)
         print('密钥协商完成，开始加密聊天')
         return
@@ -117,7 +115,8 @@ def init_mychat():
 
 
 if __name__ == '__main__':
-    itchat.auto_login(hotReload=True)  #
+    # itchat.auto_login(hotReload=True)
+    itchat.auto_login()
     init_mychat()
     # 启动线程
     t1 = threading.Thread(target=say)
