@@ -165,12 +165,11 @@ class KeyAgreement(object):
     @staticmethod
     def launch_key_agreement(user_name, in_my_info):
         #  查询user_id
-        global global_cur_chatter_id
-        if in_my_info.check_user_name_to_user_id(user_name):
-            user_id = in_my_info.get_user_name_to_user_id(user_name)
-        else:
+        if in_my_info.check_user_name_to_user_id(user_name) is False:
             print("用户不存在，请输入正确的用户名")
             return
+
+        user_id = in_my_info.get_user_name_to_user_id(user_name)
 
         # 判断是否已经加密
         if in_my_info.check_user_id_to_chat_id(user_id) and in_my_info.check_chat_id_to_chat_info(user_id):
@@ -178,7 +177,7 @@ class KeyAgreement(object):
             chat_info = in_my_info.get_chat_id_to_chat_info(chat_id)
             if chat_info.is_chat_ready is True:
                 # 密钥协商已完成，直接切换用户
-                global_cur_chatter_id = user_id
+                pass
         else:
 
             # 协商聊天id及测试好友加密聊天在线人数
@@ -194,8 +193,8 @@ class KeyAgreement(object):
                 print("当前无好友加密聊天在线")
                 return
 
-                # 设置id_ready 状态
-                chat_info.is_id_ready = True
+            # 设置id_ready 状态
+            chat_info.is_id_ready = True
             print("ID协商完成")
 
             print("密钥协商步骤一")
@@ -208,5 +207,5 @@ class KeyAgreement(object):
                 if cnt >= 10:
                     print("等待聊天协商完成超时,程序异常退出")
                     return
-            # 密钥协商成功，切换当前聊天对象
-            return user_id
+        # 密钥协商成功，切换当前聊天对象
+        return user_id
