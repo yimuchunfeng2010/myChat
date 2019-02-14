@@ -101,14 +101,12 @@ class KeyAgreement(object):
                 chat_info.rsa_public_key_name = receive_msg.FileName
                 chat_info.key_info_list.append(key_info)
 
-                print("TTT",chat_info.key_info_list[0].aes_key)
                 # 用rsa公钥加密aes密钥, 接收方用rsa私钥进行解密
                 aes_msg = UtilTool.encrypt_rsa_by_public_file(FRIEND_KEY_PATH + receive_msg['FileName'],
                                                               key_info.aes_key)
 
                 # AES_KEY，表示后序消息内容是rsa公钥加密过的aes密钥信息
                 aes_msg = AES_KEY + aes_msg + CONNECTOR + in_my_id
-                print("RRR",aes_msg)
                 itchat.send_msg(aes_msg, toUserName=receive_msg.FromUserName)
         else:
             print("receive file： ", receive_msg.FileName)
@@ -157,8 +155,6 @@ class KeyAgreement(object):
         chat_id = in_my_info.get_user_id_to_chat_id(receive_msg.FromUserName)
         chat_info = in_my_info.get_chat_id_to_chat_info(chat_id)
 
-        print("aes_key", chat_info.key_info_list[0].aes_key)
-        print("Text", receive_msg.Text)
         de_aes_key = UtilTool.aes_decrypt(chat_info.key_info_list[0].aes_key,
                                           receive_msg.Text.lstrip(in_my_id))
         chat_info.aes_key = de_aes_key

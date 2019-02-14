@@ -117,7 +117,7 @@ def init_mychat():
 
 
 if __name__ == '__main__':
-    itchat.auto_login()  # hotReload=True
+    itchat.auto_login(hotReload=True)  #
     init_mychat()
     # 启动线程
     t1 = threading.Thread(target=say)
