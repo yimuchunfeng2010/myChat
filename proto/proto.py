@@ -34,7 +34,7 @@ class IdAgreement(object):
     # 响应确认id协商
     @staticmethod
     def id_ack(receive_msg, in_my_info):
-        chat_id = receive_msg.Text.lstrip(CHAT_ID_START)
+        chat_id = receive_msg.Text[len(CHAT_ID_START):]
         new_chat = ChatUnit()
         new_chat.user_id = receive_msg.FromUserName
         new_chat.is_id_ready = True
@@ -45,7 +45,7 @@ class IdAgreement(object):
         in_my_info.set_user_id_to_chat_id(receive_msg.FromUserName, chat_id)
 
         # 发送确认消息
-        itchat.send_msg(CHAT_ID_ACK + receive_msg.Text.lstrip(CHAT_ID_START), toUserName=receive_msg.FromUserName)
+        itchat.send_msg(CHAT_ID_ACK + receive_msg.Text[len(CHAT_ID_START):], toUserName=receive_msg.FromUserName)
 
     @staticmethod
     def is_key_agreement_ready(in_my_info, cur_chatter_id):
@@ -131,7 +131,7 @@ class KeyAgreement(object):
         # 更新密钥协商步骤
         chat_info.set_agreement_step(KEY_STEEP_THR)
 
-        my_msg = receive_msg.Text.lstrip(AES_KEY)
+        my_msg = receive_msg.Text[len(AES_KEY):]
         index = my_msg.find(CONNECTOR)
         en_msg = my_msg[:index]
 
