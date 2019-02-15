@@ -39,6 +39,10 @@ def say():
             cur_chatter_info.user_id = KeyAgreement.launch_key_agreement(user_name, my_info)
             continue
 
+        # 提示用户输入好友
+        if cur_chatter_info.user_id == "":
+            print("请输入好友名称：@好友名称")
+            continue
         # 协商完成,加密通信
         if IdAgreement.is_key_agreement_ready(my_info, cur_chatter_info.user_id):
             chat_id = my_info.get_user_id_to_chat_id(cur_chatter_info.user_id)
@@ -87,9 +91,11 @@ def listen(receive_msg):
         return
 
     # 密钥协商步骤四
-    if receive_msg.Type == WX_TEXT and receive_msg.Text.startswith(owner_info.user_id) and my_info.check_user_id_to_chat_id(
+    if receive_msg.Type == WX_TEXT and receive_msg.Text.startswith(
+            owner_info.user_id) and my_info.check_user_id_to_chat_id(
             receive_msg.FromUserName):
         KeyAgreement.key_agreement_step_four(receive_msg, owner_info.user_id, my_info)
+        cur_chatter_info.user_id = receive_msg.FromUserName
         print('密钥协商完成，开始加密聊天')
         return
 
@@ -98,6 +104,7 @@ def listen(receive_msg):
 
 
 def init_mychat():
+    global owner_info
     # 初始化朋友列表
     owner_info = UtilTool.init_friends(my_info)
 

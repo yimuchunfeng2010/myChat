@@ -177,4 +177,7 @@ class UtilTool:
     # 获取当前好友信息
     @staticmethod
     def init_current_friend(in_cur_name, in_my_info):
-        return in_my_info.get_user_name_to_user_id(in_cur_name)
+        if in_my_info.check_user_name_to_user_id(in_cur_name) is True:
+            return in_my_info.get_user_name_to_user_id(in_cur_name)
+        else:
+            return ""
