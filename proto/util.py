@@ -18,15 +18,15 @@ class UtilTool:
 
     @staticmethod
     def get_cur_time_stamp():
-        return str(int(time.time()))
+        return int(time.time())
 
     @staticmethod
     def gen_rsa_key(user_name=""):
         time_stamp = UtilTool.get_cur_time_stamp()
 
         (public_key, private_key) = rsa.newkeys(RSA_KEY_LEN)
-        public_key_name = user_name + "_" + time_stamp + "_id_rsa.pub"
-        private_key_name = user_name + "_" + time_stamp + "_id_rsa.pri"
+        public_key_name = user_name + "_" + str(time_stamp) + "_id_rsa.pub"
+        private_key_name = user_name + "_" + str(time_stamp) + "_id_rsa.pri"
         with open(MINE_KEY_PATH + public_key_name, 'w+') as f:
             f.write(public_key.save_pkcs1().decode())
 

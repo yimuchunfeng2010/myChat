@@ -22,6 +22,7 @@ CHAT_ID_START = '%CHAT_ID_START%'
 CHAT_ID_ACK = '%CHAT_ID_ACK%'
 AES_KEY = '%AES_KEY%'
 CONNECTOR = '%__%'
+UPDATE_KEY = '%UPDATE_KEY%'
 
 # 密钥文件存放路径
 MINE_KEY_PATH = "./key_module/key_files/mine/"
@@ -37,3 +38,4 @@ WX_TEXT = 'Text'
 # 延时时间
 ID_WAIT_TIME = 5
 KEY_WAIT_TIME = 10
+

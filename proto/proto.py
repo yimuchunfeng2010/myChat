@@ -17,17 +17,20 @@ class IdAgreement(object):
 
     # 发起id协商
     @staticmethod
-    def id_agreement(user_id, in_my_info):
-        chat_id = UtilTool.gen_chat_id()
-        itchat.send_msg(CHAT_ID_START + chat_id, toUserName=user_id)
+    def id_agreement(user_id, in_my_info, update_key=False):
 
+        chat_id = UtilTool.gen_chat_id()
         new_chat = ChatUnit()
         new_chat.user_id = user_id
         new_chat.is_id_ready = False
         new_chat.set_agreement_step(ID_STEEP_ONE)
         in_my_info.set_chat_id_to_chat_info(chat_id, new_chat)
-
         in_my_info.set_user_id_to_chat_id(user_id, chat_id)
+
+        if update_key is True:
+            itchat.send_msg(CHAT_ID_START + UPDATE_KEY + chat_id, toUserName=user_id[len(UPDATE_KEY):])
+        else:
+            itchat.send_msg(CHAT_ID_START + chat_id, toUserName=user_id)
 
         return
 
@@ -35,6 +38,12 @@ class IdAgreement(object):
     @staticmethod
     def id_ack(receive_msg, in_my_info):
         chat_id = receive_msg.Text[len(CHAT_ID_START):]
+        user_id = receive_msg.FromUserName
+
+        if chat_id.startswith(UPDATE_KEY):
+            chat_id = chat_id[len(UPDATE_KEY):]
+            user_id = UPDATE_KEY + user_id
+
         new_chat = ChatUnit()
         new_chat.user_id = receive_msg.FromUserName
         new_chat.is_id_ready = True
@@ -42,10 +51,10 @@ class IdAgreement(object):
 
         in_my_info.set_chat_id_to_chat_info(chat_id, new_chat)
 
-        in_my_info.set_user_id_to_chat_id(receive_msg.FromUserName, chat_id)
+        in_my_info.set_user_id_to_chat_id(user_id, chat_id)
 
         # 发送确认消息
-        itchat.send_msg(CHAT_ID_ACK + receive_msg.Text[len(CHAT_ID_START):], toUserName=receive_msg.FromUserName)
+        itchat.send_msg(CHAT_ID_ACK + chat_id, toUserName=receive_msg.FromUserName)
 
     @staticmethod
     def is_key_agreement_ready(in_my_info, cur_chatter_id):
@@ -67,7 +76,7 @@ class KeyAgreement(object):
 
     # 发起协商，生成RSA密钥对，并将公钥发给好友，密钥协商步骤一
     @staticmethod
-    def key_agreement_step_one(chat_id, in_my_info):
+    def key_agreement_step_one(chat_id, in_my_info, update_key=False):
         # 生成RSA密钥对
         if in_my_info.check_chat_id_to_chat_info(chat_id) is False:
             print('未找到用户名')
@@ -86,20 +95,32 @@ class KeyAgreement(object):
         chat_info.set_agreement_step(KEY_STEEP_ONE)
 
         # 发送RSA公钥文件
+        if update_key is True:
+            user_id = user_id[len(UPDATE_KEY):]
         itchat.send_file(chat_info.rsa_public_key_name, toUserName=user_id)
 
     # # 密钥协商步骤二， 收到rsa公钥文件，本地生成aes秘钥并用rsa公钥加密发送给加密通信协商发起者
     @staticmethod
     def key_agreement_step_two(receive_msg, in_my_id, in_my_info):
         print('密钥协商步骤二')
-        print('receive file', receive_msg)
+
         if hasattr(receive_msg, 'Content') and PUBLIC_KEY_SUFFIX in receive_msg.Content:
             # 接收到rsa公钥文件
             receive_msg.text(FRIEND_KEY_PATH + receive_msg['FileName'])
+            print('receive file', receive_msg['FileName'])
+
+            # 更新密钥
+            update_key = False
+            if receive_msg['FileName'].startswith(UPDATE_KEY):
+                update_key = True
+
+            user_id = receive_msg.FromUserName
+            if update_key is True:
+                user_id = UPDATE_KEY + user_id
 
             # 记录公钥文件名(存在初始协商或者正在聊天中两种场景)
-            if in_my_info.check_user_id_to_chat_id(receive_msg.FromUserName):
-                chat_id = in_my_info.get_user_id_to_chat_id(receive_msg.FromUserName)
+            if in_my_info.check_user_id_to_chat_id(user_id):
+                chat_id = in_my_info.get_user_id_to_chat_id(user_id)
 
                 # 生成aes公钥
                 key_info = KeyInfo("", UtilTool.gen_aes_key(), UtilTool.get_cur_time_stamp())
@@ -116,7 +137,11 @@ class KeyAgreement(object):
                                                               key_info.aes_key)
 
                 # AES_KEY，表示后序消息内容是rsa公钥加密过的aes密钥信息
-                aes_msg = AES_KEY + aes_msg + CONNECTOR + in_my_id
+                if update_key is True:
+                    aes_msg = AES_KEY + aes_msg + CONNECTOR + in_my_id + UPDATE_KEY
+                else:
+                    aes_msg = AES_KEY + aes_msg + CONNECTOR + in_my_id
+
                 itchat.send_msg(aes_msg, toUserName=receive_msg.FromUserName)
         else:
             print("receive file： ", receive_msg.FileName)
@@ -124,7 +149,15 @@ class KeyAgreement(object):
     # 收到好友AES密钥确认,密钥协商步骤三
     @staticmethod
     def key_agreement_step_three(receive_msg, in_my_info):
-        chat_id = in_my_info.get_user_id_to_chat_id(receive_msg.FromUserName)
+        user_id = receive_msg.FromUserName
+        update_key = False
+        if receive_msg.Text.endswith(UPDATE_KEY):
+            user_id = UPDATE_KEY + receive_msg.FromUserName
+            index = receive_msg.Text.find(UPDATE_KEY)
+            receive_msg.Text = receive_msg.Text[:index]
+            update_key = True
+
+        chat_id = in_my_info.get_user_id_to_chat_id(user_id)
         chat_info = in_my_info.get_chat_id_to_chat_info(chat_id)
         chat_info.actual_ack_count += 1
 
@@ -153,12 +186,13 @@ class KeyAgreement(object):
             for item in chat_info.key_info_list:
                 key_msg = UtilTool.aes_encrypt(item.aes_key, chat_info.aes_key)
                 send_msg = item.user_id + key_msg
-
+                if update_key is True:
+                    send_msg = send_msg + UPDATE_KEY
                 itchat.send_msg(send_msg, toUserName=receive_msg.FromUserName)
 
             print("密钥协商完成，开始加密聊天")
             chat_info.is_chat_ready = True
-            chat_info.chat_master = True
+            chat_info.is_master = True
             chat_info.time = UtilTool.get_cur_time_stamp()
             #  设置密钥协商步骤为已完成
             chat_info.set_agreement_step(KEY_STEEP_FOUR)
@@ -166,12 +200,36 @@ class KeyAgreement(object):
             # 恢复初始状态
             chat_info.set_agreement_step(AGREEMENT_INIT)
 
+            # 切换密钥
+            time.sleep(10)
+            if update_key is True:
+                update_chat_id = in_my_info.get_user_id_to_chat_id(user_id)
+                update_chat_info = in_my_info.get_chat_id_to_chat_info(update_chat_id)
+
+                chat_id = in_my_info.get_user_id_to_chat_id(user_id[len(UPDATE_KEY):])
+                chat_info = in_my_info.get_chat_id_to_chat_info(chat_id)
+
+                chat_info.aes_key = update_chat_info.aes_key
+                chat_info.time = UtilTool.get_cur_time_stamp()
+                chat_info.is_update_key = False
+
+                # 删除协商临时聊天信息
+                in_my_info.chat_id_to_chat_info.pop(update_chat_id)
+
             return
 
     # 向所有聊天好友发送协商一致的aes密钥，密钥协商步骤四
     @staticmethod
     def key_agreement_step_four(receive_msg, in_my_id, in_my_info):
-        chat_id = in_my_info.get_user_id_to_chat_id(receive_msg.FromUserName)
+        user_id = receive_msg.FromUserName
+        update_key = False
+        if receive_msg.Text.endswith(UPDATE_KEY):
+            user_id = UPDATE_KEY + user_id
+            index = receive_msg.Text.find(UPDATE_KEY)
+            receive_msg.Text = receive_msg.Text[:index]
+            update_key = True
+
+        chat_id = in_my_info.get_user_id_to_chat_id(user_id)
         chat_info = in_my_info.get_chat_id_to_chat_info(chat_id)
 
         de_aes_key = UtilTool.aes_decrypt(chat_info.key_info_list[0].aes_key,
@@ -186,15 +244,33 @@ class KeyAgreement(object):
         # 完成密钥协商，恢复状态
         chat_info.set_agreement_step(AGREEMENT_INIT)
 
+        # 切换密钥
+        time.sleep(10)
+        if update_key is True:
+            update_chat_id = in_my_info.get_user_id_to_chat_id(user_id)
+            update_chat_info = in_my_info.get_chat_id_to_chat_info(update_chat_id)
+
+            chat_id = in_my_info.get_user_id_to_chat_id(user_id[len(UPDATE_KEY):])
+            chat_info = in_my_info.get_chat_id_to_chat_info(chat_id)
+
+            chat_info.aes_key = update_chat_info.aes_key
+
+            # 删除协商临时聊天信息
+            in_my_info.chat_id_to_chat_info.pop(update_chat_id)
+
+            chat_info.time = UtilTool.get_cur_time_stamp()
+
     #  发起密钥协商
     @staticmethod
-    def launch_key_agreement(user_name, in_my_info):
+    def launch_key_agreement(user_name, in_my_info, update_key=False):
         #  查询user_id
         if in_my_info.check_user_name_to_user_id(user_name) is False:
             print("用户不存在，请输入正确的用户名")
             return
 
         user_id = in_my_info.get_user_name_to_user_id(user_name)
+        if update_key is True:
+            user_id = UPDATE_KEY + user_id
 
         # 判断是否已经加密
         if in_my_info.check_user_id_to_chat_id(user_id) and in_my_info.check_chat_id_to_chat_info(user_id):
@@ -209,7 +285,7 @@ class KeyAgreement(object):
         else:
 
             # 协商聊天id及测试好友加密聊天在线人数
-            IdAgreement.id_agreement(user_id, in_my_info)
+            IdAgreement.id_agreement(user_id, in_my_info, update_key)
 
             # 等待好友响应id_ack
             time.sleep(ID_WAIT_TIME)
@@ -226,7 +302,7 @@ class KeyAgreement(object):
             print("ID协商完成")
 
             print("密钥协商步骤一")
-            KeyAgreement.key_agreement_step_one(in_my_info.get_user_id_to_chat_id(user_id), in_my_info)
+            KeyAgreement.key_agreement_step_one(in_my_info.get_user_id_to_chat_id(user_id), in_my_info, update_key)
 
             cnt = 0
             while chat_info.is_chat_ready is not True:

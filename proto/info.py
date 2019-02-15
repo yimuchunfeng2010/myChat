@@ -92,7 +92,7 @@ class ChatUnit(object):
     rsa_private_key_name = ""
 
     # 主聊天者(发起加密聊天的好友)
-    chat_master = False
+    is_master = False
 
     # 期望确认消息个数
     expect_ack_count = 0
@@ -110,7 +110,7 @@ class ChatUnit(object):
     is_id_ready = False
 
     # 时间戳
-    time = ""
+    time = 0
 
     # 好友ID
     user_id = ""
@@ -121,6 +121,9 @@ class ChatUnit(object):
     # 当前协商步骤
     agreement_step = AGREEMENT_INIT
 
+    # 更新密钥中
+    is_update_key = False
+
     def __init__(self):
         """"初始化"""
         self.is_chat_ready = False
@@ -130,10 +133,11 @@ class ChatUnit(object):
         self.chat_user_name = ""
         self.rsa_public_key_name = ""
         self.rsa_private_key_name = ""
-        self.chat_master = False
-        self.time = ""
+        self.is_master = False
+        self.time = 0
         self.user_name = ""
         self.agreement_step = AGREEMENT_INIT
+        self.is_update_key = False
 
     def set_aes_key(self, key):
         self.aes_key = key
