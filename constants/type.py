@@ -33,3 +33,7 @@ PUBLIC_KEY_SUFFIX = 'id_rsa.pub'
 # 微信消息类型
 WX_ATTACHMENT = 'Attachment'
 WX_TEXT = 'Text'
+
+# 延时时间
+ID_WAIT_TIME = 5
+KEY_WAIT_TIME = 10

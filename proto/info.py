@@ -1,3 +1,6 @@
+from constants.enum import *
+
+
 class MyInfo(object):
     """"信息类"""
 
@@ -115,6 +118,9 @@ class ChatUnit(object):
     # 好友名称
     user_name = ""
 
+    # 当前协商步骤
+    agreement_step = AGREEMENT_INIT
+
     def __init__(self):
         """"初始化"""
         self.is_chat_ready = False
@@ -127,6 +133,7 @@ class ChatUnit(object):
         self.chat_master = False
         self.time = ""
         self.user_name = ""
+        self.agreement_step = AGREEMENT_INIT
 
     def set_aes_key(self, key):
         self.aes_key = key
@@ -150,6 +157,15 @@ class ChatUnit(object):
     def gen_new_rsa_key(self):
         # todo
         return
+
+    def set_agreement_step(self, agreement_step):
+        self.agreement_step = agreement_step
+
+    def is_agreement_processing(self):
+        if self.agreement_step != AGREEMENT_INIT:
+            return True
+        else:
+            return False
 
 
 class FriendInfo:

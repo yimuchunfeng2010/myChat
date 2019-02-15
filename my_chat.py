@@ -42,8 +42,7 @@ def say():
             chat_id = my_info.get_user_id_to_chat_id(cur_chatter_info.user_id)
             # 加密信息
             chat_info = my_info.get_chat_id_to_chat_info(chat_id)
-            ase_key = chat_info.aes_key
-            en_msg = UtilTool.aes_encrypt(ase_key, my_msg)
+            en_msg = UtilTool.aes_encrypt(chat_info.aes_key, my_msg)
             itchat.send_msg(en_msg, toUserName=cur_chatter_info.user_id)
         else:
             print("密钥协商未完成，请等待协商完成")
@@ -53,7 +52,6 @@ def say():
 @itchat.msg_register([TEXT, ATTACHMENT], isFriendChat=True, isGroupChat=True, isMpChat=True)
 def listen(receive_msg):
     print('Receive New Msg:', receive_msg)
-
     if not hasattr(receive_msg, 'Text') and not hasattr(receive_msg, 'Type'):
         return
 
