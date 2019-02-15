@@ -33,7 +33,7 @@ def say():
 
         # 选择/切换聊天对象,开始加密聊天
         if my_msg.startswith(CHAT_START):
-            user_name = my_msg.lstrip(CHAT_START)
+            user_name = my_msg[len(CHAT_START):]
             cur_chatter_info.user_id = KeyAgreement.launch_key_agreement(user_name, my_info)
             continue
 
@@ -64,7 +64,7 @@ def listen(receive_msg):
 
     # ID协商步骤三
     if receive_msg.Type == WX_TEXT and receive_msg.Text.startswith(CHAT_ID_ACK):
-        chat_id = receive_msg.Text.lstrip(CHAT_ID_ACK)
+        chat_id = receive_msg.Text[len(CHAT_ID_ACK):]
         if my_info.check_chat_id_to_chat_info(chat_id):
             chat_info = my_info.get_chat_id_to_chat_info(chat_id)
             chat_info.expect_ack_count += 1
