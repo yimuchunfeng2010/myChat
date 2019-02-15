@@ -15,7 +15,6 @@ sys.path.append(os.getcwd() + '/constants')
 
 importlib.reload(sys)
 
-my_id = ''
 mutex = threading.Lock()
 
 # 信息类对象
@@ -23,6 +22,9 @@ my_info = MyInfo()
 
 # 当前聊天者信息
 cur_chatter_info = ChatterInfo()
+
+# 本用户id
+owner_info = ChatterInfo()
 
 
 # 发送消息
@@ -72,7 +74,7 @@ def listen(receive_msg):
 
     # 密钥协商步骤二
     if receive_msg.Type == WX_ATTACHMENT:
-        KeyAgreement.key_agreement_step_two(receive_msg, my_id, my_info)
+        KeyAgreement.key_agreement_step_two(receive_msg, owner_info.user_id, my_info)
         return
 
     # 密钥协商步骤三
@@ -85,9 +87,9 @@ def listen(receive_msg):
         return
 
     # 密钥协商步骤四
-    if receive_msg.Type == WX_TEXT and receive_msg.Text.startswith(my_id) and my_info.check_user_id_to_chat_id(
+    if receive_msg.Type == WX_TEXT and receive_msg.Text.startswith(owner_info.user_id) and my_info.check_user_id_to_chat_id(
             receive_msg.FromUserName):
-        KeyAgreement.key_agreement_step_four(receive_msg, my_id, my_info)
+        KeyAgreement.key_agreement_step_four(receive_msg, owner_info.user_id, my_info)
         print('密钥协商完成，开始加密聊天')
         return
 
@@ -96,9 +98,8 @@ def listen(receive_msg):
 
 
 def init_mychat():
-    global my_id
     # 初始化朋友列表
-    my_id = UtilTool.init_friends(my_info)
+    owner_info = UtilTool.init_friends(my_info)
 
     # 初始化好友群信息
     UtilTool.init_rooms(my_info)

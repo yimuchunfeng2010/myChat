@@ -47,6 +47,7 @@ if __name__ == '__main__':
     en_msg = aes_encrypt(aes_key, aes_key)
     print("加密后： ", en_msg)
     tmp_en_msg = tmp_user_id+en_msg
+
     pre_msg =tmp_en_msg[len(tmp_user_id)]
     de_msg = aes_decrypt(aes_key, pre_msg)
     print("解密后： ", de_msg)

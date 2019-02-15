@@ -7,8 +7,10 @@ import uuid
 import os
 import itchat
 from proto.info import FriendInfo
+from proto.info import ChatterInfo
 from Crypto.Cipher import AES
 from config.config import *
+from constants.type import *
 
 
 class UtilTool:
@@ -25,10 +27,10 @@ class UtilTool:
         (public_key, private_key) = rsa.newkeys(RSA_KEY_LEN)
         public_key_name = user_name + "_" + time_stamp + "_id_rsa.pub"
         private_key_name = user_name + "_" + time_stamp + "_id_rsa.pri"
-        with open("./key_module/key_files/mine/" + public_key_name, 'w+') as f:
+        with open(MINE_KEY_PATH + public_key_name, 'w+') as f:
             f.write(public_key.save_pkcs1().decode())
 
-        with open("./key_module/key_files/mine/" + private_key_name, 'w+') as f:
+        with open(MINE_KEY_PATH + private_key_name, 'w+') as f:
             f.write(private_key.save_pkcs1().decode())
 
         return public_key_name, private_key_name
@@ -99,8 +101,8 @@ class UtilTool:
     @staticmethod
     def remove_unused_file():
         paths = list()
-        paths.append('./key_module/key_files/mine')
-        paths.append('./key_module/key_files/friend')
+        paths.append(MINE_KEY_PATH)
+        paths.append(FRIEND_KEY_PATH)
         for path in paths:
             for file in os.listdir(path):
                 path_file = os.path.join(path, file)
@@ -153,7 +155,8 @@ class UtilTool:
                                                                  1))
 
                 in_my_info.set_user_id_to_chat_id(friend.UserName, "")
-        return friends[0].UserName
+
+        return ChatterInfo(friends[0].UserName, friends[0].NickName)
 
     # 获取聊天室信息
     @staticmethod
