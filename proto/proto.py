@@ -140,6 +140,10 @@ class KeyAgreement(object):
             for item in chat_info.key_info_list:
                 key_msg = UtilTool.aes_encrypt(item.aes_key, chat_info.aes_key)
                 send_msg = item.user_id + key_msg
+                print("en_aes_key",item.aes_key)
+                print("user_id",item.user_id)
+                print("send_msg",send_msg)
+
                 itchat.send_msg(send_msg, toUserName=receive_msg.FromUserName)
 
             print("密钥协商完成，开始加密聊天")
@@ -155,8 +159,12 @@ class KeyAgreement(object):
         chat_id = in_my_info.get_user_id_to_chat_id(receive_msg.FromUserName)
         chat_info = in_my_info.get_chat_id_to_chat_info(chat_id)
 
+        print("aes_key ", chat_info.key_info_list[0].aes_key)
+        print("in_my_id ", in_my_id)
+        print("chat_info.receive_msg ", receive_msg.Text.lstrip(in_my_id))
+
         de_aes_key = UtilTool.aes_decrypt(chat_info.key_info_list[0].aes_key,
-                                          receive_msg.Text.lstrip(in_my_id))
+                                          receive_msg.Text[len(in_my_id):])
         chat_info.aes_key = de_aes_key
         chat_info.is_chat_ready = True
         chat_info.time = UtilTool.get_cur_time_stamp()
