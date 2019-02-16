@@ -5,6 +5,7 @@ import os
 import importlib
 import threading
 from constants.type import *
+from config.config import *
 from itchat.content import *
 from proto.info import *
 from proto.proto import IdAgreement
@@ -124,7 +125,7 @@ def update_key():
         cur_time = UtilTool.get_cur_time_stamp()
         processing_chat_list = []
         for chat_id, chat_info in my_info.chat_id_to_chat_info.items():
-            if chat_info.is_chat_ready is True and chat_info.is_master is True and chat_info.is_update_key is False and cur_time - chat_info.time > 180:
+            if chat_info.is_chat_ready is True and chat_info.is_master is True and chat_info.is_update_key is False and cur_time - chat_info.time > UPDATE_KEY_DURATION:
                 processing_chat_list.append(chat_info)
 
         for chat_info in processing_chat_list:
