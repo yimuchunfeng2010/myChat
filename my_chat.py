@@ -58,7 +58,6 @@ def say():
 # 接收消息
 @itchat.msg_register([TEXT, ATTACHMENT], isFriendChat=True, isGroupChat=True, isMpChat=True)
 def listen(receive_msg):
-    print('Receive New Msg:', receive_msg)
     if not hasattr(receive_msg, 'Text') and not hasattr(receive_msg, 'Type'):
         return
 
@@ -125,6 +124,7 @@ def update_key():
 
 def init_mychat():
     global owner_info
+    print('正在初始化，请稍等...')
     # 初始化朋友列表
     owner_info = UtilTool.init_friends(my_info)
 
@@ -137,7 +137,7 @@ def init_mychat():
     # 删除无用的密钥文件
     UtilTool.remove_unused_file()
 
-    print('init success')
+    print('初始化完成')
 
 
 if __name__ == '__main__':
