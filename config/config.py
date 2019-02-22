@@ -1,3 +1,3 @@
 RSA_KEY_LEN = 512
 AES_KEY_LEN = 32  # 暂定为32位
-UPDATE_KEY_DURATION = 60 * 10  # 密钥更新间隔
+UPDATE_KEY_DURATION = 60 * 10  # 密钥更新时间间隔

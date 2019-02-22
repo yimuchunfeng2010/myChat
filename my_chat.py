@@ -4,6 +4,7 @@ import sys
 import os
 import importlib
 import threading
+import time
 from constants.type import *
 from config.config import *
 from itchat.content import *
@@ -15,8 +16,6 @@ from proto.util import UtilTool
 sys.path.append(os.getcwd() + '/constants')
 
 importlib.reload(sys)
-
-mutex = threading.Lock()
 
 # 信息类对象
 my_info = MyInfo()
@@ -44,6 +43,7 @@ def say():
         if cur_chatter_info.user_id == "":
             print("请输入好友名称：@好友名称")
             continue
+
         # 协商完成,加密通信
         if IdAgreement.is_key_agreement_ready(my_info, cur_chatter_info.user_id):
             chat_id = my_info.get_user_id_to_chat_id(cur_chatter_info.user_id)
@@ -102,6 +102,26 @@ def listen(receive_msg):
     # 开始加密聊天
     UtilTool.encrypt_chat(receive_msg, cur_chatter_info.user_id, my_info)
 
+def update_key():
+    while True:
+        time.sleep(1)
+
+        cur_time = UtilTool.get_cur_time_stamp()
+        processing_chat_list = []
+        for chat_id, chat_info in my_info.chat_id_to_chat_info.items():
+            if chat_info.is_chat_ready is True and chat_info.is_master is True and chat_info.is_update_key is False \
+                    and cur_time - chat_info.time > UPDATE_KEY_DURATION:
+                processing_chat_list.append(chat_info)
+
+        for chat_info in processing_chat_list:
+            user_id = chat_info.user_id
+            for name, my_id in my_info.user_name_to_user_id.items():
+                if my_id == user_id:
+                    user_name = name
+                    chat_info.is_update_key = True
+                    KeyAgreement.launch_key_agreement(user_name, my_info, update_key=True)
+
+
 
 def init_mychat():
     global owner_info
@@ -120,30 +140,17 @@ def init_mychat():
     print('init success')
 
 
-def update_key():
-    while True:
-        cur_time = UtilTool.get_cur_time_stamp()
-        processing_chat_list = []
-        for chat_id, chat_info in my_info.chat_id_to_chat_info.items():
-            if chat_info.is_chat_ready is True and chat_info.is_master is True and chat_info.is_update_key is False and cur_time - chat_info.time > UPDATE_KEY_DURATION:
-                processing_chat_list.append(chat_info)
-
-        for chat_info in processing_chat_list:
-            user_id = chat_info.user_id
-            for name, my_id in my_info.user_name_to_user_id.items():
-                if my_id == user_id:
-                    user_name = name
-                    chat_info.is_update_key = True
-                    KeyAgreement.launch_key_agreement(user_name, my_info, update_key=True)
-
-
 if __name__ == '__main__':
     itchat.auto_login(hotReload=True)
+
+    # 初始化
     init_mychat()
+
     # 启动线程
     t1 = threading.Thread(target=say)
     t2 = threading.Thread(target=listen, args=(u'',))
     t3 = threading.Thread(target=update_key)
+
     t1.start()
     t2.start()
     t3.start()

@@ -7,11 +7,11 @@ def get_rsa_key(user_name):
     (public_key, private_key) = rsa.newkeys(RSA_KEY_LEN)
     public_key_name = user_name + "public.file"
     private_key_name = user_name + "private.file"
-    # with open(public_key_name, 'w+') as f:
-    #     f.write(public_key.save_pkcs1().decode())
-    #
-    # with open(private_key_name, 'w+') as f:
-    #     f.write(private_key.save_pkcs1().decode())
+    with open(public_key_name, 'w+') as f:
+        f.write(public_key.save_pkcs1().decode())
+
+    with open(private_key_name, 'w+') as f:
+        f.write(private_key.save_pkcs1().decode())
 
     return public_key_name, private_key_name
 
